@@ -140,4 +140,7 @@ class RaceCasesRow extends SupabaseDataRow {
   DateTime? get penaltyAppliedAt => getField<DateTime>('penalty_applied_at');
   set penaltyAppliedAt(DateTime? value) =>
       setField<DateTime>('penalty_applied_at', value);
+
+  bool? get isProtest => getField<bool>('is_protest');
+  set isProtest(bool? value) => setField<bool>('is_protest', value);
 }

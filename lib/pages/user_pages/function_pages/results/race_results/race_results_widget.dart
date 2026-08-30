@@ -612,8 +612,7 @@ class _RaceResultsWidgetState extends State<RaceResultsWidget> {
                                         return ResultRowWidget(
                                           key: Key(
                                               'Keysnj_${listofDriverIndex}_of_${listofDriver.length}'),
-                                          rank: listofDriverItem.finishPosition
-                                              ?.toDouble(),
+                                          rank: listofDriverItem.finishPosition,
                                           isPodium: true,
                                           driver: listofDriverItem.driverName,
                                           team: '-',

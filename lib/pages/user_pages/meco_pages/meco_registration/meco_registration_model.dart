@@ -331,6 +331,11 @@ class MecoRegistrationModel extends FlutterFlowModel<MecoRegistrationWidget> {
     return null;
   }
 
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode3;
+  TextEditingController? textController19;
+  String? Function(BuildContext, String?)? textController19Validator;
+
   @override
   void initState(BuildContext context) {
     fmsciLicenseTextControllerValidator = _fmsciLicenseTextControllerValidator;
@@ -416,6 +421,9 @@ class MecoRegistrationModel extends FlutterFlowModel<MecoRegistrationWidget> {
 
     textFieldFocusNode2?.dispose();
     textController18?.dispose();
+
+    textFieldFocusNode3?.dispose();
+    textController19?.dispose();
   }
 
   /// Additional helper methods.

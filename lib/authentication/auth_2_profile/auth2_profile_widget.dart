@@ -122,8 +122,14 @@ class _Auth2ProfileWidgetState extends State<Auth2ProfileWidget>
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
                         child: Container(
                           width: double.infinity,
-                          height: 140.0,
+                          height: 133.39,
                           decoration: BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: Image.asset(
+                                'assets/images/Banner_Image.png',
+                              ).image,
+                            ),
                             gradient: LinearGradient(
                               colors: [
                                 FlutterFlowTheme.of(context).primary,
@@ -133,28 +139,6 @@ class _Auth2ProfileWidgetState extends State<Auth2ProfileWidget>
                               stops: [0.0, 0.5, 1.0],
                               begin: AlignmentDirectional(-1.0, -1.0),
                               end: AlignmentDirectional(1.0, 1.0),
-                            ),
-                          ),
-                          child: Container(
-                            width: 100.0,
-                            height: 200.0,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                fit: BoxFit.fill,
-                                image: Image.asset(
-                                  'assets/images/Banner.png',
-                                ).image,
-                              ),
-                              gradient: LinearGradient(
-                                colors: [
-                                  Color(0x00FFFFFF),
-                                  FlutterFlowTheme.of(context)
-                                      .secondaryBackground
-                                ],
-                                stops: [0.0, 1.0],
-                                begin: AlignmentDirectional(0.0, -1.0),
-                                end: AlignmentDirectional(0, 1.0),
-                              ),
                             ),
                           ),
                         ).animateOnPageLoad(

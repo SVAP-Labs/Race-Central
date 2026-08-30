@@ -142,4 +142,7 @@ class EventRegistrationsRow extends SupabaseDataRow {
   String? get attachmentLink => getField<String>('attachmentLink');
   set attachmentLink(String? value) =>
       setField<String>('attachmentLink', value);
+
+  String? get driverRemarks => getField<String>('driverRemarks');
+  set driverRemarks(String? value) => setField<String>('driverRemarks', value);
 }

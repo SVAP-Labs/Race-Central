@@ -1363,6 +1363,13 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                                           ParamType
                                                                               .String,
                                                                         ),
+                                                                        'category':
+                                                                            serializeParam(
+                                                                          listViewEventRegistrationsRow
+                                                                              .category,
+                                                                          ParamType
+                                                                              .String,
+                                                                        ),
                                                                       }.withoutNulls,
                                                                     );
 

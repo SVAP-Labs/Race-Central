@@ -147,4 +147,19 @@ class EventsRow extends SupabaseDataRow {
 
   String? get paymentQR => getField<String>('PaymentQR');
   set paymentQR(String? value) => setField<String>('PaymentQR', value);
+
+  String? get eventNotes => getField<String>('event_notes');
+  set eventNotes(String? value) => setField<String>('event_notes', value);
+
+  bool? get noteEnable => getField<bool>('note_enable');
+  set noteEnable(bool? value) => setField<bool>('note_enable', value);
+
+  String? get technicalDelegateName =>
+      getField<String>('technical_delegate_name');
+  set technicalDelegateName(String? value) =>
+      setField<String>('technical_delegate_name', value);
+
+  String? get chiefScrutineerName => getField<String>('chief_scrutineer_name');
+  set chiefScrutineerName(String? value) =>
+      setField<String>('chief_scrutineer_name', value);
 }

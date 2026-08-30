@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/pages/components/driver_nav_bar/driver_nav_bar_widget.dart';
+import '/pages/user_pages/event_details/event_details_widget.dart';
 import '/pages/user_pages/iame_pages/iame_event_registration/iame_event_registration_widget.dart';
 import '/pages/user_pages/meco_pages/event_registration_component/event_registration_component_widget.dart';
 import '/index.dart';
@@ -105,7 +106,7 @@ class _UserEventsListPageWidgetState extends State<UserEventsListPageWidget>
                   background: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: Image.asset(
-                      'assets/images/Banner.png',
+                      'assets/images/Banner_Image.png',
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -423,8 +424,116 @@ class _UserEventsListPageWidgetState extends State<UserEventsListPageWidget>
                                                                     .max,
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
-                                                                    .end,
+                                                                    .spaceBetween,
                                                             children: [
+                                                              FFButtonWidget(
+                                                                onPressed:
+                                                                    () async {
+                                                                  await showModalBottomSheet(
+                                                                    isScrollControlled:
+                                                                        true,
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    enableDrag:
+                                                                        false,
+                                                                    context:
+                                                                        context,
+                                                                    builder:
+                                                                        (context) {
+                                                                      return WebViewAware(
+                                                                        child:
+                                                                            GestureDetector(
+                                                                          onTap:
+                                                                              () {
+                                                                            FocusScope.of(context).unfocus();
+                                                                            FocusManager.instance.primaryFocus?.unfocus();
+                                                                          },
+                                                                          child:
+                                                                              Padding(
+                                                                            padding:
+                                                                                MediaQuery.viewInsetsOf(context),
+                                                                            child:
+                                                                                Container(
+                                                                              height: MediaQuery.sizeOf(context).height * 0.65,
+                                                                              child: EventDetailsWidget(
+                                                                                pEventUD: upComingEventsItem.eventUid!,
+                                                                                pChmpshipID: upComingEventsItem.eventChampionship!,
+                                                                                eventpColour: upComingEventsItem.eventPColour!,
+                                                                                eventpText: upComingEventsItem.eventPText!,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                  ).then((value) =>
+                                                                      safeSetState(
+                                                                          () {}));
+                                                                },
+                                                                text:
+                                                                    'View Event Details',
+                                                                options:
+                                                                    FFButtonOptions(
+                                                                  height: 28.0,
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          16.0,
+                                                                          0.0,
+                                                                          16.0,
+                                                                          0.0),
+                                                                  iconPadding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryBackground,
+                                                                  textStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .titleSmall
+                                                                      .override(
+                                                                        font: GoogleFonts
+                                                                            .interTight(
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                          fontStyle: FlutterFlowTheme.of(context)
+                                                                              .titleSmall
+                                                                              .fontStyle,
+                                                                        ),
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primaryText,
+                                                                        fontSize:
+                                                                            12.0,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: FlutterFlowTheme.of(context)
+                                                                            .titleSmall
+                                                                            .fontStyle,
+                                                                      ),
+                                                                  elevation:
+                                                                      10.0,
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .alternate,
+                                                                    width: 2.0,
+                                                                  ),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8.0),
+                                                                  hoverColor:
+                                                                      FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .success,
+                                                                ),
+                                                              ),
                                                               FFButtonWidget(
                                                                 onPressed:
                                                                     () async {
@@ -476,7 +585,9 @@ class _UserEventsListPageWidgetState extends State<UserEventsListPageWidget>
                                                                     ).then((value) =>
                                                                         safeSetState(
                                                                             () {}));
-                                                                  } else {
+                                                                  } else if (upComingEventsItem
+                                                                          .eventType ==
+                                                                      'Karting') {
                                                                     await showModalBottomSheet(
                                                                       isScrollControlled:
                                                                           true,
@@ -507,6 +618,11 @@ class _UserEventsListPageWidgetState extends State<UserEventsListPageWidget>
                                                                                 pLateFeeDate: upComingEventsItem.evenLateFeeDate!,
                                                                                 eventpColour: upComingEventsItem.eventPColour!,
                                                                                 eventpText: upComingEventsItem.eventPText!,
+                                                                                eventNote: valueOrDefault<String>(
+                                                                                  upComingEventsItem.eventNotes,
+                                                                                  '-',
+                                                                                ),
+                                                                                enableNote: upComingEventsItem.noteEnable,
                                                                               ),
                                                                             ),
                                                                           ),
@@ -1183,6 +1299,14 @@ class _UserEventsListPageWidgetState extends State<UserEventsListPageWidget>
                                                                                     cardEventsRow.eventPText,
                                                                                     ParamType.String,
                                                                                   ),
+                                                                                  'eventNote': serializeParam(
+                                                                                    cardEventsRow.eventNotes,
+                                                                                    ParamType.String,
+                                                                                  ),
+                                                                                  'enableNote': serializeParam(
+                                                                                    cardEventsRow.noteEnable,
+                                                                                    ParamType.bool,
+                                                                                  ),
                                                                                 }.withoutNulls,
                                                                               );
                                                                             }
@@ -1382,6 +1506,14 @@ class _UserEventsListPageWidgetState extends State<UserEventsListPageWidget>
                                                                                   'eventpText': serializeParam(
                                                                                     cardEventsRow.eventPText,
                                                                                     ParamType.String,
+                                                                                  ),
+                                                                                  'eventNote': serializeParam(
+                                                                                    cardEventsRow.eventNotes,
+                                                                                    ParamType.String,
+                                                                                  ),
+                                                                                  'enableNote': serializeParam(
+                                                                                    cardEventsRow.noteEnable,
+                                                                                    ParamType.bool,
                                                                                   ),
                                                                                 }.withoutNulls,
                                                                               );

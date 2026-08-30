@@ -27,7 +27,9 @@ class EventRegistrationComponentWidget extends StatefulWidget {
     required this.pLateFeeDate,
     required this.eventpColour,
     required this.eventpText,
-  });
+    this.eventNote,
+    bool? enableNote,
+  }) : this.enableNote = enableNote ?? false;
 
   final String? pEventUD;
   final String? pChmpshipID;
@@ -35,6 +37,8 @@ class EventRegistrationComponentWidget extends StatefulWidget {
   final DateTime? pLateFeeDate;
   final String? eventpColour;
   final String? eventpText;
+  final String? eventNote;
+  final bool enableNote;
 
   @override
   State<EventRegistrationComponentWidget> createState() =>
@@ -547,6 +551,14 @@ class _EventRegistrationComponentWidgetState
                                     'eventpText': serializeParam(
                                       widget.eventpText,
                                       ParamType.String,
+                                    ),
+                                    'eventNote': serializeParam(
+                                      widget.eventNote,
+                                      ParamType.String,
+                                    ),
+                                    'enableNote': serializeParam(
+                                      widget.enableNote,
+                                      ParamType.bool,
                                     ),
                                   }.withoutNulls,
                                 );

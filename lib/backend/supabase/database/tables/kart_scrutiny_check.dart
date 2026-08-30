@@ -136,4 +136,16 @@ class KartScrutinyCheckRow extends SupabaseDataRow {
 
   bool? get isSubmited => getField<bool>('isSubmited');
   set isSubmited(bool? value) => setField<bool>('isSubmited', value);
+
+  String? get exhaustSerialNum => getField<String>('exhaust_serial_Num');
+  set exhaustSerialNum(String? value) =>
+      setField<String>('exhaust_serial_Num', value);
+
+  String? get exhaustRotaxNo => getField<String>('exhaust_Rotax_No');
+  set exhaustRotaxNo(String? value) =>
+      setField<String>('exhaust_Rotax_No', value);
+
+  String? get exhaustOrgSeal => getField<String>('exhaust_org_seal');
+  set exhaustOrgSeal(String? value) =>
+      setField<String>('exhaust_org_seal', value);
 }

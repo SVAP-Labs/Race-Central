@@ -8,18 +8,17 @@ export 'result_row_model.dart';
 class ResultRowWidget extends StatefulWidget {
   const ResultRowWidget({
     super.key,
-    double? rank,
+    this.rank,
     bool? isPodium,
     String? driver,
     String? team,
     String? compNo,
-  })  : this.rank = rank ?? 1.0,
-        this.isPodium = isPodium ?? true,
+  })  : this.isPodium = isPodium ?? true,
         this.driver = driver ?? 'Max Verstappen',
         this.team = team ?? 'Red Bull Racing',
         this.compNo = compNo ?? '';
 
-  final double rank;
+  final int? rank;
   final bool isPodium;
   final String driver;
   final String team;
@@ -84,8 +83,8 @@ class _ResultRowWidgetState extends State<ResultRowWidget> {
                     alignment: AlignmentDirectional(0.0, 0.0),
                     child: Text(
                       valueOrDefault<String>(
-                        '${widget.rank.toString()}',
-                        '1',
+                        '${widget.rank?.toString()}',
+                        'NA',
                       ),
                       style: FlutterFlowTheme.of(context).labelLarge.override(
                             font: GoogleFonts.inter(

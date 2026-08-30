@@ -153,7 +153,7 @@ class _UserProfilePageWidgetState extends State<UserProfilePageWidget>
                           fit: BoxFit.fill,
                           alignment: AlignmentDirectional(0.0, -1.0),
                           image: Image.asset(
-                            'assets/images/Banner.png',
+                            'assets/images/Banner_Image.png',
                           ).image,
                         ),
                       ),

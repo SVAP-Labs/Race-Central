@@ -204,6 +204,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'driverScrutinyID',
               ParamType.String,
             ),
+            category: params.getParam(
+              'category',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -305,6 +309,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             eventpText: params.getParam(
               'eventpText',
               ParamType.String,
+            ),
+            eventNote: params.getParam(
+              'eventNote',
+              ParamType.String,
+            ),
+            enableNote: params.getParam(
+              'enableNote',
+              ParamType.bool,
             ),
           ),
         ),
@@ -644,10 +656,10 @@ class FFRoute {
               : builder(context, ffParams);
           final child = appStateNotifier.loading
               ? Container(
-                  color: Colors.transparent,
+                  color: Color(0xFF2E3236),
                   child: Image.asset(
-                    'assets/images/SplashScreen.png',
-                    fit: BoxFit.fill,
+                    'assets/images/Copy.png',
+                    fit: BoxFit.contain,
                   ),
                 )
               : page;

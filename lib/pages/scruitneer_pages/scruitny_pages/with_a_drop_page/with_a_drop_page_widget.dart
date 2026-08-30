@@ -1152,6 +1152,11 @@ class _WithADropPageWidgetState extends State<WithADropPageWidget> {
                                                                               driverListItem.driverScrutinyId,
                                                                               ParamType.String,
                                                                             ),
+                                                                            'category':
+                                                                                serializeParam(
+                                                                              driverListItem.category,
+                                                                              ParamType.String,
+                                                                            ),
                                                                           }.withoutNulls,
                                                                         );
                                                                       },

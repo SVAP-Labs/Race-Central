@@ -286,21 +286,34 @@ class _TrackdetailsWidgetState extends State<TrackdetailsWidget> {
                                       borderRadius: BorderRadius.circular(24.0),
                                       shape: BoxShape.rectangle,
                                     ),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          5.0, 5.0, 5.0, 5.0),
-                                      child: Container(
-                                        decoration: BoxDecoration(),
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(22.0),
-                                          child: Image.network(
-                                            getCORSProxyUrl(
-                                              trackdetailsRaceTracksRow!
-                                                  .trackImage!,
+                                    child: Visibility(
+                                      visible: valueOrDefault<bool>(
+                                        trackdetailsRaceTracksRow?.trackImage !=
+                                                null &&
+                                            trackdetailsRaceTracksRow
+                                                    ?.trackImage !=
+                                                '',
+                                        false,
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            5.0, 5.0, 5.0, 5.0),
+                                        child: Container(
+                                          decoration: BoxDecoration(),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(22.0),
+                                            child: Image.network(
+                                              getCORSProxyUrl(
+                                                valueOrDefault<String>(
+                                                  trackdetailsRaceTracksRow
+                                                      ?.trackImage,
+                                                  '-',
+                                                ),
+                                              ),
+                                              width: 200.0,
+                                              fit: BoxFit.fill,
                                             ),
-                                            width: 200.0,
-                                            fit: BoxFit.fill,
                                           ),
                                         ),
                                       ),
@@ -337,7 +350,7 @@ class _TrackdetailsWidgetState extends State<TrackdetailsWidget> {
                                                   .primary,
                                               label: 'Total Length',
                                               value: trackdetailsRaceTracksRow
-                                                  .trackLength,
+                                                  ?.trackLength,
                                             ),
                                           ),
                                         ),
@@ -367,8 +380,11 @@ class _TrackdetailsWidgetState extends State<TrackdetailsWidget> {
                                               tone: FlutterFlowTheme.of(context)
                                                   .primary,
                                               label: 'Start Pole',
-                                              value: trackdetailsRaceTracksRow
-                                                  .poleDirection,
+                                              value: valueOrDefault<String>(
+                                                trackdetailsRaceTracksRow
+                                                    ?.poleDirection,
+                                                '-',
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -390,7 +406,7 @@ class _TrackdetailsWidgetState extends State<TrackdetailsWidget> {
                                                   .tertiary,
                                               label: 'Corners',
                                               value: trackdetailsRaceTracksRow
-                                                  .trackCorners
+                                                  ?.trackCorners
                                                   ?.toString(),
                                             ),
                                           ),

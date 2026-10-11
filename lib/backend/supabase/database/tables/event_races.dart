@@ -47,4 +47,7 @@ class EventRacesRow extends SupabaseDataRow {
   String? get pointsSchemeId => getField<String>('points_scheme_id');
   set pointsSchemeId(String? value) =>
       setField<String>('points_scheme_id', value);
+
+  bool? get scoring => getField<bool>('scoring');
+  set scoring(bool? value) => setField<bool>('scoring', value);
 }

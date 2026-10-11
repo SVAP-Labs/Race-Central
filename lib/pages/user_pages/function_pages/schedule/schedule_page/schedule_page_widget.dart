@@ -1,4 +1,5 @@
 import '/backend/supabase/supabase.dart';
+import '/components/to_display_nothing_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_pdf_viewer.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -167,7 +168,7 @@ class _SchedulePageWidgetState extends State<SchedulePageWidget> {
                                   ),
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.all(24.0),
+                                  padding: EdgeInsets.all(14.0),
                                   child: Container(
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
@@ -191,7 +192,7 @@ class _SchedulePageWidgetState extends State<SchedulePageWidget> {
                                                   'Loading..',
                                                 ),
                                                 textAlign: TextAlign.center,
-                                                maxLines: 2,
+                                                maxLines: 3,
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .titleLarge
@@ -209,7 +210,7 @@ class _SchedulePageWidgetState extends State<SchedulePageWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
-                                                          fontSize: 18.0,
+                                                          fontSize: 16.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -236,6 +237,19 @@ class _SchedulePageWidgetState extends State<SchedulePageWidget> {
                                     schedulePagePdfScheduleRowList
                                         .map((e) => e)
                                         .toList();
+                                if (scheduleList.isEmpty) {
+                                  return Container(
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 1.0,
+                                    child: ToDisplayNothingWidget(
+                                      icon: Icon(
+                                        Icons.schema_outlined,
+                                        size: 25.0,
+                                      ),
+                                      message: 'Schedule yet to be released ',
+                                    ),
+                                  );
+                                }
 
                                 return ListView.builder(
                                   padding: EdgeInsets.zero,

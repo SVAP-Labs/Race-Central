@@ -74,7 +74,7 @@ class MecoKartingSupportRecord extends FirestoreRecord {
   @override
   bool operator ==(other) =>
       other is MecoKartingSupportRecord &&
-      reference.path.hashCode == other.reference.path.hashCode;
+      reference.path == other.reference.path;
 }
 
 Map<String, dynamic> createMecoKartingSupportRecordData({
@@ -107,8 +107,8 @@ class MecoKartingSupportRecordDocumentEquality
 
   @override
   int hash(MecoKartingSupportRecord? e) => const ListEquality().hash([
-        e?.mecoKartingCategory,
-        e?.mecoKartingPayment,
+        const ListEquality().hash(e?.mecoKartingCategory),
+        const ListEquality().hash(e?.mecoKartingPayment),
         e?.feePaymentQRImage,
         e?.tempEventTimeTable
       ]);

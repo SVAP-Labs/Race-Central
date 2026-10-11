@@ -45,6 +45,25 @@ class Auth2EditProfileModel extends FlutterFlowModel<Auth2EditProfileWidget> {
   // State field(s) for bloodDropDown widget.
   String? bloodDropDownValue;
   FormFieldController<String>? bloodDropDownValueController;
+  // State field(s) for gender widget.
+  String? genderValue;
+  FormFieldController<String>? genderValueController;
+  // State field(s) for contact widget.
+  FocusNode? contactFocusNode;
+  TextEditingController? contactTextController;
+  String? Function(BuildContext, String?)? contactTextControllerValidator;
+  String? _contactTextControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Emergency Contact is required';
+    }
+
+    if (val.length < 10) {
+      return 'Requires at least 10 characters.';
+    }
+
+    return null;
+  }
+
   // State field(s) for parentName widget.
   FocusNode? parentNameFocusNode;
   TextEditingController? parentNameTextController;
@@ -66,30 +85,14 @@ class Auth2EditProfileModel extends FlutterFlowModel<Auth2EditProfileWidget> {
   FocusNode? parentemailFocusNode;
   TextEditingController? parentemailTextController;
   String? Function(BuildContext, String?)? parentemailTextControllerValidator;
-  // State field(s) for contact widget.
-  FocusNode? contactFocusNode;
-  TextEditingController? contactTextController;
-  String? Function(BuildContext, String?)? contactTextControllerValidator;
-  String? _contactTextControllerValidator(BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Emergency Contact is required';
-    }
-
-    if (val.length < 10) {
-      return 'Requires at least 10 characters.';
-    }
-
-    return null;
-  }
-
   // Stores action output result for [Backend Call - Update Row(s)] action in Button-Login widget.
   List<AppUsersRow>? supabaseUpdateRow;
 
   @override
   void initState(BuildContext context) {
     firstNameTextControllerValidator = _firstNameTextControllerValidator;
-    parentNameTextControllerValidator = _parentNameTextControllerValidator;
     contactTextControllerValidator = _contactTextControllerValidator;
+    parentNameTextControllerValidator = _parentNameTextControllerValidator;
   }
 
   @override
@@ -100,13 +103,13 @@ class Auth2EditProfileModel extends FlutterFlowModel<Auth2EditProfileWidget> {
     lastNameFocusNode?.dispose();
     lastNameTextController?.dispose();
 
+    contactFocusNode?.dispose();
+    contactTextController?.dispose();
+
     parentNameFocusNode?.dispose();
     parentNameTextController?.dispose();
 
     parentemailFocusNode?.dispose();
     parentemailTextController?.dispose();
-
-    contactFocusNode?.dispose();
-    contactTextController?.dispose();
   }
 }

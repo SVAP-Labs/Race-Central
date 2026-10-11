@@ -88,7 +88,7 @@ class _SupportAlertWidgetState extends State<SupportAlertWidget> {
                       ),
                 ),
                 Text(
-                  'Please Contact Scrutiny Team for any Support',
+                  'Please Contact Race Organiser or Write to admin@Ranbolt',
                   textAlign: TextAlign.center,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         font: GoogleFonts.inter(

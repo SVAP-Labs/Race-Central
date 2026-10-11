@@ -10,6 +10,7 @@ import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
 import '/pages/scruitneer_pages/sealing_pages/components/preview_uploaded_file/preview_uploaded_file_widget.dart';
 import '/pages/scruitneer_pages/sealing_pages/components/signature_component/signature_component_widget.dart';
+import '/flutter_flow/permissions_util.dart';
 import '/index.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -3319,6 +3320,10 @@ class _EngineSealPageWidgetState extends State<EngineSealPageWidget> {
                                                       ),
                                                       FFButtonWidget(
                                                         onPressed: () async {
+                                                          if (!isWeb) {
+                                                            await requestPermission(
+                                                                cameraPermission);
+                                                          }
                                                           final selectedMedia =
                                                               await selectMediaWithSourceBottomSheet(
                                                             context: context,

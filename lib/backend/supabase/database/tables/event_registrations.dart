@@ -145,4 +145,22 @@ class EventRegistrationsRow extends SupabaseDataRow {
 
   String? get driverRemarks => getField<String>('driverRemarks');
   set driverRemarks(String? value) => setField<String>('driverRemarks', value);
+
+  String? get issuingASN => getField<String>('issuing_ASN');
+  set issuingASN(String? value) => setField<String>('issuing_ASN', value);
+
+  String? get entryNumber3 => getField<String>('entry_number_3');
+  set entryNumber3(String? value) => setField<String>('entry_number_3', value);
+
+  bool? get isRookie => getField<bool>('isRookie');
+  set isRookie(bool? value) => setField<bool>('isRookie', value);
+
+  bool? get isNonVeg => getField<bool>('isNonVeg');
+  set isNonVeg(bool? value) => setField<bool>('isNonVeg', value);
+
+  String? get vehicleModel => getField<String>('vehicleModel');
+  set vehicleModel(String? value) => setField<String>('vehicleModel', value);
+
+  String? get tyreSize => getField<String>('tyre_size');
+  set tyreSize(String? value) => setField<String>('tyre_size', value);
 }

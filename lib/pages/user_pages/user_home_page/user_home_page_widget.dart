@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'user_home_page_model.dart';
 export 'user_home_page_model.dart';
 
@@ -653,40 +654,155 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                                     FFButtonWidget(
                                                                   onPressed:
                                                                       () async {
-                                                                    context
-                                                                        .pushNamed(
-                                                                      DriverScrutinycheckWidget
-                                                                          .routeName,
-                                                                      queryParameters:
-                                                                          {
-                                                                        'driverScrutinyID':
-                                                                            serializeParam(
-                                                                          listViewEventRegistrationsRow
-                                                                              .driverScrutinyId,
-                                                                          ParamType
-                                                                              .String,
-                                                                        ),
-                                                                        'eventRegID':
-                                                                            serializeParam(
-                                                                          listViewEventRegistrationsRow
-                                                                              .id,
-                                                                          ParamType
-                                                                              .String,
-                                                                        ),
-                                                                        'pCategory':
-                                                                            serializeParam(
-                                                                          listViewEventRegistrationsRow
-                                                                              .category,
-                                                                          ParamType
-                                                                              .String,
-                                                                        ),
-                                                                      }.withoutNulls,
+                                                                    _model.queriedChampionshipCategory =
+                                                                        await ChampionshipCategoriesTable()
+                                                                            .queryRows(
+                                                                      queryFn:
+                                                                          (q) =>
+                                                                              q.eqOrNull(
+                                                                        'category_name',
+                                                                        listViewEventRegistrationsRow
+                                                                            .category,
+                                                                      ),
                                                                     );
+                                                                    if (_model
+                                                                            .queriedChampionshipCategory
+                                                                            ?.firstOrNull
+                                                                            ?.categoryType ==
+                                                                        'karting') {
+                                                                      context
+                                                                          .pushNamed(
+                                                                        KartDriverScrutinycheckWidget
+                                                                            .routeName,
+                                                                        queryParameters:
+                                                                            {
+                                                                          'driverScrutinyID':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.driverScrutinyId,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                          'eventRegID':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.id,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                          'pCategory':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.category,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                        }.withoutNulls,
+                                                                      );
+                                                                    } else if ((_model.queriedChampionshipCategory?.firstOrNull?.categoryType == 'touring') ||
+                                                                        (_model.queriedChampionshipCategory?.firstOrNull?.categoryType ==
+                                                                            'f4') ||
+                                                                        (_model.queriedChampionshipCategory?.firstOrNull?.categoryType ==
+                                                                            'onemake_4w')) {
+                                                                      context
+                                                                          .pushNamed(
+                                                                        AdultDriverScrutinycheckWidget
+                                                                            .routeName,
+                                                                        queryParameters:
+                                                                            {
+                                                                          'driverScrutinyID':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.driverScrutinyId,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                          'eventRegID':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.id,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                          'pCategory':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.category,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                        }.withoutNulls,
+                                                                      );
+                                                                    } else if (_model
+                                                                            .queriedChampionshipCategory
+                                                                            ?.firstOrNull
+                                                                            ?.categoryType ==
+                                                                        'onemake_2w') {
+                                                                      context
+                                                                          .pushNamed(
+                                                                        TwoWheelDriverScrutinycheckWidget
+                                                                            .routeName,
+                                                                        queryParameters:
+                                                                            {
+                                                                          'driverScrutinyID':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.driverScrutinyId,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                          'eventRegID':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.id,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                          'pCategory':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.category,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                        }.withoutNulls,
+                                                                      );
+                                                                    } else {
+                                                                      await showDialog(
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (alertDialogContext) {
+                                                                          return WebViewAware(
+                                                                            child:
+                                                                                AlertDialog(
+                                                                              title: Text('Error'),
+                                                                              content: Text('Error in Fetching category '),
+                                                                              actions: [
+                                                                                TextButton(
+                                                                                  onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                  child: Text('Ok'),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          );
+                                                                        },
+                                                                      );
+
+                                                                      context
+                                                                          .pushNamed(
+                                                                        KartDriverScrutinycheckWidget
+                                                                            .routeName,
+                                                                        queryParameters:
+                                                                            {
+                                                                          'driverScrutinyID':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.driverScrutinyId,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                          'eventRegID':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.id,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                          'pCategory':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.category,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                        }.withoutNulls,
+                                                                      );
+                                                                    }
 
                                                                     FFAppState()
                                                                             .userChoosenEvent =
                                                                         cardEventsRow
                                                                             .eventUid!;
+                                                                    safeSetState(
+                                                                        () {});
+
                                                                     safeSetState(
                                                                         () {});
                                                                   },
@@ -896,7 +1012,7 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                                       () async {
                                                                     context
                                                                         .pushNamed(
-                                                                      RaceResultsWidget
+                                                                      OfEntryListPageWidget
                                                                           .routeName,
                                                                       queryParameters:
                                                                           {
@@ -907,14 +1023,28 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                                           ParamType
                                                                               .String,
                                                                         ),
+                                                                        'eventName':
+                                                                            serializeParam(
+                                                                          cardEventsRow
+                                                                              .eventName,
+                                                                          ParamType
+                                                                              .String,
+                                                                        ),
+                                                                        'category':
+                                                                            serializeParam(
+                                                                          listViewEventRegistrationsRow
+                                                                              .category,
+                                                                          ParamType
+                                                                              .String,
+                                                                        ),
                                                                       }.withoutNulls,
                                                                     );
                                                                   },
                                                                   text:
-                                                                      'Race Results',
+                                                                      'Entry List',
                                                                   icon: Icon(
                                                                     Icons
-                                                                        .emoji_events,
+                                                                        .list_alt_rounded,
                                                                     size: 18.0,
                                                                   ),
                                                                   options:
@@ -999,7 +1129,7 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                                       () async {
                                                                     context
                                                                         .pushNamed(
-                                                                      OfEntryListPageWidget
+                                                                      RaceResultsWidget
                                                                           .routeName,
                                                                       queryParameters:
                                                                           {
@@ -1010,28 +1140,14 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                                           ParamType
                                                                               .String,
                                                                         ),
-                                                                        'eventName':
-                                                                            serializeParam(
-                                                                          cardEventsRow
-                                                                              .eventName,
-                                                                          ParamType
-                                                                              .String,
-                                                                        ),
-                                                                        'category':
-                                                                            serializeParam(
-                                                                          listViewEventRegistrationsRow
-                                                                              .category,
-                                                                          ParamType
-                                                                              .String,
-                                                                        ),
                                                                       }.withoutNulls,
                                                                     );
                                                                   },
                                                                   text:
-                                                                      'Entry List',
+                                                                      'Race Results',
                                                                   icon: Icon(
                                                                     Icons
-                                                                        .list_alt_rounded,
+                                                                        .emoji_events,
                                                                     size: 18.0,
                                                                   ),
                                                                   options:
@@ -1343,35 +1459,174 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                                     FFButtonWidget(
                                                                   onPressed:
                                                                       () async {
-                                                                    context
-                                                                        .pushNamed(
-                                                                      KartScrutinycheckWidget
-                                                                          .routeName,
-                                                                      queryParameters:
-                                                                          {
-                                                                        'kartScrutinyID':
-                                                                            serializeParam(
-                                                                          listViewEventRegistrationsRow
-                                                                              .kartScrutinyId,
-                                                                          ParamType
-                                                                              .String,
-                                                                        ),
-                                                                        'eventRegistrationID':
-                                                                            serializeParam(
-                                                                          listViewEventRegistrationsRow
-                                                                              .id,
-                                                                          ParamType
-                                                                              .String,
-                                                                        ),
-                                                                        'category':
-                                                                            serializeParam(
-                                                                          listViewEventRegistrationsRow
-                                                                              .category,
-                                                                          ParamType
-                                                                              .String,
-                                                                        ),
-                                                                      }.withoutNulls,
+                                                                    _model.fetchingEventCategortype =
+                                                                        await ChampionshipCategoriesTable()
+                                                                            .queryRows(
+                                                                      queryFn:
+                                                                          (q) =>
+                                                                              q.eqOrNull(
+                                                                        'category_name',
+                                                                        listViewEventRegistrationsRow
+                                                                            .category,
+                                                                      ),
                                                                     );
+                                                                    if (_model
+                                                                            .fetchingEventCategortype
+                                                                            ?.firstOrNull
+                                                                            ?.categoryType ==
+                                                                        'touring') {
+                                                                      context
+                                                                          .pushNamed(
+                                                                        TouringVehicleScrutinyWidget
+                                                                            .routeName,
+                                                                        queryParameters:
+                                                                            {
+                                                                          'kartScrutinyID':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.kartScrutinyId,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                          'eventRegistrationID':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.id,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                          'category':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.category,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                        }.withoutNulls,
+                                                                      );
+                                                                    } else if ((_model.fetchingEventCategortype?.firstOrNull?.categoryType ==
+                                                                            'onemake_4w') ||
+                                                                        (_model.fetchingEventCategortype?.firstOrNull?.categoryType ==
+                                                                            'f4')) {
+                                                                      context
+                                                                          .pushNamed(
+                                                                        OpenWheelVehicleScrutinyWidget
+                                                                            .routeName,
+                                                                        queryParameters:
+                                                                            {
+                                                                          'kartScrutinyID':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.kartScrutinyId,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                          'eventRegistrationID':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.id,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                          'category':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.category,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                        }.withoutNulls,
+                                                                      );
+                                                                    } else if (_model
+                                                                            .fetchingEventCategortype
+                                                                            ?.firstOrNull
+                                                                            ?.categoryType ==
+                                                                        'onemake_2w') {
+                                                                      context
+                                                                          .pushNamed(
+                                                                        TwoWheelerScrutinyWidget
+                                                                            .routeName,
+                                                                        queryParameters:
+                                                                            {
+                                                                          'kartScrutinyID':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.kartScrutinyId,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                          'eventRegistrationID':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.id,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                          'category':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.category,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                        }.withoutNulls,
+                                                                      );
+                                                                    } else if (_model
+                                                                            .fetchingEventCategortype
+                                                                            ?.firstOrNull
+                                                                            ?.categoryType ==
+                                                                        'karting') {
+                                                                      context
+                                                                          .pushNamed(
+                                                                        KartScrutinycheckWidget
+                                                                            .routeName,
+                                                                        queryParameters:
+                                                                            {
+                                                                          'kartScrutinyID':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.kartScrutinyId,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                          'eventRegistrationID':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.id,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                          'category':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.category,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                        }.withoutNulls,
+                                                                      );
+                                                                    } else {
+                                                                      await showDialog(
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (alertDialogContext) {
+                                                                          return WebViewAware(
+                                                                            child:
+                                                                                AlertDialog(
+                                                                              title: Text('Error'),
+                                                                              content: Text('Error in Fetching category '),
+                                                                              actions: [
+                                                                                TextButton(
+                                                                                  onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                  child: Text('Ok'),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          );
+                                                                        },
+                                                                      );
+
+                                                                      context
+                                                                          .pushNamed(
+                                                                        KartScrutinycheckWidget
+                                                                            .routeName,
+                                                                        queryParameters:
+                                                                            {
+                                                                          'kartScrutinyID':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.kartScrutinyId,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                          'eventRegistrationID':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.id,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                          'category':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.category,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                        }.withoutNulls,
+                                                                      );
+                                                                    }
 
                                                                     FFAppState()
                                                                             .userChoosenEvent =
@@ -1379,12 +1634,118 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                                             .eventUid!;
                                                                     safeSetState(
                                                                         () {});
+
+                                                                    safeSetState(
+                                                                        () {});
                                                                   },
                                                                   text:
-                                                                      'Kart Scrutiny',
+                                                                      'Vehicle Scrutiny',
                                                                   icon: Icon(
                                                                     Icons
                                                                         .directions_car,
+                                                                    size: 18.0,
+                                                                  ),
+                                                                  options:
+                                                                      FFButtonOptions(
+                                                                    width: MediaQuery.sizeOf(context)
+                                                                            .width *
+                                                                        1.0,
+                                                                    height:
+                                                                        30.0,
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            16.0,
+                                                                            0.0,
+                                                                            16.0,
+                                                                            0.0),
+                                                                    iconPadding:
+                                                                        EdgeInsetsDirectional.fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                    iconColor: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryText,
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryBackground,
+                                                                    textStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .titleSmall
+                                                                        .override(
+                                                                          font:
+                                                                              GoogleFonts.interTight(
+                                                                            fontWeight:
+                                                                                FontWeight.normal,
+                                                                            fontStyle:
+                                                                                FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                          ),
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          fontSize:
+                                                                              14.0,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                          fontWeight:
+                                                                              FontWeight.normal,
+                                                                          fontStyle: FlutterFlowTheme.of(context)
+                                                                              .titleSmall
+                                                                              .fontStyle,
+                                                                        ),
+                                                                    elevation:
+                                                                        10.0,
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .alternate,
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                    hoverColor:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .alternate,
+                                                                    hoverBorderSide:
+                                                                        BorderSide(
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .success,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .all(
+                                                                            4.0),
+                                                                child:
+                                                                    FFButtonWidget(
+                                                                  onPressed:
+                                                                      () async {
+                                                                    context
+                                                                        .pushNamed(
+                                                                      StreamingPageWidget
+                                                                          .routeName,
+                                                                      queryParameters:
+                                                                          {
+                                                                        'eventID':
+                                                                            serializeParam(
+                                                                          cardEventsRow
+                                                                              .eventUid,
+                                                                          ParamType
+                                                                              .String,
+                                                                        ),
+                                                                      }.withoutNulls,
+                                                                    );
+                                                                  },
+                                                                  text:
+                                                                      'Allocated Tyres',
+                                                                  icon: Icon(
+                                                                    Icons
+                                                                        .tire_repair,
                                                                     size: 18.0,
                                                                   ),
                                                                   options:

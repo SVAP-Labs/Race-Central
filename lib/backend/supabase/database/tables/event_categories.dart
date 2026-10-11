@@ -60,4 +60,26 @@ class EventCategoriesRow extends SupabaseDataRow {
 
   String? get tyreFee => getField<String>('tyre_fee');
   set tyreFee(String? value) => setField<String>('tyre_fee', value);
+
+  String? get pointsSchemeId => getField<String>('points_scheme_id');
+  set pointsSchemeId(String? value) =>
+      setField<String>('points_scheme_id', value);
+
+  String? get championshipCategoryId =>
+      getField<String>('championship_category_id');
+  set championshipCategoryId(String? value) =>
+      setField<String>('championship_category_id', value);
+
+  bool? get hasRookieCategory => getField<bool>('hasRookieCategory');
+  set hasRookieCategory(bool? value) =>
+      setField<bool>('hasRookieCategory', value);
+
+  bool? get lotCompNumber => getField<bool>('lot_CompNumber');
+  set lotCompNumber(bool? value) => setField<bool>('lot_CompNumber', value);
+
+  bool? get noTeamName => getField<bool>('noTeamName');
+  set noTeamName(bool? value) => setField<bool>('noTeamName', value);
+
+  String? get categoryType => getField<String>('category_type');
+  set categoryType(String? value) => setField<String>('category_type', value);
 }

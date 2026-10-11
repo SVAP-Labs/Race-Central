@@ -2,11 +2,12 @@ import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/index.dart';
-import 'driver_scrutinycheck_widget.dart' show DriverScrutinycheckWidget;
+import 'adult_driver_scrutinycheck_widget.dart'
+    show AdultDriverScrutinycheckWidget;
 import 'package:flutter/material.dart';
 
-class DriverScrutinycheckModel
-    extends FlutterFlowModel<DriverScrutinycheckWidget> {
+class AdultDriverScrutinycheckModel
+    extends FlutterFlowModel<AdultDriverScrutinycheckWidget> {
   ///  Local state fields for this page.
 
   String? psSignature;
@@ -16,20 +17,12 @@ class DriverScrutinycheckModel
   ///  State fields for stateful widgets in this page.
 
   final formKey = GlobalKey<FormState>();
-  // Stores action output result for [Backend Call - Query Rows] action in driverScrutinycheck widget.
+  // Stores action output result for [Backend Call - Query Rows] action in adult_driverScrutinycheck widget.
   List<EventRegistrationsRow>? eventRegRow;
-  // Stores action output result for [Backend Call - Query Rows] action in driverScrutinycheck widget.
+  // Stores action output result for [Backend Call - Query Rows] action in adult_driverScrutinycheck widget.
   List<AppUsersRow>? appUserAge;
-  // State field(s) for competitionNumber widget.
-  FocusNode? competitionNumberFocusNode;
-  TextEditingController? competitionNumberTextController;
-  String? Function(BuildContext, String?)?
-      competitionNumberTextControllerValidator;
   // State field(s) for HelmetCheckbox widget.
   bool? helmetCheckboxValue;
-  // State field(s) for helmetStandardU15 widget.
-  String? helmetStandardU15Value;
-  FormFieldController<String>? helmetStandardU15ValueController;
   // State field(s) for helmetStandard widget.
   String? helmetStandardValue;
   FormFieldController<String>? helmetStandardValueController;
@@ -47,46 +40,36 @@ class DriverScrutinycheckModel
     return null;
   }
 
-  // State field(s) for OverallsCheckbox widget.
-  bool? overallsCheckboxValue;
-  // State field(s) for overallsStandard widget.
-  String? overallsStandardValue;
-  FormFieldController<String>? overallsStandardValueController;
-  // State field(s) for overallsSerialNumber widget.
-  FocusNode? overallsSerialNumberFocusNode;
-  TextEditingController? overallsSerialNumberTextController;
+  // State field(s) for fhrbodyProtectCheckbox widget.
+  bool? fhrbodyProtectCheckboxValue;
+  // State field(s) for fhrStandard widget.
+  String? fhrStandardValue;
+  FormFieldController<String>? fhrStandardValueController;
+  // State field(s) for fhrSerialNumber widget.
+  FocusNode? fhrSerialNumberFocusNode;
+  TextEditingController? fhrSerialNumberTextController;
   String? Function(BuildContext, String?)?
-      overallsSerialNumberTextControllerValidator;
-  String? _overallsSerialNumberTextControllerValidator(
+      fhrSerialNumberTextControllerValidator;
+  String? _fhrSerialNumberTextControllerValidator(
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
-      return 'Overalls Serial Number is Required';
+      return 'FHR Serial Number is Required';
     }
 
     return null;
   }
 
-  // State field(s) for glovesCheckbox widget.
-  bool? glovesCheckboxValue;
-  // State field(s) for glovesStandard widget.
-  String? glovesStandardValue;
-  FormFieldController<String>? glovesStandardValueController;
-  // State field(s) for shoesCheckbox widget.
-  bool? shoesCheckboxValue;
-  // State field(s) for shoesStandard widget.
-  String? shoesStandardValue;
-  FormFieldController<String>? shoesStandardValueController;
-  // State field(s) for bodyProtectCheckbox widget.
-  bool? bodyProtectCheckboxValue;
-  // State field(s) for bodyProtStandard widget.
-  String? bodyProtStandardValue;
-  FormFieldController<String>? bodyProtStandardValueController;
-  // State field(s) for bodyProtSerialNumber widget.
-  FocusNode? bodyProtSerialNumberFocusNode;
-  TextEditingController? bodyProtSerialNumberTextController;
+  // State field(s) for OverallsCheckbox widget.
+  bool? overallsCheckboxValue;
+  // State field(s) for overallProtStandard widget.
+  String? overallProtStandardValue;
+  FormFieldController<String>? overallProtStandardValueController;
+  // State field(s) for overallProtSerialNumber widget.
+  FocusNode? overallProtSerialNumberFocusNode;
+  TextEditingController? overallProtSerialNumberTextController;
   String? Function(BuildContext, String?)?
-      bodyProtSerialNumberTextControllerValidator;
-  String? _bodyProtSerialNumberTextControllerValidator(
+      overallProtSerialNumberTextControllerValidator;
+  String? _overallProtSerialNumberTextControllerValidator(
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return 'Body Protection Number is Required.';
@@ -95,6 +78,35 @@ class DriverScrutinycheckModel
     return null;
   }
 
+  // State field(s) for balaclavaStandard widget.
+  String? balaclavaStandardValue;
+  FormFieldController<String>? balaclavaStandardValueController;
+  // State field(s) for undergarmentsStandard widget.
+  String? undergarmentsStandardValue;
+  FormFieldController<String>? undergarmentsStandardValueController;
+  // State field(s) for glovesCheckbox widget.
+  bool? glovesCheckboxValue;
+  // State field(s) for glovesStandard widget.
+  String? glovesStandardValue;
+  FormFieldController<String>? glovesStandardValueController;
+  // State field(s) for glovesSerialNumber widget.
+  FocusNode? glovesSerialNumberFocusNode;
+  TextEditingController? glovesSerialNumberTextController;
+  String? Function(BuildContext, String?)?
+      glovesSerialNumberTextControllerValidator;
+  // State field(s) for shoesCheckbox widget.
+  bool? shoesCheckboxValue;
+  // State field(s) for shoesStandard widget.
+  String? shoesStandardValue;
+  FormFieldController<String>? shoesStandardValueController;
+  // State field(s) for shoesSerialNumber widget.
+  FocusNode? shoesSerialNumberFocusNode;
+  TextEditingController? shoesSerialNumberTextController;
+  String? Function(BuildContext, String?)?
+      shoesSerialNumberTextControllerValidator;
+  // State field(s) for socksStandard widget.
+  String? socksStandardValue;
+  FormFieldController<String>? socksStandardValueController;
   // Stores action output result for [Bottom Sheet - signatureComponent] action in Container widget.
   String? returnedSignatureCopy;
   // State field(s) for scrutineerName widget.
@@ -104,8 +116,8 @@ class DriverScrutinycheckModel
       scrutineerNameTextControllerValidator;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode;
-  TextEditingController? textController6;
-  String? Function(BuildContext, String?)? textController6Validator;
+  TextEditingController? textController7;
+  String? Function(BuildContext, String?)? textController7Validator;
   // State field(s) for RemarksTextField widget.
   FocusNode? remarksTextFieldFocusNode;
   TextEditingController? remarksTextFieldTextController;
@@ -118,7 +130,7 @@ class DriverScrutinycheckModel
   // Stores action output result for [Validate Form] action in Button widget.
   bool? formValidate;
   // Stores action output result for [Backend Call - Update Row(s)] action in Button widget.
-  List<DriverScrutinyRow>? aOVDriverScrUpdate;
+  List<DriverScrutinyRow>? aOVDriverScrSubmit;
   // Stores action output result for [Backend Call - Update Row(s)] action in Button widget.
   List<DriverScrutinyRow>? aOVScruitneerApproval;
   // Stores action output result for [Backend Call - Update Row(s)] action in Button widget.
@@ -134,31 +146,34 @@ class DriverScrutinycheckModel
   void initState(BuildContext context) {
     helmetSerialNumberTextControllerValidator =
         _helmetSerialNumberTextControllerValidator;
-    overallsSerialNumberTextControllerValidator =
-        _overallsSerialNumberTextControllerValidator;
-    bodyProtSerialNumberTextControllerValidator =
-        _bodyProtSerialNumberTextControllerValidator;
+    fhrSerialNumberTextControllerValidator =
+        _fhrSerialNumberTextControllerValidator;
+    overallProtSerialNumberTextControllerValidator =
+        _overallProtSerialNumberTextControllerValidator;
   }
 
   @override
   void dispose() {
-    competitionNumberFocusNode?.dispose();
-    competitionNumberTextController?.dispose();
-
     helmetSerialNumberFocusNode?.dispose();
     helmetSerialNumberTextController?.dispose();
 
-    overallsSerialNumberFocusNode?.dispose();
-    overallsSerialNumberTextController?.dispose();
+    fhrSerialNumberFocusNode?.dispose();
+    fhrSerialNumberTextController?.dispose();
 
-    bodyProtSerialNumberFocusNode?.dispose();
-    bodyProtSerialNumberTextController?.dispose();
+    overallProtSerialNumberFocusNode?.dispose();
+    overallProtSerialNumberTextController?.dispose();
+
+    glovesSerialNumberFocusNode?.dispose();
+    glovesSerialNumberTextController?.dispose();
+
+    shoesSerialNumberFocusNode?.dispose();
+    shoesSerialNumberTextController?.dispose();
 
     scrutineerNameFocusNode?.dispose();
     scrutineerNameTextController?.dispose();
 
     textFieldFocusNode?.dispose();
-    textController6?.dispose();
+    textController7?.dispose();
 
     remarksTextFieldFocusNode?.dispose();
     remarksTextFieldTextController?.dispose();

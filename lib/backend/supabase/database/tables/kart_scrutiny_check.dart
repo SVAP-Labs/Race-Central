@@ -148,4 +148,23 @@ class KartScrutinyCheckRow extends SupabaseDataRow {
   String? get exhaustOrgSeal => getField<String>('exhaust_org_seal');
   set exhaustOrgSeal(String? value) =>
       setField<String>('exhaust_org_seal', value);
+
+  String? get seatBeltStandard => getField<String>('seatBeltStandard');
+  set seatBeltStandard(String? value) =>
+      setField<String>('seatBeltStandard', value);
+
+  bool? get chk18 => getField<bool>('chk_18');
+  set chk18(bool? value) => setField<bool>('chk_18', value);
+
+  bool? get chk19 => getField<bool>('chk_19');
+  set chk19(bool? value) => setField<bool>('chk_19', value);
+
+  bool? get chk20 => getField<bool>('chk_20');
+  set chk20(bool? value) => setField<bool>('chk_20', value);
+
+  bool? get chk21 => getField<bool>('chk_21');
+  set chk21(bool? value) => setField<bool>('chk_21', value);
+
+  bool? get chk22 => getField<bool>('chk_22');
+  set chk22(bool? value) => setField<bool>('chk_22', value);
 }

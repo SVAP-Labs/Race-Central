@@ -292,16 +292,28 @@ dynamic deserializeParam<T>(
         switch (T) {
           case AppUsersRow:
             return AppUsersRow(data);
+          case ChampionshipCategoriesRow:
+            return ChampionshipCategoriesRow(data);
+          case ChampionshipTeamsRow:
+            return ChampionshipTeamsRow(data);
           case DriverScrutinyRow:
             return DriverScrutinyRow(data);
           case EngineSealsRow:
             return EngineSealsRow(data);
           case EntryApplicationsRow:
             return EntryApplicationsRow(data);
+          case EventBrandingRow:
+            return EventBrandingRow(data);
           case EventCategoriesRow:
             return EventCategoriesRow(data);
+          case EventEntriesRow:
+            return EventEntriesRow(data);
+          case EventLogosRow:
+            return EventLogosRow(data);
           case EventNoticeboardRow:
             return EventNoticeboardRow(data);
+          case EventOfficialSignaturesRow:
+            return EventOfficialSignaturesRow(data);
           case EventRacesRow:
             return EventRacesRow(data);
           case EventRegistrationsRow:
@@ -330,6 +342,8 @@ dynamic deserializeParam<T>(
             return RaceControlRow(data);
           case RaceIncidentsRow:
             return RaceIncidentsRow(data);
+          case RaceLogsRow:
+            return RaceLogsRow(data);
           case RaceResultsRow:
             return RaceResultsRow(data);
           case RaceScheduleRow:
@@ -340,10 +354,14 @@ dynamic deserializeParam<T>(
             return RegulationDocsRow(data);
           case RegulationPagesRow:
             return RegulationPagesRow(data);
+          case ResultPublicationsRow:
+            return ResultPublicationsRow(data);
           case SealingRow:
             return SealingRow(data);
           case StewardsCasesRow:
             return StewardsCasesRow(data);
+          case TeamsRow:
+            return TeamsRow(data);
           case TyreLotTyresRow:
             return TyreLotTyresRow(data);
           case TyreLotsRow:

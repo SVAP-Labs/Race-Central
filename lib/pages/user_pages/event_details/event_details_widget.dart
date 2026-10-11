@@ -104,7 +104,7 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                     ),
                     child: Container(
                       width: MediaQuery.sizeOf(context).width * 1.0,
-                      height: MediaQuery.sizeOf(context).height * 0.34,
+                      height: MediaQuery.sizeOf(context).height * 0.37,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                         borderRadius: BorderRadius.circular(16.0),
@@ -118,32 +118,42 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 10.0, 0.0, 0.0),
-                              child: Text(
+                              child: SelectionArea(
+                                  child: Text(
                                 valueOrDefault<String>(
                                   containerEventsRow?.eventName,
-                                  '-',
+                                  'Event Name',
                                 ),
                                 textAlign: TextAlign.center,
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
-                                      font: GoogleFonts.inter(
-                                        fontWeight: FontWeight.w600,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                      color: colorFromCssString(
-                                        widget.eventpColour!,
-                                        defaultColor: Colors.black,
-                                      ),
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w600,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                              ),
+                                  font: GoogleFonts.inter(
+                                    fontWeight: FontWeight.w600,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                                  color: colorFromCssString(
+                                    widget.eventpColour!,
+                                    defaultColor:
+                                        FlutterFlowTheme.of(context).primary,
+                                  ),
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w600,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .fontStyle,
+                                  shadows: [
+                                    Shadow(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      offset: Offset(2.0, 2.0),
+                                      blurRadius: 3.0,
+                                    )
+                                  ],
+                                ),
+                              )),
                             ),
                             Divider(
                               thickness: 2.0,
@@ -160,7 +170,7 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                   ),
                                   width: MediaQuery.sizeOf(context).width * 1.0,
                                   height: 180.0,
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.fill,
                                 ),
                               ),
                             ),

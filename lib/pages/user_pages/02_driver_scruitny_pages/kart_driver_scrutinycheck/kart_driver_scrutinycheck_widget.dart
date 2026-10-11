@@ -18,8 +18,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
-import 'driver_scrutinycheck_model.dart';
-export 'driver_scrutinycheck_model.dart';
+import 'kart_driver_scrutinycheck_model.dart';
+export 'kart_driver_scrutinycheck_model.dart';
 
 /// create a page called driver scrutiny checks with the following data
 /// entries - class - dropdown, competitor name - textfield, competition
@@ -29,8 +29,8 @@ export 'driver_scrutinycheck_model.dart';
 /// down, gloves serial number - text field, shoes standard - dropdown, shoes
 /// serial number - text field, body protection standard - drop down, body
 /// protection serial number - text field
-class DriverScrutinycheckWidget extends StatefulWidget {
-  const DriverScrutinycheckWidget({
+class KartDriverScrutinycheckWidget extends StatefulWidget {
+  const KartDriverScrutinycheckWidget({
     super.key,
     required this.driverScrutinyID,
     required this.eventRegID,
@@ -41,23 +41,24 @@ class DriverScrutinycheckWidget extends StatefulWidget {
   final String? eventRegID;
   final String? pCategory;
 
-  static String routeName = 'driverScrutinycheck';
+  static String routeName = 'kart_driverScrutinycheck';
   static String routePath = '/driver-scrutiny-check';
 
   @override
-  State<DriverScrutinycheckWidget> createState() =>
-      _DriverScrutinycheckWidgetState();
+  State<KartDriverScrutinycheckWidget> createState() =>
+      _KartDriverScrutinycheckWidgetState();
 }
 
-class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
-  late DriverScrutinycheckModel _model;
+class _KartDriverScrutinycheckWidgetState
+    extends State<KartDriverScrutinycheckWidget> {
+  late KartDriverScrutinycheckModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => DriverScrutinycheckModel());
+    _model = createModel(context, () => KartDriverScrutinycheckModel());
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -130,12 +131,12 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
             ),
           );
         }
-        List<DriverScrutinyRow> driverScrutinycheckDriverScrutinyRowList =
+        List<DriverScrutinyRow> kartDriverScrutinycheckDriverScrutinyRowList =
             snapshot.data!;
 
-        final driverScrutinycheckDriverScrutinyRow =
-            driverScrutinycheckDriverScrutinyRowList.isNotEmpty
-                ? driverScrutinycheckDriverScrutinyRowList.first
+        final kartDriverScrutinycheckDriverScrutinyRow =
+            kartDriverScrutinycheckDriverScrutinyRowList.isNotEmpty
+                ? kartDriverScrutinycheckDriverScrutinyRowList.first
                 : null;
 
         return GestureDetector(
@@ -197,7 +198,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                         future: EventRegistrationsTable().querySingleRow(
                           queryFn: (q) => q.eqOrNull(
                             'id',
-                            driverScrutinycheckDriverScrutinyRow
+                            kartDriverScrutinycheckDriverScrutinyRow
                                 ?.registrationId,
                           ),
                         ),
@@ -789,7 +790,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                         future: EventRegistrationsTable().querySingleRow(
                           queryFn: (q) => q.eqOrNull(
                             'id',
-                            driverScrutinycheckDriverScrutinyRow
+                            kartDriverScrutinycheckDriverScrutinyRow
                                 ?.registrationId,
                           ),
                         ),
@@ -876,7 +877,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                           child: Checkbox(
                                             value: _model
                                                     .helmetCheckboxValue ??=
-                                                driverScrutinycheckDriverScrutinyRow!
+                                                kartDriverScrutinycheckDriverScrutinyRow!
                                                     .isHelmetChecked!,
                                             onChanged: (newValue) async {
                                               safeSetState(() =>
@@ -956,7 +957,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                                   .helmetStandardU15ValueController ??=
                                               FormFieldController<String>(
                                             _model.helmetStandardU15Value ??=
-                                                driverScrutinycheckDriverScrutinyRow
+                                                kartDriverScrutinycheckDriverScrutinyRow
                                                     ?.helmetStandard,
                                           ),
                                           options: [
@@ -1011,7 +1012,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                                   .helmetStandardValueController ??=
                                               FormFieldController<String>(
                                             _model.helmetStandardValue ??=
-                                                driverScrutinycheckDriverScrutinyRow
+                                                kartDriverScrutinycheckDriverScrutinyRow
                                                     ?.helmetStandard,
                                           ),
                                           options: [
@@ -1122,7 +1123,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                               controller:
                                   _model.helmetSerialNumberTextController ??=
                                       TextEditingController(
-                                text: driverScrutinycheckDriverScrutinyRow
+                                text: kartDriverScrutinycheckDriverScrutinyRow
                                     ?.helmetSerialNumber,
                               ),
                               focusNode: _model.helmetSerialNumberFocusNode,
@@ -1282,7 +1283,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                       ),
                                       child: Checkbox(
                                         value: _model.overallsCheckboxValue ??=
-                                            driverScrutinycheckDriverScrutinyRow!
+                                            kartDriverScrutinycheckDriverScrutinyRow!
                                                 .isOverallsChecked!,
                                         onChanged: (newValue) async {
                                           safeSetState(() =>
@@ -1324,7 +1325,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                 _model.overallsStandardValueController ??=
                                     FormFieldController<String>(
                               _model.overallsStandardValue ??=
-                                  driverScrutinycheckDriverScrutinyRow
+                                  kartDriverScrutinycheckDriverScrutinyRow
                                       ?.overallsStandard,
                             ),
                             options: [
@@ -1416,7 +1417,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                               controller:
                                   _model.overallsSerialNumberTextController ??=
                                       TextEditingController(
-                                text: driverScrutinycheckDriverScrutinyRow
+                                text: kartDriverScrutinycheckDriverScrutinyRow
                                     ?.overallsSerialNumber,
                               ),
                               focusNode: _model.overallsSerialNumberFocusNode,
@@ -1576,7 +1577,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                       ),
                                       child: Checkbox(
                                         value: _model.glovesCheckboxValue ??=
-                                            driverScrutinycheckDriverScrutinyRow!
+                                            kartDriverScrutinycheckDriverScrutinyRow!
                                                 .isGlovesChecked!,
                                         onChanged: (newValue) async {
                                           safeSetState(() => _model
@@ -1607,7 +1608,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                             controller: _model.glovesStandardValueController ??=
                                 FormFieldController<String>(
                               _model.glovesStandardValue ??=
-                                  driverScrutinycheckDriverScrutinyRow
+                                  kartDriverScrutinycheckDriverScrutinyRow
                                       ?.glovesStandard,
                             ),
                             options: ['FIA 8877-2022'],
@@ -1706,7 +1707,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                       ),
                                       child: Checkbox(
                                         value: _model.shoesCheckboxValue ??=
-                                            driverScrutinycheckDriverScrutinyRow!
+                                            kartDriverScrutinycheckDriverScrutinyRow!
                                                 .isShoesChecked!,
                                         onChanged: (newValue) async {
                                           safeSetState(() => _model
@@ -1737,7 +1738,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                             controller: _model.shoesStandardValueController ??=
                                 FormFieldController<String>(
                               _model.shoesStandardValue ??=
-                                  driverScrutinycheckDriverScrutinyRow
+                                  kartDriverScrutinycheckDriverScrutinyRow
                                       ?.shoesStandard,
                             ),
                             options: ['FIA 8877-2022'],
@@ -1837,7 +1838,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                       child: Checkbox(
                                         value: _model
                                                 .bodyProtectCheckboxValue ??=
-                                            driverScrutinycheckDriverScrutinyRow!
+                                            kartDriverScrutinycheckDriverScrutinyRow!
                                                 .isBodyProtChecked!,
                                         onChanged: (newValue) async {
                                           safeSetState(() =>
@@ -1879,7 +1880,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                 _model.bodyProtStandardValueController ??=
                                     FormFieldController<String>(
                               _model.bodyProtStandardValue ??=
-                                  driverScrutinycheckDriverScrutinyRow
+                                  kartDriverScrutinycheckDriverScrutinyRow
                                       ?.bodyProtectionStandard,
                             ),
                             options: ['FIA 8870-2018'],
@@ -1965,7 +1966,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                               controller:
                                   _model.bodyProtSerialNumberTextController ??=
                                       TextEditingController(
-                                text: driverScrutinycheckDriverScrutinyRow
+                                text: kartDriverScrutinycheckDriverScrutinyRow
                                     ?.bodyProtectionSerialNumber,
                               ),
                               focusNode: _model.bodyProtSerialNumberFocusNode,
@@ -2178,10 +2179,10 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                                 fit: BoxFit.cover,
                                               ),
                                             );
-                                          } else if (driverScrutinycheckDriverScrutinyRow
+                                          } else if (kartDriverScrutinycheckDriverScrutinyRow
                                                       ?.driverSignature !=
                                                   null &&
-                                              driverScrutinycheckDriverScrutinyRow
+                                              kartDriverScrutinycheckDriverScrutinyRow
                                                       ?.driverSignature !=
                                                   '') {
                                             return ClipRRect(
@@ -2189,7 +2190,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                                   BorderRadius.circular(8.0),
                                               child: Image.network(
                                                 getCORSProxyUrl(
-                                                  driverScrutinycheckDriverScrutinyRow!
+                                                  kartDriverScrutinycheckDriverScrutinyRow!
                                                       .driverSignature!,
                                                 ),
                                                 width:
@@ -2347,13 +2348,13 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                                 controller: _model
                                                         .scrutineerNameTextController ??=
                                                     TextEditingController(
-                                                  text: driverScrutinycheckDriverScrutinyRow
+                                                  text: kartDriverScrutinycheckDriverScrutinyRow
                                                                   ?.scrutinisedBy !=
                                                               null &&
-                                                          driverScrutinycheckDriverScrutinyRow
+                                                          kartDriverScrutinycheckDriverScrutinyRow
                                                                   ?.scrutinisedBy !=
                                                               ''
-                                                      ? driverScrutinycheckDriverScrutinyRow
+                                                      ? kartDriverScrutinycheckDriverScrutinyRow
                                                           ?.scrutinisedBy
                                                       : currentUserDisplayName,
                                                 ),
@@ -2502,12 +2503,12 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                                 controller:
                                                     _model.textController6 ??=
                                                         TextEditingController(
-                                                  text: driverScrutinycheckDriverScrutinyRow
+                                                  text: kartDriverScrutinycheckDriverScrutinyRow
                                                               ?.scrutinisedAt !=
                                                           null
                                                       ? dateTimeFormat(
                                                           "y-MMM-d h:MM a",
-                                                          driverScrutinycheckDriverScrutinyRow
+                                                          kartDriverScrutinycheckDriverScrutinyRow
                                                               ?.scrutinisedAt)
                                                       : dateTimeFormat(
                                                           "y-MMM-d h:MM a",
@@ -2661,7 +2662,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                                         .remarksTextFieldTextController ??=
                                                     TextEditingController(
                                                   text:
-                                                      driverScrutinycheckDriverScrutinyRow
+                                                      kartDriverScrutinycheckDriverScrutinyRow
                                                           ?.remarks,
                                                 ),
                                                 focusNode: _model
@@ -2805,7 +2806,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                                               ) ||
                                                               valueOrDefault<
                                                                   bool>(
-                                                                driverScrutinycheckDriverScrutinyRow
+                                                                kartDriverScrutinycheckDriverScrutinyRow
                                                                     ?.isHelmetChecked,
                                                                 false,
                                                               )) &&
@@ -2816,7 +2817,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                                               ) ||
                                                               valueOrDefault<
                                                                   bool>(
-                                                                driverScrutinycheckDriverScrutinyRow
+                                                                kartDriverScrutinycheckDriverScrutinyRow
                                                                     ?.isOverallsChecked,
                                                                 false,
                                                               )) &&
@@ -2827,7 +2828,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                                               ) ||
                                                               valueOrDefault<
                                                                   bool>(
-                                                                driverScrutinycheckDriverScrutinyRow
+                                                                kartDriverScrutinycheckDriverScrutinyRow
                                                                     ?.isGlovesChecked,
                                                                 false,
                                                               )) &&
@@ -2838,7 +2839,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                                               ) ||
                                                               valueOrDefault<
                                                                   bool>(
-                                                                driverScrutinycheckDriverScrutinyRow
+                                                                kartDriverScrutinycheckDriverScrutinyRow
                                                                     ?.isShoesChecked,
                                                                 false,
                                                               )) &&
@@ -2849,7 +2850,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                                               ) ||
                                                               valueOrDefault<
                                                                   bool>(
-                                                                driverScrutinycheckDriverScrutinyRow
+                                                                kartDriverScrutinycheckDriverScrutinyRow
                                                                     ?.isBodyProtChecked,
                                                                 false,
                                                               )) &&
@@ -2865,7 +2866,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                                             .adaptive(
                                                           value: _model
                                                                   .workSwitchListTileValue ??=
-                                                              driverScrutinycheckDriverScrutinyRow!
+                                                              kartDriverScrutinycheckDriverScrutinyRow!
                                                                   .passed!,
                                                           onChanged:
                                                               (newValue) async {
@@ -2935,7 +2936,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                                           tileColor: FlutterFlowTheme
                                                                   .of(context)
                                                               .secondaryBackground,
-                                                          activeColor:
+                                                          activeThumbColor:
                                                               FlutterFlowTheme.of(
                                                                       context)
                                                                   .alternate,
@@ -3054,7 +3055,8 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                             ),
                           ),
                         ),
-                      if (driverScrutinycheckDriverScrutinyRow?.passed == true)
+                      if (kartDriverScrutinycheckDriverScrutinyRow?.passed ==
+                          true)
                         Material(
                           color: Colors.transparent,
                           elevation: 10.0,
@@ -3104,7 +3106,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    if (driverScrutinycheckDriverScrutinyRow
+                                    if (kartDriverScrutinycheckDriverScrutinyRow
                                             ?.isSubmited ==
                                         false)
                                       FFButtonWidget(
@@ -3209,7 +3211,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                               BorderRadius.circular(18.0),
                                         ),
                                       ),
-                                    if (driverScrutinycheckDriverScrutinyRow
+                                    if (kartDriverScrutinycheckDriverScrutinyRow
                                             ?.isSubmited ==
                                         false)
                                       FFButtonWidget(
@@ -3413,7 +3415,7 @@ class _DriverScrutinycheckWidgetState extends State<DriverScrutinycheckWidget> {
                                                     null &&
                                                 _model.psSignature != ''
                                             ? _model.psSignature
-                                            : driverScrutinycheckDriverScrutinyRow
+                                            : kartDriverScrutinycheckDriverScrutinyRow
                                                 ?.driverSignature,
                                         'scrutinised_by':
                                             currentUserDisplayName,

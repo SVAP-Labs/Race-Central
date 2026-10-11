@@ -28,8 +28,8 @@ async function _createEmptyKartingCheckCall(context, ffVariables) {
   var params = {};
   var ffApiRequestBody = `
 {
-  "p_sealing_id": "${escapeStringForJson(pSealingId)}",
-  "p_category": "${escapeStringForJson(pCategoryId)}"
+  "p_sealing_id": ${pSealingId == null ? "null" : `"${escapeStringForJson(pSealingId)}"`},
+  "p_category": ${pCategoryId == null ? "null" : `"${escapeStringForJson(pCategoryId)}"`}
 }`;
 
   return makeApiRequest({
@@ -63,9 +63,9 @@ async function _createEmptyAndCopyKartingChecksCall(context, ffVariables) {
   var params = {};
   var ffApiRequestBody = `
 {
-  "p_new_sealing_id": "${escapeStringForJson(newSealingId)}",
-  "p_source_sealing_id": "${escapeStringForJson(sourceSealingId)}",
-  "p_category": "${escapeStringForJson(category)}"
+  "p_new_sealing_id": ${newSealingId == null ? "null" : `"${escapeStringForJson(newSealingId)}"`},
+  "p_source_sealing_id": ${sourceSealingId == null ? "null" : `"${escapeStringForJson(sourceSealingId)}"`},
+  "p_category": ${category == null ? "null" : `"${escapeStringForJson(category)}"`}
 }`;
 
   return makeApiRequest({
@@ -101,11 +101,11 @@ async function _createUniqueNumberCall(context, ffVariables) {
   var params = {};
   var ffApiRequestBody = `
 {
-  "p_engine_number": "${escapeStringForJson(engineNumber)}",
-  "p_event_name": "${escapeStringForJson(eventNameCode)}",
-  "p_round": "${escapeStringForJson(roundNumber)}",
-  "p_year": "${escapeStringForJson(year)}",
-  "p_seal_type": "${escapeStringForJson(sealType)}"
+  "p_engine_number": ${engineNumber == null ? "null" : `"${escapeStringForJson(engineNumber)}"`},
+  "p_event_name": ${eventNameCode == null ? "null" : `"${escapeStringForJson(eventNameCode)}"`},
+  "p_round": ${roundNumber == null ? "null" : `"${escapeStringForJson(roundNumber)}"`},
+  "p_year": ${year == null ? "null" : `"${escapeStringForJson(year)}"`},
+  "p_seal_type": ${sealType == null ? "null" : `"${escapeStringForJson(sealType)}"`}
 }`;
 
   return makeApiRequest({
@@ -140,10 +140,10 @@ async function _noOfSealPerTeamCall(context, ffVariables) {
   var params = {};
   var ffApiRequestBody = `
 {
-  "p_round": "${escapeStringForJson(round)}",
-  "p_year": "${escapeStringForJson(year)}",
-  "p_eventname": "${escapeStringForJson(eventName)}",
-  "p_inspection_completed": "${inspectionCompleted}"
+  "p_round": ${round == null ? "null" : `"${escapeStringForJson(round)}"`},
+  "p_year": ${year == null ? "null" : `"${escapeStringForJson(year)}"`},
+  "p_eventname": ${eventName == null ? "null" : `"${escapeStringForJson(eventName)}"`},
+  "p_inspection_completed": ${inspectionCompleted == null ? "null" : `"${inspectionCompleted}"`}
 }`;
 
   return makeApiRequest({
@@ -177,9 +177,9 @@ async function _isUserAlreadyRegisteredCall(context, ffVariables) {
   var params = {};
   var ffApiRequestBody = `
 {
-  "p_event_id": "${escapeStringForJson(eventId)}",
-  "p_driver_id": "${escapeStringForJson(driverId)}",
-  "p_category": "${escapeStringForJson(category)}"
+  "p_event_id": ${eventId == null ? "null" : `"${escapeStringForJson(eventId)}"`},
+  "p_driver_id": ${driverId == null ? "null" : `"${escapeStringForJson(driverId)}"`},
+  "p_category": ${category == null ? "null" : `"${escapeStringForJson(category)}"`}
 }`;
 
   return makeApiRequest({
@@ -213,9 +213,9 @@ async function _getCompEntryNumberCall(context, ffVariables) {
   var params = {};
   var ffApiRequestBody = `
 {
-  "p_event_id": "${escapeStringForJson(vEventId)}",
-  "p_current_driver_id": "${escapeStringForJson(vDriverId)}",
-  "p_category_name": "${escapeStringForJson(vCategory)}"
+  "p_event_id": ${vEventId == null ? "null" : `"${escapeStringForJson(vEventId)}"`},
+  "p_current_driver_id": ${vDriverId == null ? "null" : `"${escapeStringForJson(vDriverId)}"`},
+  "p_category_name": ${vCategory == null ? "null" : `"${escapeStringForJson(vCategory)}"`}
 }`;
 
   return makeApiRequest({
@@ -248,8 +248,8 @@ async function _getcategorynumbersCall(context, ffVariables) {
   var params = {};
   var ffApiRequestBody = `
 {
-  "p_event_id": "${escapeStringForJson(vEventID)}",
-  "p_category_name": "${escapeStringForJson(vCategory)}"
+  "p_event_id": ${vEventID == null ? "null" : `"${escapeStringForJson(vEventID)}"`},
+  "p_category_name": ${vCategory == null ? "null" : `"${escapeStringForJson(vCategory)}"`}
 }`;
 
   return makeApiRequest({
@@ -283,9 +283,9 @@ async function _getUniqueEntryNumberCall(context, ffVariables) {
   var params = {};
   var ffApiRequestBody = `
 {
-  "p_event_id": "${escapeStringForJson(vEventId)}",
-  "p_driver_id": "${escapeStringForJson(vDriverId)}",
-  "p_category_name": "${escapeStringForJson(vCategory)}"
+  "p_event_id": ${vEventId == null ? "null" : `"${escapeStringForJson(vEventId)}"`},
+  "p_driver_id": ${vDriverId == null ? "null" : `"${escapeStringForJson(vDriverId)}"`},
+  "p_category_name": ${vCategory == null ? "null" : `"${escapeStringForJson(vCategory)}"`}
 }`;
 
   return makeApiRequest({
@@ -394,11 +394,7 @@ function escapeStringForJson(val) {
   if (typeof val !== "string") {
     return val;
   }
-  return val
-    .replace(/[\\]/g, "\\\\")
-    .replace(/["]/g, '\\"')
-    .replace(/[\n]/g, "\\n")
-    .replace(/[\t]/g, "\\t");
+  return JSON.stringify(val).slice(1, -1);
 }
 
 module.exports = { makeApiCall };

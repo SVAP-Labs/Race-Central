@@ -1,4 +1,5 @@
 import '/backend/supabase/supabase.dart';
+import '/components/to_display_nothing_widget.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -495,6 +496,15 @@ class _OfEntryListPageWidgetState extends State<OfEntryListPageWidget> {
                                         final entryList =
                                             ofEntryListPageEventRegistrationsRowList
                                                 .toList();
+                                        if (entryList.isEmpty) {
+                                          return ToDisplayNothingWidget(
+                                            icon: Icon(
+                                              Icons.people,
+                                              size: 25.0,
+                                            ),
+                                            message: 'List Yet to be Updated.',
+                                          );
+                                        }
 
                                         return ListView.builder(
                                           padding: EdgeInsets.zero,

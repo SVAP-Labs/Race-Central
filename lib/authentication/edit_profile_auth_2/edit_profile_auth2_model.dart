@@ -40,10 +40,41 @@ class EditProfileAuth2Model extends FlutterFlowModel<EditProfileAuth2Widget> {
   FocusNode? lastNameFocusNode;
   TextEditingController? lastNameTextController;
   String? Function(BuildContext, String?)? lastNameTextControllerValidator;
+  String? _lastNameTextControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Last Name is required';
+    }
+
+    if (val.length < 3) {
+      return 'Requires at least 3 characters.';
+    }
+
+    return null;
+  }
+
   DateTime? datePicked;
   // State field(s) for bloodDropDown widget.
   String? bloodDropDownValue;
   FormFieldController<String>? bloodDropDownValueController;
+  // State field(s) for genderDropDown widget.
+  String? genderDropDownValue;
+  FormFieldController<String>? genderDropDownValueController;
+  // State field(s) for contact widget.
+  FocusNode? contactFocusNode;
+  TextEditingController? contactTextController;
+  String? Function(BuildContext, String?)? contactTextControllerValidator;
+  String? _contactTextControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Emergency Contact is required';
+    }
+
+    if (val.length < 10) {
+      return 'Requires at least 10 characters.';
+    }
+
+    return null;
+  }
+
   // State field(s) for parentName widget.
   FocusNode? parentNameFocusNode;
   TextEditingController? parentNameTextController;
@@ -65,22 +96,6 @@ class EditProfileAuth2Model extends FlutterFlowModel<EditProfileAuth2Widget> {
   FocusNode? parentemailFocusNode;
   TextEditingController? parentemailTextController;
   String? Function(BuildContext, String?)? parentemailTextControllerValidator;
-  // State field(s) for contact widget.
-  FocusNode? contactFocusNode;
-  TextEditingController? contactTextController;
-  String? Function(BuildContext, String?)? contactTextControllerValidator;
-  String? _contactTextControllerValidator(BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Emergency Contact is required';
-    }
-
-    if (val.length < 10) {
-      return 'Requires at least 10 characters.';
-    }
-
-    return null;
-  }
-
   // Stores action output result for [Backend Call - Update Row(s)] action in Button-Login widget.
   List<AppUsersRow>? supabaseUpdateRow;
   // Stores action output result for [Backend Call - Query Rows] action in Button-Login widget.
@@ -89,8 +104,9 @@ class EditProfileAuth2Model extends FlutterFlowModel<EditProfileAuth2Widget> {
   @override
   void initState(BuildContext context) {
     firstNameTextControllerValidator = _firstNameTextControllerValidator;
-    parentNameTextControllerValidator = _parentNameTextControllerValidator;
+    lastNameTextControllerValidator = _lastNameTextControllerValidator;
     contactTextControllerValidator = _contactTextControllerValidator;
+    parentNameTextControllerValidator = _parentNameTextControllerValidator;
   }
 
   @override
@@ -101,13 +117,13 @@ class EditProfileAuth2Model extends FlutterFlowModel<EditProfileAuth2Widget> {
     lastNameFocusNode?.dispose();
     lastNameTextController?.dispose();
 
+    contactFocusNode?.dispose();
+    contactTextController?.dispose();
+
     parentNameFocusNode?.dispose();
     parentNameTextController?.dispose();
 
     parentemailFocusNode?.dispose();
     parentemailTextController?.dispose();
-
-    contactFocusNode?.dispose();
-    contactTextController?.dispose();
   }
 }

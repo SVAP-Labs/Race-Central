@@ -98,4 +98,20 @@ class AppUsersRow extends SupabaseDataRow {
   String? get fmsciLicenseNo => getField<String>('fmsci_license_no');
   set fmsciLicenseNo(String? value) =>
       setField<String>('fmsci_license_no', value);
+
+  String? get idproofImageurl => getField<String>('idproof_imageurl');
+  set idproofImageurl(String? value) =>
+      setField<String>('idproof_imageurl', value);
+
+  dynamic get userProfileDetails => getField<dynamic>('user_ProfileDetails');
+  set userProfileDetails(dynamic value) =>
+      setField<dynamic>('user_ProfileDetails', value);
+
+  String? get gender => getField<String>('gender');
+  set gender(String? value) => setField<String>('gender', value);
+
+  dynamic get userEmergencyDetails =>
+      getField<dynamic>('user_EmergencyDetails');
+  set userEmergencyDetails(dynamic value) =>
+      setField<dynamic>('user_EmergencyDetails', value);
 }

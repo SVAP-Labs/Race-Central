@@ -1,4 +1,5 @@
 import '/backend/supabase/supabase.dart';
+import '/components/to_display_nothing_widget.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -596,6 +597,21 @@ class _RaceResultsWidgetState extends State<RaceResultsWidget> {
                                   builder: (context) {
                                     final listofDriver =
                                         _model.psResultsFetchec.toList();
+                                    if (listofDriver.isEmpty) {
+                                      return Container(
+                                        width:
+                                            MediaQuery.sizeOf(context).width *
+                                                1.0,
+                                        child: ToDisplayNothingWidget(
+                                          icon: Icon(
+                                            Icons.menu,
+                                            size: 25.0,
+                                          ),
+                                          message:
+                                              'Choose Category and Race to see Results',
+                                        ),
+                                      );
+                                    }
 
                                     return ListView.separated(
                                       padding: EdgeInsets.zero,

@@ -103,4 +103,16 @@ class DriverScrutinyRow extends SupabaseDataRow {
   bool? get isBodyProtChecked => getField<bool>('isBodyProtChecked');
   set isBodyProtChecked(bool? value) =>
       setField<bool>('isBodyProtChecked', value);
+
+  String? get socksStandard => getField<String>('socks_standard');
+  set socksStandard(String? value) => setField<String>('socks_standard', value);
+
+  String? get undergarmentsStandard =>
+      getField<String>('undergarments_standard');
+  set undergarmentsStandard(String? value) =>
+      setField<String>('undergarments_standard', value);
+
+  String? get balaclavaStandard => getField<String>('balaclava_standard');
+  set balaclavaStandard(String? value) =>
+      setField<String>('balaclava_standard', value);
 }

@@ -1,12 +1,16 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
+import '/flutter_flow/ff_builtin_enums.dart';
+import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
 import '/pages/scruitneer_pages/sealing_pages/components/signature_component/signature_component_widget.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/index.dart';
+import 'package:styled_divider/styled_divider.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,16 +18,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
-import 'kart_scrutinycheck_model.dart';
-export 'kart_scrutinycheck_model.dart';
+import 'touring_vehicle_scrutiny_model.dart';
+export 'touring_vehicle_scrutiny_model.dart';
 
-/// Create a page called Kart Scrutiny Check with two containers with the
-/// first container containing in a two column table format the following data
-/// entry fields - chassis make, chassis number, main engine number, main
-/// engine seal number, spare engine number, spare engine seal number, sharing
-/// of spare engine with , ballast weight.
-class KartScrutinycheckWidget extends StatefulWidget {
-  const KartScrutinycheckWidget({
+/// The page is for open wheel vehicles
+class TouringVehicleScrutinyWidget extends StatefulWidget {
+  const TouringVehicleScrutinyWidget({
     super.key,
     required this.kartScrutinyID,
     required this.eventRegistrationID,
@@ -36,45 +36,46 @@ class KartScrutinycheckWidget extends StatefulWidget {
   final String? driverScrutinyID;
   final String? category;
 
-  static String routeName = 'kartScrutinycheck';
-  static String routePath = '/KartScrutinyCheck';
+  static String routeName = 'touringVehicleScrutiny';
+  static String routePath = '/TouringVehicleScrutinyCheck';
 
   @override
-  State<KartScrutinycheckWidget> createState() =>
-      _KartScrutinycheckWidgetState();
+  State<TouringVehicleScrutinyWidget> createState() =>
+      _TouringVehicleScrutinyWidgetState();
 }
 
-class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
-  late KartScrutinycheckModel _model;
+class _TouringVehicleScrutinyWidgetState
+    extends State<TouringVehicleScrutinyWidget> {
+  late TouringVehicleScrutinyModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => KartScrutinycheckModel());
+    _model = createModel(context, () => TouringVehicleScrutinyModel());
 
-    _model.cCMakeFocusNode ??= FocusNode();
+    _model.makeModelFocusNode ??= FocusNode();
 
     _model.cCNumberFocusNode ??= FocusNode();
+
+    _model.fMSCIHomologationNoFocusNode ??= FocusNode();
+
+    _model.cubicCapacityFocusNode ??= FocusNode();
+
+    _model.minimumweightFocusNode ??= FocusNode();
 
     _model.engineNumberFocusNode ??= FocusNode();
 
     _model.engineSealNoFocusNode ??= FocusNode();
 
-    _model.spareEngineNoFocusNode ??= FocusNode();
+    _model.turboSealNumberFocusNode ??= FocusNode();
 
-    _model.spareEngSealNoFocusNode ??= FocusNode();
-
-    _model.spareKartNoFocusNode ??= FocusNode();
+    _model.geraBoxSealNoFocusNode ??= FocusNode();
 
     _model.ballastWeightFocusNode ??= FocusNode();
 
-    _model.exhaustNumberFocusNode ??= FocusNode();
-
-    _model.exhaustRotaxSealNoFocusNode ??= FocusNode();
-
-    _model.exhaustOrgSealNoFocusNode ??= FocusNode();
+    _model.seatbeltSerialNoFocusNode ??= FocusNode();
 
     _model.textFieldFocusNode1 ??= FocusNode();
 
@@ -120,12 +121,12 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
             ),
           );
         }
-        List<KartScrutinyCheckRow> kartScrutinycheckKartScrutinyCheckRowList =
-            snapshot.data!;
+        List<KartScrutinyCheckRow>
+            touringVehicleScrutinyKartScrutinyCheckRowList = snapshot.data!;
 
-        final kartScrutinycheckKartScrutinyCheckRow =
-            kartScrutinycheckKartScrutinyCheckRowList.isNotEmpty
-                ? kartScrutinycheckKartScrutinyCheckRowList.first
+        final touringVehicleScrutinyKartScrutinyCheckRow =
+            touringVehicleScrutinyKartScrutinyCheckRowList.isNotEmpty
+                ? touringVehicleScrutinyKartScrutinyCheckRowList.first
                 : null;
 
         return GestureDetector(
@@ -154,7 +155,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                 ),
               ),
               title: Text(
-                'Kart Scrutiny Check',
+                'PRE - Event Scrutiny Check Sheet',
                 style: FlutterFlowTheme.of(context).headlineMedium.override(
                       font: GoogleFonts.interTight(
                         fontWeight: FontWeight.w600,
@@ -162,7 +163,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                             .headlineMedium
                             .fontStyle,
                       ),
-                      fontSize: 20.0,
+                      fontSize: 18.0,
                       letterSpacing: 0.0,
                       fontWeight: FontWeight.w600,
                       fontStyle:
@@ -203,12 +204,14 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                             );
                           }
                           List<EventRegistrationsRow>
-                              containerEventRegistrationsRowList =
+                              personalDetailsContainerEventRegistrationsRowList =
                               snapshot.data!;
 
-                          final containerEventRegistrationsRow =
-                              containerEventRegistrationsRowList.isNotEmpty
-                                  ? containerEventRegistrationsRowList.first
+                          final personalDetailsContainerEventRegistrationsRow =
+                              personalDetailsContainerEventRegistrationsRowList
+                                      .isNotEmpty
+                                  ? personalDetailsContainerEventRegistrationsRowList
+                                      .first
                                   : null;
 
                           return Material(
@@ -220,12 +223,13 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                             child: Container(
                               width: MediaQuery.sizeOf(context).width * 1.0,
                               decoration: BoxDecoration(
-                                color: kartScrutinycheckKartScrutinyCheckRow
-                                            ?.passed ==
-                                        true
-                                    ? Color(0xFF529C6D)
-                                    : FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
+                                color:
+                                    touringVehicleScrutinyKartScrutinyCheckRow
+                                                ?.passed ==
+                                            true
+                                        ? Color(0xFF529C6D)
+                                        : FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                               child: Padding(
@@ -256,7 +260,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(8.0, 0.0, 8.0, 0.0),
                                               child: Text(
-                                                '#${containerEventRegistrationsRow?.entryNumber?.toString()}',
+                                                'Competition Number #${personalDetailsContainerEventRegistrationsRow?.entryNumber?.toString()}',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .titleMedium
@@ -290,68 +294,6 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                                   .titleMedium
                                                                   .fontStyle,
                                                         ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(0.0, 0.0),
-                                          child: Container(
-                                            height: 32.0,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              borderRadius:
-                                                  BorderRadius.circular(20.0),
-                                            ),
-                                            child: Align(
-                                              alignment: AlignmentDirectional(
-                                                  0.0, 0.0),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        12.0, 0.0, 12.0, 0.0),
-                                                child: Text(
-                                                  valueOrDefault<String>(
-                                                    containerEventRegistrationsRow
-                                                        ?.category,
-                                                    '-',
-                                                  ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelMedium
-                                                      .override(
-                                                        font: GoogleFonts.inter(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .labelMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .labelMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelMedium
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelMedium
-                                                                .fontStyle,
-                                                      ),
-                                                ),
                                               ),
                                             ),
                                           ),
@@ -394,7 +336,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                   .querySingleRow(
                                                 queryFn: (q) => q.eqOrNull(
                                                   'id',
-                                                  containerEventRegistrationsRow
+                                                  personalDetailsContainerEventRegistrationsRow
                                                       ?.driverId,
                                                 ),
                                               ),
@@ -483,6 +425,73 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                 BorderRadius.circular(24.0),
                                           ),
                                           child: Icon(
+                                            Icons.directions_car,
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            size: 24.0,
+                                          ),
+                                        ),
+                                        Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              valueOrDefault<String>(
+                                                personalDetailsContainerEventRegistrationsRow
+                                                    ?.category,
+                                                '-',
+                                              ),
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .titleMedium
+                                                  .override(
+                                                    font:
+                                                        GoogleFonts.interTight(
+                                                      fontWeight:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .titleMedium
+                                                              .fontWeight,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .titleMedium
+                                                              .fontStyle,
+                                                    ),
+                                                    fontSize: 14.0,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .titleMedium
+                                                            .fontWeight,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .titleMedium
+                                                            .fontStyle,
+                                                  ),
+                                            ),
+                                          ].divide(SizedBox(height: 4.0)),
+                                        ),
+                                      ].divide(SizedBox(width: 12.0)),
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 38.0,
+                                          height: 34.0,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            borderRadius:
+                                                BorderRadius.circular(24.0),
+                                          ),
+                                          child: Icon(
                                             Icons.group_rounded,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondaryText,
@@ -496,7 +505,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                           children: [
                                             Text(
                                               valueOrDefault<String>(
-                                                containerEventRegistrationsRow
+                                                personalDetailsContainerEventRegistrationsRow
                                                     ?.teamName,
                                                 '- ',
                                               ),
@@ -517,7 +526,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                               .titleMedium
                                                               .fontStyle,
                                                     ),
-                                                    fontSize: 12.0,
+                                                    fontSize: 14.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight:
                                                         FlutterFlowTheme.of(
@@ -566,7 +575,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Form(
-                                key: _model.formKey2,
+                                key: _model.formKey,
                                 autovalidateMode: AutovalidateMode.disabled,
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
@@ -583,7 +592,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              'Kart Details',
+                                              'Vehicle Details',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .titleMedium
@@ -635,7 +644,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                       .fromSTEB(
                                                           0.0, 0.0, 0.0, 4.0),
                                                   child: Text(
-                                                    'Chassis Make',
+                                                    'Make & Model',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .labelMedium
@@ -672,14 +681,14 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                 ),
                                                 TextFormField(
                                                   controller: _model
-                                                          .cCMakeTextController ??=
+                                                          .makeModelTextController ??=
                                                       TextEditingController(
                                                     text:
-                                                        kartScrutinycheckKartScrutinyCheckRow
+                                                        touringVehicleScrutinyKartScrutinyCheckRow
                                                             ?.chassisMake,
                                                   ),
                                                   focusNode:
-                                                      _model.cCMakeFocusNode,
+                                                      _model.makeModelFocusNode,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
                                                     hintText:
@@ -774,7 +783,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                                 .fontStyle,
                                                       ),
                                                   validator: _model
-                                                      .cCMakeTextControllerValidator
+                                                      .makeModelTextControllerValidator
                                                       .asValidator(context),
                                                 ),
                                               ],
@@ -829,7 +838,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                           .cCNumberTextController ??=
                                                       TextEditingController(
                                                     text:
-                                                        kartScrutinycheckKartScrutinyCheckRow
+                                                        touringVehicleScrutinyKartScrutinyCheckRow
                                                             ?.chassisNumber,
                                                   ),
                                                   focusNode:
@@ -932,14 +941,422 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                 ),
                                               ],
                                             ),
-                                          ],
+                                            Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 0.0, 4.0),
+                                                  child: Text(
+                                                    'FMSCI Homologation No',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .labelMedium
+                                                        .override(
+                                                          font:
+                                                              GoogleFonts.inter(
+                                                            fontWeight:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMedium
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMedium
+                                                                    .fontStyle,
+                                                          ),
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .labelMedium
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .labelMedium
+                                                                  .fontStyle,
+                                                        ),
+                                                  ),
+                                                ),
+                                                TextFormField(
+                                                  controller: _model
+                                                          .fMSCIHomologationNoTextController ??=
+                                                      TextEditingController(
+                                                    text: touringVehicleScrutinyKartScrutinyCheckRow
+                                                        ?.spareEngineSharedWith,
+                                                  ),
+                                                  focusNode: _model
+                                                      .fMSCIHomologationNoFocusNode,
+                                                  obscureText: false,
+                                                  decoration: InputDecoration(
+                                                    hintText:
+                                                        'Driver name / kart no.',
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8.0),
+                                                    ),
+                                                    errorBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            Color(0x00000000),
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8.0),
+                                                    ),
+                                                    focusedErrorBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            Color(0x00000000),
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8.0),
+                                                    ),
+                                                    filled: true,
+                                                    fillColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primaryBackground,
+                                                    contentPadding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                12.0,
+                                                                10.0,
+                                                                12.0,
+                                                                10.0),
+                                                  ),
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        font: GoogleFonts.inter(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontStyle,
+                                                        ),
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontStyle,
+                                                      ),
+                                                  validator: _model
+                                                      .fMSCIHomologationNoTextControllerValidator
+                                                      .asValidator(context),
+                                                ),
+                                              ],
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      0.0, 10.0, 0.0, 0.0),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Expanded(
+                                                        child: TextFormField(
+                                                          controller: _model
+                                                                  .cubicCapacityTextController ??=
+                                                              TextEditingController(
+                                                            text: touringVehicleScrutinyKartScrutinyCheckRow
+                                                                ?.exhaustRotaxNo,
+                                                          ),
+                                                          focusNode: _model
+                                                              .cubicCapacityFocusNode,
+                                                          obscureText: false,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            labelText:
+                                                                'Cubic Capacity',
+                                                            hintText:
+                                                                'Enter Rotax seal no.',
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .alternate,
+                                                                width: 1.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                            ),
+                                                            focusedBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                width: 1.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                            ),
+                                                            errorBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: Color(
+                                                                    0x00000000),
+                                                                width: 1.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                            ),
+                                                            focusedErrorBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: Color(
+                                                                    0x00000000),
+                                                                width: 1.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                            ),
+                                                            filled: true,
+                                                            fillColor: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryBackground,
+                                                            contentPadding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        12.0,
+                                                                        10.0,
+                                                                        12.0,
+                                                                        10.0),
+                                                          ),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                font:
+                                                                    GoogleFonts
+                                                                        .inter(
+                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontWeight,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontStyle,
+                                                                ),
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontWeight,
+                                                                fontStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                              ),
+                                                          validator: _model
+                                                              .cubicCapacityTextControllerValidator
+                                                              .asValidator(
+                                                                  context),
+                                                        ),
+                                                      ),
+                                                      Expanded(
+                                                        child: TextFormField(
+                                                          controller: _model
+                                                                  .minimumweightTextController ??=
+                                                              TextEditingController(
+                                                            text: touringVehicleScrutinyKartScrutinyCheckRow
+                                                                ?.exhaustOrgSeal,
+                                                          ),
+                                                          focusNode: _model
+                                                              .minimumweightFocusNode,
+                                                          obscureText: false,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            labelText:
+                                                                'Vehicle Min Weight',
+                                                            hintText:
+                                                                'Enter Org seal no.',
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .alternate,
+                                                                width: 1.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                            ),
+                                                            focusedBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                width: 1.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                            ),
+                                                            errorBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: Color(
+                                                                    0x00000000),
+                                                                width: 1.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                            ),
+                                                            focusedErrorBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: Color(
+                                                                    0x00000000),
+                                                                width: 1.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                            ),
+                                                            filled: true,
+                                                            fillColor: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryBackground,
+                                                            contentPadding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        12.0,
+                                                                        10.0,
+                                                                        12.0,
+                                                                        10.0),
+                                                          ),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                font:
+                                                                    GoogleFonts
+                                                                        .inter(
+                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontWeight,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontStyle,
+                                                                ),
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontWeight,
+                                                                fontStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                              ),
+                                                          validator: _model
+                                                              .minimumweightTextControllerValidator
+                                                              .asValidator(
+                                                                  context),
+                                                        ),
+                                                      ),
+                                                    ].divide(
+                                                        SizedBox(width: 5.0)),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ].divide(SizedBox(height: 5.0)),
                                         ),
                                       ),
-                                      Divider(
+                                      StyledDivider(
                                         height: 1.0,
-                                        thickness: 1.0,
+                                        thickness: 2.0,
+                                        indent: 50.0,
+                                        endIndent: 50.0,
                                         color: FlutterFlowTheme.of(context)
                                             .alternate,
+                                        lineStyle: DividerLineStyle.dashed,
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
@@ -957,7 +1374,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                       .fromSTEB(
                                                           0.0, 0.0, 0.0, 4.0),
                                                   child: Text(
-                                                    'Main Engine Number',
+                                                    'Engine Number',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .labelMedium
@@ -997,7 +1414,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                           .engineNumberTextController ??=
                                                       TextEditingController(
                                                     text:
-                                                        kartScrutinycheckKartScrutinyCheckRow
+                                                        touringVehicleScrutinyKartScrutinyCheckRow
                                                             ?.mainEngineNumber,
                                                   ),
                                                   focusNode: _model
@@ -1100,9 +1517,6 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                 ),
                                               ],
                                             ),
-                                            Container(
-                                              width: 16.0,
-                                            ),
                                             Column(
                                               mainAxisSize: MainAxisSize.max,
                                               crossAxisAlignment:
@@ -1113,7 +1527,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                       .fromSTEB(
                                                           0.0, 0.0, 0.0, 4.0),
                                                   child: Text(
-                                                    'Main Engine Seal No.',
+                                                    'Engine Seal No.',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .labelMedium
@@ -1152,7 +1566,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                   controller: _model
                                                           .engineSealNoTextController ??=
                                                       TextEditingController(
-                                                    text: kartScrutinycheckKartScrutinyCheckRow
+                                                    text: touringVehicleScrutinyKartScrutinyCheckRow
                                                         ?.mainEngineSealNumber,
                                                   ),
                                                   focusNode: _model
@@ -1255,250 +1669,130 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                 ),
                                               ],
                                             ),
-                                          ],
-                                        ),
-                                      ),
-                                      Divider(
-                                        height: 1.0,
-                                        thickness: 1.0,
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                      ),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Material(
-                                              color: Colors.transparent,
-                                              child: Theme(
-                                                data: ThemeData(
-                                                  checkboxTheme:
-                                                      CheckboxThemeData(
-                                                    visualDensity:
-                                                        VisualDensity.compact,
-                                                    materialTapTargetSize:
-                                                        MaterialTapTargetSize
-                                                            .shrinkWrap,
-                                                  ),
-                                                  unselectedWidgetColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .alternate,
-                                                ),
-                                                child: CheckboxListTile(
-                                                  value: _model
-                                                          .spareEngineValue ??=
-                                                      kartScrutinycheckKartScrutinyCheckRow!
-                                                          .spareEngineShared!,
-                                                  onChanged: (newValue) async {
-                                                    safeSetState(() => _model
-                                                            .spareEngineValue =
-                                                        newValue!);
-                                                  },
-                                                  title: Text(
-                                                    'Are you using a Spare Engine ?',
+                                            Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 0.0, 4.0),
+                                                  child: Text(
+                                                    'Turbo/Restrictor Seal No',
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .titleLarge
-                                                        .override(
-                                                          font: GoogleFonts
-                                                              .interTight(
-                                                            fontWeight:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .titleLarge
-                                                                    .fontWeight,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .titleLarge
-                                                                    .fontStyle,
-                                                          ),
-                                                          fontSize: 18.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontStyle,
-                                                        ),
-                                                  ),
-                                                  tileColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .secondaryBackground,
-                                                  activeColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .primary,
-                                                  checkColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .info,
-                                                  dense: false,
-                                                  controlAffinity:
-                                                      ListTileControlAffinity
-                                                          .trailing,
-                                                  contentPadding:
-                                                      EdgeInsetsDirectional
-                                                          .fromSTEB(1.0, 0.0,
-                                                              12.0, 0.0),
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      if (_model.spareEngineValue ?? true)
-                                        Container(
-                                          decoration: BoxDecoration(),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                0.0, 4.0),
-                                                    child: Text(
-                                                      'Spare Engine Number',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelMedium
-                                                              .override(
-                                                                font:
-                                                                    GoogleFonts
-                                                                        .inter(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelMedium
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryText,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelMedium
-                                                                    .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelMedium
-                                                                    .fontStyle,
-                                                              ),
-                                                    ),
-                                                  ),
-                                                  TextFormField(
-                                                    controller: _model
-                                                            .spareEngineNoTextController ??=
-                                                        TextEditingController(
-                                                      text: kartScrutinycheckKartScrutinyCheckRow
-                                                          ?.spareEngineNumber,
-                                                    ),
-                                                    focusNode: _model
-                                                        .spareEngineNoFocusNode,
-                                                    obscureText: false,
-                                                    decoration: InputDecoration(
-                                                      hintText: 'Enter number',
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .alternate,
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primary,
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                      ),
-                                                      errorBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color:
-                                                              Color(0x00000000),
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                      ),
-                                                      focusedErrorBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color:
-                                                              Color(0x00000000),
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                      ),
-                                                      filled: true,
-                                                      fillColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryBackground,
-                                                      contentPadding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  12.0,
-                                                                  10.0,
-                                                                  12.0,
-                                                                  10.0),
-                                                    ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
+                                                        .labelMedium
                                                         .override(
                                                           font:
                                                               GoogleFonts.inter(
                                                             fontWeight:
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyMedium
+                                                                    .labelMedium
                                                                     .fontWeight,
                                                             fontStyle:
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyMedium
+                                                                    .labelMedium
                                                                     .fontStyle,
                                                           ),
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
                                                           letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .labelMedium
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .labelMedium
+                                                                  .fontStyle,
+                                                        ),
+                                                  ),
+                                                ),
+                                                TextFormField(
+                                                  controller: _model
+                                                          .turboSealNumberTextController ??=
+                                                      TextEditingController(
+                                                    text:
+                                                        touringVehicleScrutinyKartScrutinyCheckRow
+                                                            ?.spareEngineNumber,
+                                                  ),
+                                                  focusNode: _model
+                                                      .turboSealNumberFocusNode,
+                                                  obscureText: false,
+                                                  decoration: InputDecoration(
+                                                    hintText: 'Enter number',
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8.0),
+                                                    ),
+                                                    errorBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            Color(0x00000000),
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8.0),
+                                                    ),
+                                                    focusedErrorBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            Color(0x00000000),
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8.0),
+                                                    ),
+                                                    filled: true,
+                                                    fillColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primaryBackground,
+                                                    contentPadding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                12.0,
+                                                                10.0,
+                                                                12.0,
+                                                                10.0),
+                                                  ),
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        font: GoogleFonts.inter(
                                                           fontWeight:
                                                               FlutterFlowTheme.of(
                                                                       context)
@@ -1510,16 +1804,28 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                                   .bodyMedium
                                                                   .fontStyle,
                                                         ),
-                                                    validator: _model
-                                                        .spareEngineNoTextControllerValidator
-                                                        .asValidator(context),
-                                                  ),
-                                                ],
-                                              ),
-                                              Container(
-                                                width: 16.0,
-                                              ),
-                                              Column(
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontStyle,
+                                                      ),
+                                                  validator: _model
+                                                      .turboSealNumberTextControllerValidator
+                                                      .asValidator(context),
+                                                ),
+                                              ],
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 5.0),
+                                              child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
@@ -1530,7 +1836,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                             .fromSTEB(0.0, 0.0,
                                                                 0.0, 4.0),
                                                     child: Text(
-                                                      'Spare Engine Seal No.',
+                                                      'Gear Box Seal No.',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -1566,13 +1872,13 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                   ),
                                                   TextFormField(
                                                     controller: _model
-                                                            .spareEngSealNoTextController ??=
+                                                            .geraBoxSealNoTextController ??=
                                                         TextEditingController(
-                                                      text: kartScrutinycheckKartScrutinyCheckRow
+                                                      text: touringVehicleScrutinyKartScrutinyCheckRow
                                                           ?.spareEngineSealNumber,
                                                     ),
                                                     focusNode: _model
-                                                        .spareEngSealNoFocusNode,
+                                                        .geraBoxSealNoFocusNode,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
                                                       hintText:
@@ -1666,174 +1972,24 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                                   .fontStyle,
                                                         ),
                                                     validator: _model
-                                                        .spareEngSealNoTextControllerValidator
+                                                        .geraBoxSealNoTextControllerValidator
                                                         .asValidator(context),
                                                   ),
                                                 ],
                                               ),
-                                              Divider(
-                                                height: 1.0,
-                                                thickness: 1.0,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                              ),
-                                              Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                0.0, 4.0),
-                                                    child: Text(
-                                                      'Share Spare Engine With',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelMedium
-                                                              .override(
-                                                                font:
-                                                                    GoogleFonts
-                                                                        .inter(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelMedium
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryText,
-                                                                fontSize: 12.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelMedium
-                                                                    .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelMedium
-                                                                    .fontStyle,
-                                                              ),
-                                                    ),
-                                                  ),
-                                                  TextFormField(
-                                                    controller: _model
-                                                            .spareKartNoTextController ??=
-                                                        TextEditingController(
-                                                      text: kartScrutinycheckKartScrutinyCheckRow
-                                                          ?.spareEngineSharedWith,
-                                                    ),
-                                                    focusNode: _model
-                                                        .spareKartNoFocusNode,
-                                                    obscureText: false,
-                                                    decoration: InputDecoration(
-                                                      hintText:
-                                                          'Driver name / kart no.',
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .alternate,
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primary,
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                      ),
-                                                      errorBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color:
-                                                              Color(0x00000000),
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                      ),
-                                                      focusedErrorBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color:
-                                                              Color(0x00000000),
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                      ),
-                                                      filled: true,
-                                                      fillColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryBackground,
-                                                      contentPadding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  12.0,
-                                                                  10.0,
-                                                                  12.0,
-                                                                  10.0),
-                                                    ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          font:
-                                                              GoogleFonts.inter(
-                                                            fontWeight:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontWeight,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                          ),
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                    validator: _model
-                                                        .spareKartNoTextControllerValidator
-                                                        .asValidator(context),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
+                                            ),
+                                          ].divide(SizedBox(height: 5.0)),
                                         ),
+                                      ),
+                                      StyledDivider(
+                                        height: 1.0,
+                                        thickness: 2.0,
+                                        indent: 50.0,
+                                        endIndent: 50.0,
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        lineStyle: DividerLineStyle.dashed,
+                                      ),
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
@@ -1857,7 +2013,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                 ),
                                                 child: CheckboxListTile(
                                                   value: _model.ballastValue ??=
-                                                      kartScrutinycheckKartScrutinyCheckRow!
+                                                      touringVehicleScrutinyKartScrutinyCheckRow!
                                                           .ballastAvailable!,
                                                   onChanged: (newValue) async {
                                                     safeSetState(() =>
@@ -1986,7 +2142,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                         .ballastWeightTextController ??=
                                                     TextEditingController(
                                                   text:
-                                                      kartScrutinycheckKartScrutinyCheckRow
+                                                      touringVehicleScrutinyKartScrutinyCheckRow
                                                           ?.ballastWeight,
                                                 ),
                                                 focusNode: _model
@@ -2092,457 +2248,192 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                   ),
                                 ),
                               ),
-                              if (valueOrDefault<bool>(
-                                valueOrDefault<bool>(
-                                      widget.category == 'MicroMAX',
-                                      false,
-                                    ) ||
-                                    valueOrDefault<bool>(
-                                      widget.category == 'MiniMAX',
-                                      false,
-                                    ),
-                                false,
-                              ))
-                                Container(
-                                  decoration: BoxDecoration(),
-                                  child: Form(
-                                    key: _model.formKey1,
-                                    autovalidateMode: AutovalidateMode.disabled,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(16.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 0.0, 0.0, 4.0),
-                                                child: Text(
-                                                  'Exhaust Serial Number',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelMedium
-                                                      .override(
-                                                        font: GoogleFonts.inter(
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .labelMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelMedium
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                              ),
-                                              TextFormField(
-                                                controller: _model
-                                                        .exhaustNumberTextController ??=
-                                                    TextEditingController(
-                                                  text:
-                                                      kartScrutinycheckKartScrutinyCheckRow
-                                                          ?.exhaustSerialNum,
-                                                ),
-                                                focusNode: _model
-                                                    .exhaustNumberFocusNode,
-                                                obscureText: false,
-                                                decoration: InputDecoration(
-                                                  hintText: 'Enter number',
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .alternate,
-                                                      width: 1.0,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
-                                                      width: 1.0,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                  ),
-                                                  errorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color: Color(0x00000000),
-                                                      width: 1.0,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                  ),
-                                                  focusedErrorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color: Color(0x00000000),
-                                                      width: 1.0,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                  ),
-                                                  filled: true,
-                                                  fillColor:
+                              Container(
+                                decoration: BoxDecoration(),
+                                child: Padding(
+                                  padding: EdgeInsets.all(16.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        (FFCrossAxisAlignment.start)
+                                            .flutterValue,
+                                    textBaseline: TextBaseline.alphabetic,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 4.0),
+                                        child: Text(
+                                          'Seat & Seat Belt',
+                                          style: FlutterFlowTheme.of(context)
+                                              .labelMedium
+                                              .override(
+                                                font: GoogleFonts.inter(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontStyle:
                                                       FlutterFlowTheme.of(
                                                               context)
-                                                          .primaryBackground,
-                                                  contentPadding:
-                                                      EdgeInsetsDirectional
-                                                          .fromSTEB(12.0, 10.0,
-                                                              12.0, 10.0),
+                                                          .labelMedium
+                                                          .fontStyle,
                                                 ),
-                                                style:
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w600,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium
+                                                        .fontStyle,
+                                              ),
+                                        ),
+                                      ),
+                                      FlutterFlowDropDown<String>(
+                                        controller: _model
+                                                .seatbeltStandardValueController ??=
+                                            FormFieldController<String>(
+                                          _model.seatbeltStandardValue ??=
+                                              touringVehicleScrutinyKartScrutinyCheckRow
+                                                  ?.seatBeltStandard,
+                                        ),
+                                        options: ['FIA 8853-2016'],
+                                        onChanged: (val) => safeSetState(() =>
+                                            _model.seatbeltStandardValue = val),
+                                        width:
+                                            MediaQuery.sizeOf(context).width *
+                                                1.0,
+                                        height: 40.0,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              font: GoogleFonts.inter(
+                                                fontWeight:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
-                                                        .override(
-                                                          font:
-                                                              GoogleFonts.inter(
-                                                            fontWeight:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontWeight,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                          ),
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                validator: _model
-                                                    .exhaustNumberTextControllerValidator
-                                                    .asValidator(context),
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
                                               ),
-                                            ],
-                                          ),
-                                          Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 4.0, 0.0, 4.0),
-                                                child: Text(
-                                                  'Exhaust Seal No.',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelMedium
-                                                      .override(
-                                                        font: GoogleFonts.inter(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .labelMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelMedium
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                              ),
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Expanded(
-                                                    child: TextFormField(
-                                                      controller: _model
-                                                              .exhaustRotaxSealNoTextController ??=
-                                                          TextEditingController(
-                                                        text:
-                                                            kartScrutinycheckKartScrutinyCheckRow
-                                                                ?.exhaustRotaxNo,
-                                                      ),
-                                                      focusNode: _model
-                                                          .exhaustRotaxSealNoFocusNode,
-                                                      obscureText: false,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        labelText:
-                                                            'OEM Seal No',
-                                                        hintText:
-                                                            'Enter Rotax seal no.',
-                                                        enabledBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .alternate,
-                                                            width: 1.0,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
-                                                        ),
-                                                        focusedBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primary,
-                                                            width: 1.0,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
-                                                        ),
-                                                        errorBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Color(
-                                                                0x00000000),
-                                                            width: 1.0,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
-                                                        ),
-                                                        focusedErrorBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Color(
-                                                                0x00000000),
-                                                            width: 1.0,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
-                                                        ),
-                                                        filled: true,
-                                                        fillColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryBackground,
-                                                        contentPadding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    12.0,
-                                                                    10.0,
-                                                                    12.0,
-                                                                    10.0),
-                                                      ),
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                font:
-                                                                    GoogleFonts
-                                                                        .inter(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                              ),
-                                                      validator: _model
-                                                          .exhaustRotaxSealNoTextControllerValidator
-                                                          .asValidator(context),
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: TextFormField(
-                                                      controller: _model
-                                                              .exhaustOrgSealNoTextController ??=
-                                                          TextEditingController(
-                                                        text:
-                                                            kartScrutinycheckKartScrutinyCheckRow
-                                                                ?.exhaustOrgSeal,
-                                                      ),
-                                                      focusNode: _model
-                                                          .exhaustOrgSealNoFocusNode,
-                                                      obscureText: false,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        labelText:
-                                                            'Org Seal No',
-                                                        hintText:
-                                                            'Enter Org seal no.',
-                                                        enabledBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .alternate,
-                                                            width: 1.0,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
-                                                        ),
-                                                        focusedBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primary,
-                                                            width: 1.0,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
-                                                        ),
-                                                        errorBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Color(
-                                                                0x00000000),
-                                                            width: 1.0,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
-                                                        ),
-                                                        focusedErrorBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Color(
-                                                                0x00000000),
-                                                            width: 1.0,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
-                                                        ),
-                                                        filled: true,
-                                                        fillColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryBackground,
-                                                        contentPadding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    12.0,
-                                                                    10.0,
-                                                                    12.0,
-                                                                    10.0),
-                                                      ),
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                font:
-                                                                    GoogleFonts
-                                                                        .inter(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                              ),
-                                                      validator: _model
-                                                          .exhaustOrgSealNoTextControllerValidator
-                                                          .asValidator(context),
-                                                    ),
-                                                  ),
-                                                ].divide(SizedBox(width: 5.0)),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
+                                              letterSpacing: 0.0,
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                        hintText: 'Select...',
+                                        icon: Icon(
+                                          Icons.keyboard_arrow_down_rounded,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          size: 24.0,
+                                        ),
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .primaryBackground,
+                                        elevation: 10.0,
+                                        borderColor: Colors.transparent,
+                                        borderWidth: 0.0,
+                                        borderRadius: 8.0,
+                                        margin: EdgeInsetsDirectional.fromSTEB(
+                                            12.0, 0.0, 12.0, 0.0),
+                                        hidesUnderline: true,
+                                        isOverButton: false,
+                                        isSearchable: false,
+                                        isMultiSelect: false,
                                       ),
-                                    ),
+                                      TextFormField(
+                                        controller: _model
+                                                .seatbeltSerialNoTextController ??=
+                                            TextEditingController(
+                                          text:
+                                              touringVehicleScrutinyKartScrutinyCheckRow
+                                                  ?.exhaustSerialNum,
+                                        ),
+                                        focusNode:
+                                            _model.seatbeltSerialNoFocusNode,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          hintText: 'Enter number',
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          filled: true,
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primaryBackground,
+                                          contentPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  12.0, 10.0, 12.0, 10.0),
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              font: GoogleFonts.inter(
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                              letterSpacing: 0.0,
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                        validator: _model
+                                            .seatbeltSerialNoTextControllerValidator
+                                            .asValidator(context),
+                                      ),
+                                    ].divide(SizedBox(height: 5.0)),
                                   ),
                                 ),
+                              ),
                             ],
                           ),
                         ),
@@ -2694,220 +2585,16 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                               ),
                                               child: CheckboxListTile(
                                                 value: _model
-                                                        .chkChassisValue ??=
-                                                    kartScrutinycheckKartScrutinyCheckRow!
+                                                        .chkRearViewmirrorsValue ??=
+                                                    touringVehicleScrutinyKartScrutinyCheckRow!
                                                         .chkChassis!,
                                                 onChanged: (newValue) async {
-                                                  safeSetState(() =>
-                                                      _model.chkChassisValue =
-                                                          newValue!);
+                                                  safeSetState(() => _model
+                                                          .chkRearViewmirrorsValue =
+                                                      newValue!);
                                                 },
                                                 title: Text(
-                                                  'Chassis — no damage & critical re-work',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleLarge
-                                                      .override(
-                                                        font: GoogleFonts
-                                                            .interTight(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontStyle,
-                                                        ),
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                                tileColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                activeColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                checkColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .info,
-                                                dense: false,
-                                                controlAffinity:
-                                                    ListTileControlAffinity
-                                                        .trailing,
-                                                contentPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 0.0,
-                                                            12.0, 0.0),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1.0,
-                                    thickness: 1.0,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 2.0, 0.0, 2.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            child: Theme(
-                                              data: ThemeData(
-                                                checkboxTheme:
-                                                    CheckboxThemeData(
-                                                  visualDensity:
-                                                      VisualDensity.compact,
-                                                  materialTapTargetSize:
-                                                      MaterialTapTargetSize
-                                                          .shrinkWrap,
-                                                ),
-                                                unselectedWidgetColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                              ),
-                                              child: CheckboxListTile(
-                                                value: _model.chkAxlesValue ??=
-                                                    kartScrutinycheckKartScrutinyCheckRow!
-                                                        .chkAxle!,
-                                                onChanged: (newValue) async {
-                                                  safeSetState(() =>
-                                                      _model.chkAxlesValue =
-                                                          newValue!);
-                                                },
-                                                title: Text(
-                                                  'Axles - no excessive free play',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleLarge
-                                                      .override(
-                                                        font: GoogleFonts
-                                                            .interTight(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontStyle,
-                                                        ),
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                                tileColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                activeColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                checkColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .info,
-                                                dense: false,
-                                                controlAffinity:
-                                                    ListTileControlAffinity
-                                                        .trailing,
-                                                contentPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 0.0,
-                                                            12.0, 0.0),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1.0,
-                                    thickness: 1.0,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 2.0, 0.0, 2.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            child: Theme(
-                                              data: ThemeData(
-                                                checkboxTheme:
-                                                    CheckboxThemeData(
-                                                  visualDensity:
-                                                      VisualDensity.compact,
-                                                  materialTapTargetSize:
-                                                      MaterialTapTargetSize
-                                                          .shrinkWrap,
-                                                ),
-                                                unselectedWidgetColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                              ),
-                                              child: CheckboxListTile(
-                                                value: _model.chkWheelsValue ??=
-                                                    kartScrutinycheckKartScrutinyCheckRow!
-                                                        .chkWheels!,
-                                                onChanged: (newValue) async {
-                                                  safeSetState(() =>
-                                                      _model.chkWheelsValue =
-                                                          newValue!);
-                                                },
-                                                title: Text(
-                                                  'Wheels - no visible damage',
+                                                  '1. Rear View Mirrors',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .titleLarge
@@ -3001,16 +2688,325 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                               ),
                                               child: CheckboxListTile(
                                                 value: _model
-                                                        .chkSteeringValue ??=
-                                                    kartScrutinycheckKartScrutinyCheckRow!
-                                                        .chkSteering!,
+                                                        .chkCompNosValue ??=
+                                                    touringVehicleScrutinyKartScrutinyCheckRow!
+                                                        .chkRacingNos!,
                                                 onChanged: (newValue) async {
                                                   safeSetState(() =>
-                                                      _model.chkSteeringValue =
+                                                      _model.chkCompNosValue =
                                                           newValue!);
                                                 },
                                                 title: Text(
-                                                  'Steering - no excessive play',
+                                                  '2. Competition No sticker',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleLarge
+                                                      .override(
+                                                        font: GoogleFonts
+                                                            .interTight(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontStyle,
+                                                        ),
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontStyle,
+                                                      ),
+                                                ),
+                                                tileColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                activeColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                checkColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .info,
+                                                dense: false,
+                                                controlAffinity:
+                                                    ListTileControlAffinity
+                                                        .trailing,
+                                                contentPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(12.0, 0.0,
+                                                            12.0, 0.0),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    height: 1.0,
+                                    thickness: 1.0,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 2.0, 0.0, 2.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Theme(
+                                              data: ThemeData(
+                                                checkboxTheme:
+                                                    CheckboxThemeData(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                  materialTapTargetSize:
+                                                      MaterialTapTargetSize
+                                                          .shrinkWrap,
+                                                ),
+                                                unselectedWidgetColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                              child: CheckboxListTile(
+                                                value: _model
+                                                        .chkNameAxlesValue ??=
+                                                    touringVehicleScrutinyKartScrutinyCheckRow!
+                                                        .chkAxle!,
+                                                onChanged: (newValue) async {
+                                                  safeSetState(() =>
+                                                      _model.chkNameAxlesValue =
+                                                          newValue!);
+                                                },
+                                                title: Text(
+                                                  '3. Competition Name Sticker',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleLarge
+                                                      .override(
+                                                        font: GoogleFonts
+                                                            .interTight(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontStyle,
+                                                        ),
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontStyle,
+                                                      ),
+                                                ),
+                                                tileColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                activeColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                checkColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .info,
+                                                dense: false,
+                                                controlAffinity:
+                                                    ListTileControlAffinity
+                                                        .trailing,
+                                                contentPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(12.0, 0.0,
+                                                            12.0, 0.0),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    height: 1.0,
+                                    thickness: 1.0,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 2.0, 0.0, 2.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Theme(
+                                              data: ThemeData(
+                                                checkboxTheme:
+                                                    CheckboxThemeData(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                  materialTapTargetSize:
+                                                      MaterialTapTargetSize
+                                                          .shrinkWrap,
+                                                ),
+                                                unselectedWidgetColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                              child: CheckboxListTile(
+                                                value: _model
+                                                        .chkemgyStickWheelsValue ??=
+                                                    touringVehicleScrutinyKartScrutinyCheckRow!
+                                                        .chkWheels!,
+                                                onChanged: (newValue) async {
+                                                  safeSetState(() => _model
+                                                          .chkemgyStickWheelsValue =
+                                                      newValue!);
+                                                },
+                                                title: Text(
+                                                  '4. Emergency cut off sticker',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleLarge
+                                                      .override(
+                                                        font: GoogleFonts
+                                                            .interTight(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontStyle,
+                                                        ),
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontStyle,
+                                                      ),
+                                                ),
+                                                tileColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                activeColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                checkColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .info,
+                                                dense: false,
+                                                controlAffinity:
+                                                    ListTileControlAffinity
+                                                        .trailing,
+                                                contentPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(12.0, 0.0,
+                                                            12.0, 0.0),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    height: 1.0,
+                                    thickness: 1.0,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 2.0, 0.0, 2.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Theme(
+                                              data: ThemeData(
+                                                checkboxTheme:
+                                                    CheckboxThemeData(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                  materialTapTargetSize:
+                                                      MaterialTapTargetSize
+                                                          .shrinkWrap,
+                                                ),
+                                                unselectedWidgetColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                              child: CheckboxListTile(
+                                                value: _model
+                                                        .chkAdverStickSteerValue ??=
+                                                    touringVehicleScrutinyKartScrutinyCheckRow!
+                                                        .chkSteering!,
+                                                onChanged: (newValue) async {
+                                                  safeSetState(() => _model
+                                                          .chkAdverStickSteerValue =
+                                                      newValue!);
+                                                },
+                                                title: Text(
+                                                  '5. Advertisment sticker',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .titleLarge
@@ -3105,7 +3101,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                               child: CheckboxListTile(
                                                 value: _model
                                                         .chkSeatFitValue ??=
-                                                    kartScrutinycheckKartScrutinyCheckRow!
+                                                    touringVehicleScrutinyKartScrutinyCheckRow!
                                                         .chkSeatFitment!,
                                                 onChanged: (newValue) async {
                                                   safeSetState(() =>
@@ -3113,1171 +3109,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                           newValue!);
                                                 },
                                                 title: Text(
-                                                  'Seat - no cracks at seat mounting point',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleLarge
-                                                      .override(
-                                                        font: GoogleFonts
-                                                            .interTight(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontStyle,
-                                                        ),
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                                tileColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                activeColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                checkColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .info,
-                                                dense: false,
-                                                controlAffinity:
-                                                    ListTileControlAffinity
-                                                        .trailing,
-                                                contentPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 0.0,
-                                                            12.0, 0.0),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1.0,
-                                    thickness: 1.0,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 2.0, 0.0, 2.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            child: Theme(
-                                              data: ThemeData(
-                                                checkboxTheme:
-                                                    CheckboxThemeData(
-                                                  visualDensity:
-                                                      VisualDensity.compact,
-                                                  materialTapTargetSize:
-                                                      MaterialTapTargetSize
-                                                          .shrinkWrap,
-                                                ),
-                                                unselectedWidgetColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                              ),
-                                              child: CheckboxListTile(
-                                                value: _model
-                                                        .chkBodyWorkValue ??=
-                                                    kartScrutinycheckKartScrutinyCheckRow!
-                                                        .chkBodyworks!,
-                                                onChanged: (newValue) async {
-                                                  safeSetState(() =>
-                                                      _model.chkBodyWorkValue =
-                                                          newValue!);
-                                                },
-                                                title: Text(
-                                                  'Bodyworks - no modifications permitted',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleLarge
-                                                      .override(
-                                                        font: GoogleFonts
-                                                            .interTight(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontStyle,
-                                                        ),
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                                tileColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                activeColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                checkColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .info,
-                                                dense: false,
-                                                controlAffinity:
-                                                    ListTileControlAffinity
-                                                        .trailing,
-                                                contentPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 0.0,
-                                                            12.0, 0.0),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1.0,
-                                    thickness: 1.0,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 2.0, 0.0, 2.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            child: Theme(
-                                              data: ThemeData(
-                                                checkboxTheme:
-                                                    CheckboxThemeData(
-                                                  visualDensity:
-                                                      VisualDensity.compact,
-                                                  materialTapTargetSize:
-                                                      MaterialTapTargetSize
-                                                          .shrinkWrap,
-                                                ),
-                                                unselectedWidgetColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                              ),
-                                              child: CheckboxListTile(
-                                                value: _model
-                                                        .chkBumperFrontValue ??=
-                                                    kartScrutinycheckKartScrutinyCheckRow!
-                                                        .chkBumperFrontFairing!,
-                                                onChanged: (newValue) async {
-                                                  safeSetState(() => _model
-                                                          .chkBumperFrontValue =
-                                                      newValue!);
-                                                },
-                                                title: Text(
-                                                  'Bumper & Front Fairing — properly fixed',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleLarge
-                                                      .override(
-                                                        font: GoogleFonts
-                                                            .interTight(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontStyle,
-                                                        ),
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                                tileColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                activeColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                checkColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .info,
-                                                dense: false,
-                                                controlAffinity:
-                                                    ListTileControlAffinity
-                                                        .trailing,
-                                                contentPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 0.0,
-                                                            12.0, 0.0),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1.0,
-                                    thickness: 1.0,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 2.0, 0.0, 2.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            child: Theme(
-                                              data: ThemeData(
-                                                checkboxTheme:
-                                                    CheckboxThemeData(
-                                                  visualDensity:
-                                                      VisualDensity.compact,
-                                                  materialTapTargetSize:
-                                                      MaterialTapTargetSize
-                                                          .shrinkWrap,
-                                                ),
-                                                unselectedWidgetColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                              ),
-                                              child: CheckboxListTile(
-                                                value: _model
-                                                        .chkExhaustValue ??=
-                                                    kartScrutinycheckKartScrutinyCheckRow!
-                                                        .chkExhaust!,
-                                                onChanged: (newValue) async {
-                                                  safeSetState(() =>
-                                                      _model.chkExhaustValue =
-                                                          newValue!);
-                                                },
-                                                title: Text(
-                                                  'Exhaust - securely fixed',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleLarge
-                                                      .override(
-                                                        font: GoogleFonts
-                                                            .interTight(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontStyle,
-                                                        ),
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                                tileColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                activeColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                checkColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .info,
-                                                dense: false,
-                                                controlAffinity:
-                                                    ListTileControlAffinity
-                                                        .trailing,
-                                                contentPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 0.0,
-                                                            12.0, 0.0),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1.0,
-                                    thickness: 1.0,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 2.0, 0.0, 2.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            child: Theme(
-                                              data: ThemeData(
-                                                checkboxTheme:
-                                                    CheckboxThemeData(
-                                                  visualDensity:
-                                                      VisualDensity.compact,
-                                                  materialTapTargetSize:
-                                                      MaterialTapTargetSize
-                                                          .shrinkWrap,
-                                                ),
-                                                unselectedWidgetColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                              ),
-                                              child: CheckboxListTile(
-                                                value: _model
-                                                        .chkCarburetorValue ??=
-                                                    kartScrutinycheckKartScrutinyCheckRow!
-                                                        .chkCarburetor!,
-                                                onChanged: (newValue) async {
-                                                  safeSetState(() => _model
-                                                          .chkCarburetorValue =
-                                                      newValue!);
-                                                },
-                                                title: Text(
-                                                  'Carburetor - return spring',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleLarge
-                                                      .override(
-                                                        font: GoogleFonts
-                                                            .interTight(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontStyle,
-                                                        ),
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                                tileColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                activeColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                checkColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .info,
-                                                dense: false,
-                                                controlAffinity:
-                                                    ListTileControlAffinity
-                                                        .trailing,
-                                                contentPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 0.0,
-                                                            12.0, 0.0),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1.0,
-                                    thickness: 1.0,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 2.0, 0.0, 2.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            child: Theme(
-                                              data: ThemeData(
-                                                checkboxTheme:
-                                                    CheckboxThemeData(
-                                                  visualDensity:
-                                                      VisualDensity.compact,
-                                                  materialTapTargetSize:
-                                                      MaterialTapTargetSize
-                                                          .shrinkWrap,
-                                                ),
-                                                unselectedWidgetColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                              ),
-                                              child: CheckboxListTile(
-                                                value: _model
-                                                        .chkBatteryValue ??=
-                                                    kartScrutinycheckKartScrutinyCheckRow!
-                                                        .chkBattery!,
-                                                onChanged: (newValue) async {
-                                                  safeSetState(() =>
-                                                      _model.chkBatteryValue =
-                                                          newValue!);
-                                                },
-                                                title: Text(
-                                                  'Battery - securely fixed',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleLarge
-                                                      .override(
-                                                        font: GoogleFonts
-                                                            .interTight(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontStyle,
-                                                        ),
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                                tileColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                activeColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                checkColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .info,
-                                                dense: false,
-                                                controlAffinity:
-                                                    ListTileControlAffinity
-                                                        .trailing,
-                                                contentPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 0.0,
-                                                            12.0, 0.0),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1.0,
-                                    thickness: 1.0,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 2.0, 0.0, 2.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            child: Theme(
-                                              data: ThemeData(
-                                                checkboxTheme:
-                                                    CheckboxThemeData(
-                                                  visualDensity:
-                                                      VisualDensity.compact,
-                                                  materialTapTargetSize:
-                                                      MaterialTapTargetSize
-                                                          .shrinkWrap,
-                                                ),
-                                                unselectedWidgetColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                              ),
-                                              child: CheckboxListTile(
-                                                value: _model
-                                                        .chkKillSwitchValue ??=
-                                                    kartScrutinycheckKartScrutinyCheckRow!
-                                                        .chkKillSwitch!,
-                                                onChanged: (newValue) async {
-                                                  safeSetState(() => _model
-                                                          .chkKillSwitchValue =
-                                                      newValue!);
-                                                },
-                                                title: Text(
-                                                  'Kill Switch - working',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleLarge
-                                                      .override(
-                                                        font: GoogleFonts
-                                                            .interTight(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontStyle,
-                                                        ),
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                                tileColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                activeColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                checkColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .info,
-                                                dense: false,
-                                                controlAffinity:
-                                                    ListTileControlAffinity
-                                                        .trailing,
-                                                contentPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 0.0,
-                                                            12.0, 0.0),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1.0,
-                                    thickness: 1.0,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 2.0, 0.0, 2.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            child: Theme(
-                                              data: ThemeData(
-                                                checkboxTheme:
-                                                    CheckboxThemeData(
-                                                  visualDensity:
-                                                      VisualDensity.compact,
-                                                  materialTapTargetSize:
-                                                      MaterialTapTargetSize
-                                                          .shrinkWrap,
-                                                ),
-                                                unselectedWidgetColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                              ),
-                                              child: CheckboxListTile(
-                                                value: _model
-                                                        .chkRacingNosValue ??=
-                                                    kartScrutinycheckKartScrutinyCheckRow!
-                                                        .chkRacingNos!,
-                                                onChanged: (newValue) async {
-                                                  safeSetState(() =>
-                                                      _model.chkRacingNosValue =
-                                                          newValue!);
-                                                },
-                                                title: Text(
-                                                  'Racing numbers',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleLarge
-                                                      .override(
-                                                        font: GoogleFonts
-                                                            .interTight(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontStyle,
-                                                        ),
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                                tileColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                activeColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                checkColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .info,
-                                                dense: false,
-                                                controlAffinity:
-                                                    ListTileControlAffinity
-                                                        .trailing,
-                                                contentPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 0.0,
-                                                            12.0, 0.0),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1.0,
-                                    thickness: 1.0,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 2.0, 0.0, 2.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            child: Theme(
-                                              data: ThemeData(
-                                                checkboxTheme:
-                                                    CheckboxThemeData(
-                                                  visualDensity:
-                                                      VisualDensity.compact,
-                                                  materialTapTargetSize:
-                                                      MaterialTapTargetSize
-                                                          .shrinkWrap,
-                                                ),
-                                                unselectedWidgetColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                              ),
-                                              child: CheckboxListTile(
-                                                value: _model
-                                                        .chkFuelLinesValue ??=
-                                                    kartScrutinycheckKartScrutinyCheckRow!
-                                                        .chkFuelLines!,
-                                                onChanged: (newValue) async {
-                                                  safeSetState(() =>
-                                                      _model.chkFuelLinesValue =
-                                                          newValue!);
-                                                },
-                                                title: Text(
-                                                  'Fuel lines',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleLarge
-                                                      .override(
-                                                        font: GoogleFonts
-                                                            .interTight(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontStyle,
-                                                        ),
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                                tileColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                activeColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                checkColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .info,
-                                                dense: false,
-                                                controlAffinity:
-                                                    ListTileControlAffinity
-                                                        .trailing,
-                                                contentPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 0.0,
-                                                            12.0, 0.0),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1.0,
-                                    thickness: 1.0,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 2.0, 0.0, 2.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            child: Theme(
-                                              data: ThemeData(
-                                                checkboxTheme:
-                                                    CheckboxThemeData(
-                                                  visualDensity:
-                                                      VisualDensity.compact,
-                                                  materialTapTargetSize:
-                                                      MaterialTapTargetSize
-                                                          .shrinkWrap,
-                                                ),
-                                                unselectedWidgetColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                              ),
-                                              child: CheckboxListTile(
-                                                value: _model
-                                                        .chkTransponderValue ??=
-                                                    kartScrutinycheckKartScrutinyCheckRow!
-                                                        .chkTransponder!,
-                                                onChanged: (newValue) async {
-                                                  safeSetState(() => _model
-                                                          .chkTransponderValue =
-                                                      newValue!);
-                                                },
-                                                title: Text(
-                                                  'Transponder - mount & location',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleLarge
-                                                      .override(
-                                                        font: GoogleFonts
-                                                            .interTight(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontStyle,
-                                                        ),
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                                subtitle: Text(
-                                                  'Less than 25cm from the ground',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelMedium
-                                                      .override(
-                                                        font: GoogleFonts.inter(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .labelMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .labelMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelMedium
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelMedium
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                                tileColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                activeColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                checkColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .info,
-                                                dense: false,
-                                                controlAffinity:
-                                                    ListTileControlAffinity
-                                                        .trailing,
-                                                contentPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 0.0,
-                                                            12.0, 0.0),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1.0,
-                                    thickness: 1.0,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 2.0, 0.0, 2.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            child: Theme(
-                                              data: ThemeData(
-                                                checkboxTheme:
-                                                    CheckboxThemeData(
-                                                  visualDensity:
-                                                      VisualDensity.compact,
-                                                  materialTapTargetSize:
-                                                      MaterialTapTargetSize
-                                                          .shrinkWrap,
-                                                ),
-                                                unselectedWidgetColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                              ),
-                                              child: CheckboxListTile(
-                                                value: _model
-                                                        .chkChainGuardValue ??=
-                                                    kartScrutinycheckKartScrutinyCheckRow!
-                                                        .chkChainGuard!,
-                                                onChanged: (newValue) async {
-                                                  safeSetState(() => _model
-                                                          .chkChainGuardValue =
-                                                      newValue!);
-                                                },
-                                                title: Text(
-                                                  'Chain guard',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleLarge
-                                                      .override(
-                                                        font: GoogleFonts
-                                                            .interTight(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontStyle,
-                                                        ),
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                                tileColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                activeColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                checkColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .info,
-                                                dense: false,
-                                                controlAffinity:
-                                                    ListTileControlAffinity
-                                                        .trailing,
-                                                contentPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 0.0,
-                                                            12.0, 0.0),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1.0,
-                                    thickness: 1.0,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 2.0, 0.0, 2.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            child: Theme(
-                                              data: ThemeData(
-                                                checkboxTheme:
-                                                    CheckboxThemeData(
-                                                  visualDensity:
-                                                      VisualDensity.compact,
-                                                  materialTapTargetSize:
-                                                      MaterialTapTargetSize
-                                                          .shrinkWrap,
-                                                ),
-                                                unselectedWidgetColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                              ),
-                                              child: CheckboxListTile(
-                                                value: _model
-                                                        .chkBallastValue ??=
-                                                    kartScrutinycheckKartScrutinyCheckRow!
-                                                        .chkBallastFix!,
-                                                onChanged: (newValue) async {
-                                                  safeSetState(() =>
-                                                      _model.chkBallastValue =
-                                                          newValue!);
-                                                },
-                                                title: Text(
-                                                  'Ballast fixing',
+                                                  '6. Seat  Fixing - no cracks ',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .titleLarge
@@ -4372,7 +3204,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                               child: CheckboxListTile(
                                                 value: _model
                                                         .chkSeatMountValue ??=
-                                                    kartScrutinycheckKartScrutinyCheckRow!
+                                                    touringVehicleScrutinyKartScrutinyCheckRow!
                                                         .chkSeatMount!,
                                                 onChanged: (newValue) async {
                                                   safeSetState(() =>
@@ -4380,7 +3212,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                           newValue!);
                                                 },
                                                 title: Text(
-                                                  'Seat Mounts - no crack at mounting points',
+                                                  '7. Seat belt fixing & condition',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .titleLarge
@@ -4399,6 +3231,1550 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                                   .fontStyle,
                                                         ),
                                                         fontSize: 13.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontStyle,
+                                                      ),
+                                                ),
+                                                tileColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                activeColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                checkColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .info,
+                                                dense: false,
+                                                controlAffinity:
+                                                    ListTileControlAffinity
+                                                        .trailing,
+                                                contentPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(12.0, 0.0,
+                                                            12.0, 0.0),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    height: 1.0,
+                                    thickness: 1.0,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 2.0, 0.0, 2.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Theme(
+                                              data: ThemeData(
+                                                checkboxTheme:
+                                                    CheckboxThemeData(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                  materialTapTargetSize:
+                                                      MaterialTapTargetSize
+                                                          .shrinkWrap,
+                                                ),
+                                                unselectedWidgetColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                              child: CheckboxListTile(
+                                                value: _model
+                                                        .chkRollbarBodyWorkValue ??=
+                                                    touringVehicleScrutinyKartScrutinyCheckRow!
+                                                        .chkBodyworks!,
+                                                onChanged: (newValue) async {
+                                                  safeSetState(() => _model
+                                                          .chkRollbarBodyWorkValue =
+                                                      newValue!);
+                                                },
+                                                title: Text(
+                                                  '8. Roll bar construction',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleLarge
+                                                      .override(
+                                                        font: GoogleFonts
+                                                            .interTight(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontStyle,
+                                                        ),
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontStyle,
+                                                      ),
+                                                ),
+                                                tileColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                activeColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                checkColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .info,
+                                                dense: false,
+                                                controlAffinity:
+                                                    ListTileControlAffinity
+                                                        .trailing,
+                                                contentPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(12.0, 0.0,
+                                                            12.0, 0.0),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    height: 1.0,
+                                    thickness: 1.0,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 2.0, 0.0, 2.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Theme(
+                                              data: ThemeData(
+                                                checkboxTheme:
+                                                    CheckboxThemeData(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                  materialTapTargetSize:
+                                                      MaterialTapTargetSize
+                                                          .shrinkWrap,
+                                                ),
+                                                unselectedWidgetColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                              child: CheckboxListTile(
+                                                value: _model
+                                                        .chk2clearBumperFrontValue ??=
+                                                    touringVehicleScrutinyKartScrutinyCheckRow!
+                                                        .chkBumperFrontFairing!,
+                                                onChanged: (newValue) async {
+                                                  safeSetState(() => _model
+                                                          .chk2clearBumperFrontValue =
+                                                      newValue!);
+                                                },
+                                                title: Text(
+                                                  '9. Roll bar padding',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleLarge
+                                                      .override(
+                                                        font: GoogleFonts
+                                                            .interTight(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontStyle,
+                                                        ),
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontStyle,
+                                                      ),
+                                                ),
+                                                tileColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                activeColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                checkColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .info,
+                                                dense: false,
+                                                controlAffinity:
+                                                    ListTileControlAffinity
+                                                        .trailing,
+                                                contentPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(12.0, 0.0,
+                                                            12.0, 0.0),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    height: 1.0,
+                                    thickness: 1.0,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 2.0, 0.0, 2.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Theme(
+                                              data: ThemeData(
+                                                checkboxTheme:
+                                                    CheckboxThemeData(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                  materialTapTargetSize:
+                                                      MaterialTapTargetSize
+                                                          .shrinkWrap,
+                                                ),
+                                                unselectedWidgetColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                              child: CheckboxListTile(
+                                                value: _model
+                                                        .chkStarterExhaustValue ??=
+                                                    touringVehicleScrutinyKartScrutinyCheckRow!
+                                                        .chkExhaust!,
+                                                onChanged: (newValue) async {
+                                                  safeSetState(() => _model
+                                                          .chkStarterExhaustValue =
+                                                      newValue!);
+                                                },
+                                                title: Text(
+                                                  '10. Starter',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleLarge
+                                                      .override(
+                                                        font: GoogleFonts
+                                                            .interTight(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontStyle,
+                                                        ),
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontStyle,
+                                                      ),
+                                                ),
+                                                tileColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                activeColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                checkColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .info,
+                                                dense: false,
+                                                controlAffinity:
+                                                    ListTileControlAffinity
+                                                        .trailing,
+                                                contentPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(12.0, 0.0,
+                                                            12.0, 0.0),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    height: 1.0,
+                                    thickness: 1.0,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 2.0, 0.0, 2.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Theme(
+                                              data: ThemeData(
+                                                checkboxTheme:
+                                                    CheckboxThemeData(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                  materialTapTargetSize:
+                                                      MaterialTapTargetSize
+                                                          .shrinkWrap,
+                                                ),
+                                                unselectedWidgetColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                              child: CheckboxListTile(
+                                                value: _model
+                                                        .chkWindowlassCarburetorValue ??=
+                                                    touringVehicleScrutinyKartScrutinyCheckRow!
+                                                        .chkCarburetor!,
+                                                onChanged: (newValue) async {
+                                                  safeSetState(() => _model
+                                                          .chkWindowlassCarburetorValue =
+                                                      newValue!);
+                                                },
+                                                title: Text(
+                                                  '11. Window glass safety flim',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleLarge
+                                                      .override(
+                                                        font: GoogleFonts
+                                                            .interTight(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontStyle,
+                                                        ),
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontStyle,
+                                                      ),
+                                                ),
+                                                tileColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                activeColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                checkColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .info,
+                                                dense: false,
+                                                controlAffinity:
+                                                    ListTileControlAffinity
+                                                        .trailing,
+                                                contentPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(12.0, 0.0,
+                                                            12.0, 0.0),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    height: 1.0,
+                                    thickness: 1.0,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 2.0, 0.0, 2.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Theme(
+                                              data: ThemeData(
+                                                checkboxTheme:
+                                                    CheckboxThemeData(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                  materialTapTargetSize:
+                                                      MaterialTapTargetSize
+                                                          .shrinkWrap,
+                                                ),
+                                                unselectedWidgetColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                              child: CheckboxListTile(
+                                                value: _model
+                                                        .chkBatteryValue ??=
+                                                    touringVehicleScrutinyKartScrutinyCheckRow!
+                                                        .chkBattery!,
+                                                onChanged: (newValue) async {
+                                                  safeSetState(() =>
+                                                      _model.chkBatteryValue =
+                                                          newValue!);
+                                                },
+                                                title: Text(
+                                                  '12. Battery fixing is it secure',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleLarge
+                                                      .override(
+                                                        font: GoogleFonts
+                                                            .interTight(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontStyle,
+                                                        ),
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontStyle,
+                                                      ),
+                                                ),
+                                                tileColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                activeColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                checkColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .info,
+                                                dense: false,
+                                                controlAffinity:
+                                                    ListTileControlAffinity
+                                                        .trailing,
+                                                contentPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(12.0, 0.0,
+                                                            12.0, 0.0),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    height: 1.0,
+                                    thickness: 1.0,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 2.0, 0.0, 2.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Theme(
+                                              data: ThemeData(
+                                                checkboxTheme:
+                                                    CheckboxThemeData(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                  materialTapTargetSize:
+                                                      MaterialTapTargetSize
+                                                          .shrinkWrap,
+                                                ),
+                                                unselectedWidgetColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                              child: CheckboxListTile(
+                                                value: _model
+                                                        .chkFuelLinesValue ??=
+                                                    touringVehicleScrutinyKartScrutinyCheckRow!
+                                                        .chkFuelLines!,
+                                                onChanged: (newValue) async {
+                                                  safeSetState(() =>
+                                                      _model.chkFuelLinesValue =
+                                                          newValue!);
+                                                },
+                                                title: Text(
+                                                  '13. Fuel hose and hose clips',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleLarge
+                                                      .override(
+                                                        font: GoogleFonts
+                                                            .interTight(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontStyle,
+                                                        ),
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontStyle,
+                                                      ),
+                                                ),
+                                                tileColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                activeColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                checkColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .info,
+                                                dense: false,
+                                                controlAffinity:
+                                                    ListTileControlAffinity
+                                                        .trailing,
+                                                contentPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(12.0, 0.0,
+                                                            12.0, 0.0),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    height: 1.0,
+                                    thickness: 1.0,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 2.0, 0.0, 2.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Theme(
+                                              data: ThemeData(
+                                                checkboxTheme:
+                                                    CheckboxThemeData(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                  materialTapTargetSize:
+                                                      MaterialTapTargetSize
+                                                          .shrinkWrap,
+                                                ),
+                                                unselectedWidgetColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                              child: CheckboxListTile(
+                                                value: _model
+                                                        .chkOilcanChainGuardValue ??=
+                                                    touringVehicleScrutinyKartScrutinyCheckRow!
+                                                        .chkChainGuard!,
+                                                onChanged: (newValue) async {
+                                                  safeSetState(() => _model
+                                                          .chkOilcanChainGuardValue =
+                                                      newValue!);
+                                                },
+                                                title: Text(
+                                                  '14. Oil catch can',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleLarge
+                                                      .override(
+                                                        font: GoogleFonts
+                                                            .interTight(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontStyle,
+                                                        ),
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontStyle,
+                                                      ),
+                                                ),
+                                                tileColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                activeColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                checkColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .info,
+                                                dense: false,
+                                                controlAffinity:
+                                                    ListTileControlAffinity
+                                                        .trailing,
+                                                contentPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(12.0, 0.0,
+                                                            12.0, 0.0),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    height: 1.0,
+                                    thickness: 1.0,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 2.0, 0.0, 2.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Theme(
+                                              data: ThemeData(
+                                                checkboxTheme:
+                                                    CheckboxThemeData(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                  materialTapTargetSize:
+                                                      MaterialTapTargetSize
+                                                          .shrinkWrap,
+                                                ),
+                                                unselectedWidgetColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                              child: CheckboxListTile(
+                                                value: _model
+                                                        .chkBallastValue ??=
+                                                    touringVehicleScrutinyKartScrutinyCheckRow!
+                                                        .chkBallastFix!,
+                                                onChanged: (newValue) async {
+                                                  safeSetState(() =>
+                                                      _model.chkBallastValue =
+                                                          newValue!);
+                                                },
+                                                title: Text(
+                                                  '15. Ballast fixing',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleLarge
+                                                      .override(
+                                                        font: GoogleFonts
+                                                            .interTight(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontStyle,
+                                                        ),
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontStyle,
+                                                      ),
+                                                ),
+                                                tileColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                activeColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                checkColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .info,
+                                                dense: false,
+                                                controlAffinity:
+                                                    ListTileControlAffinity
+                                                        .trailing,
+                                                contentPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(12.0, 0.0,
+                                                            12.0, 0.0),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    height: 1.0,
+                                    thickness: 1.0,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 2.0, 0.0, 2.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Theme(
+                                              data: ThemeData(
+                                                checkboxTheme:
+                                                    CheckboxThemeData(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                  materialTapTargetSize:
+                                                      MaterialTapTargetSize
+                                                          .shrinkWrap,
+                                                ),
+                                                unselectedWidgetColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                              child: CheckboxListTile(
+                                                value: _model
+                                                        .chkKillSwitchValue ??=
+                                                    touringVehicleScrutinyKartScrutinyCheckRow!
+                                                        .chkKillSwitch!,
+                                                onChanged: (newValue) async {
+                                                  safeSetState(() => _model
+                                                          .chkKillSwitchValue =
+                                                      newValue!);
+                                                },
+                                                title: Text(
+                                                  '16. Kill Switch - Circuit Breaker Working',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleLarge
+                                                      .override(
+                                                        font: GoogleFonts
+                                                            .interTight(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontStyle,
+                                                        ),
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontStyle,
+                                                      ),
+                                                ),
+                                                tileColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                activeColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                checkColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .info,
+                                                dense: false,
+                                                controlAffinity:
+                                                    ListTileControlAffinity
+                                                        .trailing,
+                                                contentPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(12.0, 0.0,
+                                                            12.0, 0.0),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    height: 1.0,
+                                    thickness: 1.0,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 2.0, 0.0, 2.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Theme(
+                                              data: ThemeData(
+                                                checkboxTheme:
+                                                    CheckboxThemeData(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                  materialTapTargetSize:
+                                                      MaterialTapTargetSize
+                                                          .shrinkWrap,
+                                                ),
+                                                unselectedWidgetColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                              child: CheckboxListTile(
+                                                value: _model
+                                                        .chkwindscreenwashValue ??=
+                                                    touringVehicleScrutinyKartScrutinyCheckRow!
+                                                        .chkTransponder!,
+                                                onChanged: (newValue) async {
+                                                  safeSetState(() => _model
+                                                          .chkwindscreenwashValue =
+                                                      newValue!);
+                                                },
+                                                title: Text(
+                                                  '17. Windscreen wash & wipe',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleLarge
+                                                      .override(
+                                                        font: GoogleFonts
+                                                            .interTight(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontStyle,
+                                                        ),
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontStyle,
+                                                      ),
+                                                ),
+                                                tileColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                activeColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                checkColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .info,
+                                                dense: false,
+                                                controlAffinity:
+                                                    ListTileControlAffinity
+                                                        .trailing,
+                                                contentPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(12.0, 0.0,
+                                                            12.0, 0.0),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    height: 1.0,
+                                    thickness: 1.0,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 2.0, 0.0, 2.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Theme(
+                                              data: ThemeData(
+                                                checkboxTheme:
+                                                    CheckboxThemeData(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                  materialTapTargetSize:
+                                                      MaterialTapTargetSize
+                                                          .shrinkWrap,
+                                                ),
+                                                unselectedWidgetColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                              child: CheckboxListTile(
+                                                value: _model
+                                                        .chkwindscreenlaminaValue ??=
+                                                    touringVehicleScrutinyKartScrutinyCheckRow!
+                                                        .chk18!,
+                                                onChanged: (newValue) async {
+                                                  safeSetState(() => _model
+                                                          .chkwindscreenlaminaValue =
+                                                      newValue!);
+                                                },
+                                                title: Text(
+                                                  '18. Wind screen lamination',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleLarge
+                                                      .override(
+                                                        font: GoogleFonts
+                                                            .interTight(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontStyle,
+                                                        ),
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontStyle,
+                                                      ),
+                                                ),
+                                                tileColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                activeColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                checkColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .info,
+                                                dense: false,
+                                                controlAffinity:
+                                                    ListTileControlAffinity
+                                                        .trailing,
+                                                contentPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(12.0, 0.0,
+                                                            12.0, 0.0),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    height: 1.0,
+                                    thickness: 1.0,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 2.0, 0.0, 2.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Theme(
+                                              data: ThemeData(
+                                                checkboxTheme:
+                                                    CheckboxThemeData(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                  materialTapTargetSize:
+                                                      MaterialTapTargetSize
+                                                          .shrinkWrap,
+                                                ),
+                                                unselectedWidgetColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                              child: CheckboxListTile(
+                                                value: _model.chktoweyeValue ??=
+                                                    touringVehicleScrutinyKartScrutinyCheckRow!
+                                                        .chk19!,
+                                                onChanged: (newValue) async {
+                                                  safeSetState(() =>
+                                                      _model.chktoweyeValue =
+                                                          newValue!);
+                                                },
+                                                title: Text(
+                                                  '19. Towing Eye & Arrow Marking',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleLarge
+                                                      .override(
+                                                        font: GoogleFonts
+                                                            .interTight(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontStyle,
+                                                        ),
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontStyle,
+                                                      ),
+                                                ),
+                                                tileColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                activeColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                checkColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .info,
+                                                dense: false,
+                                                controlAffinity:
+                                                    ListTileControlAffinity
+                                                        .trailing,
+                                                contentPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(12.0, 0.0,
+                                                            12.0, 0.0),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    height: 1.0,
+                                    thickness: 1.0,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 2.0, 0.0, 2.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Theme(
+                                              data: ThemeData(
+                                                checkboxTheme:
+                                                    CheckboxThemeData(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                  materialTapTargetSize:
+                                                      MaterialTapTargetSize
+                                                          .shrinkWrap,
+                                                ),
+                                                unselectedWidgetColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                              child: CheckboxListTile(
+                                                value: _model
+                                                        .chkdriverdoorValue ??=
+                                                    touringVehicleScrutinyKartScrutinyCheckRow!
+                                                        .chk20!,
+                                                onChanged: (newValue) async {
+                                                  safeSetState(() => _model
+                                                          .chkdriverdoorValue =
+                                                      newValue!);
+                                                },
+                                                title: Text(
+                                                  '20. Driver door openable IN & OUT',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleLarge
+                                                      .override(
+                                                        font: GoogleFonts
+                                                            .interTight(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontStyle,
+                                                        ),
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontStyle,
+                                                      ),
+                                                ),
+                                                tileColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                activeColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                checkColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .info,
+                                                dense: false,
+                                                controlAffinity:
+                                                    ListTileControlAffinity
+                                                        .trailing,
+                                                contentPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(12.0, 0.0,
+                                                            12.0, 0.0),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    height: 1.0,
+                                    thickness: 1.0,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 2.0, 0.0, 2.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Theme(
+                                              data: ThemeData(
+                                                checkboxTheme:
+                                                    CheckboxThemeData(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                  materialTapTargetSize:
+                                                      MaterialTapTargetSize
+                                                          .shrinkWrap,
+                                                ),
+                                                unselectedWidgetColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                              child: CheckboxListTile(
+                                                value: _model
+                                                        .chkfirewallbulkheadValue ??=
+                                                    touringVehicleScrutinyKartScrutinyCheckRow!
+                                                        .chk21!,
+                                                onChanged: (newValue) async {
+                                                  safeSetState(() => _model
+                                                          .chkfirewallbulkheadValue =
+                                                      newValue!);
+                                                },
+                                                title: Text(
+                                                  '21. Fire wall & Bulk head',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleLarge
+                                                      .override(
+                                                        font: GoogleFonts
+                                                            .interTight(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontStyle,
+                                                        ),
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontStyle,
+                                                      ),
+                                                ),
+                                                tileColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                activeColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                checkColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .info,
+                                                dense: false,
+                                                controlAffinity:
+                                                    ListTileControlAffinity
+                                                        .trailing,
+                                                contentPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(12.0, 0.0,
+                                                            12.0, 0.0),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    height: 1.0,
+                                    thickness: 1.0,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 2.0, 0.0, 2.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Theme(
+                                              data: ThemeData(
+                                                checkboxTheme:
+                                                    CheckboxThemeData(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                  materialTapTargetSize:
+                                                      MaterialTapTargetSize
+                                                          .shrinkWrap,
+                                                ),
+                                                unselectedWidgetColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                              child: CheckboxListTile(
+                                                value: _model
+                                                        .chkfireextfixValue ??=
+                                                    touringVehicleScrutinyKartScrutinyCheckRow!
+                                                        .chk22!,
+                                                onChanged: (newValue) async {
+                                                  safeSetState(() => _model
+                                                          .chkfireextfixValue =
+                                                      newValue!);
+                                                },
+                                                title: Text(
+                                                  '22. Fire extinguisher fixing & Validity',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleLarge
+                                                      .override(
+                                                        font: GoogleFonts
+                                                            .interTight(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleLarge
+                                                                  .fontStyle,
+                                                        ),
+                                                        fontSize: 14.0,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FlutterFlowTheme.of(
@@ -4475,12 +4851,14 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                 );
                               }
                               List<DriverScrutinyRow>
-                                  containerDriverScrutinyRowList =
+                                  driverSignatureContainerDriverScrutinyRowList =
                                   snapshot.data!;
 
-                              final containerDriverScrutinyRow =
-                                  containerDriverScrutinyRowList.isNotEmpty
-                                      ? containerDriverScrutinyRowList.first
+                              final driverSignatureContainerDriverScrutinyRow =
+                                  driverSignatureContainerDriverScrutinyRowList
+                                          .isNotEmpty
+                                      ? driverSignatureContainerDriverScrutinyRowList
+                                          .first
                                       : null;
 
                               return Material(
@@ -4526,10 +4904,10 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                               ),
                                         ),
                                       ),
-                                      if (containerDriverScrutinyRow
+                                      if (driverSignatureContainerDriverScrutinyRow
                                                   ?.driverSignature !=
                                               null &&
-                                          containerDriverScrutinyRow
+                                          driverSignatureContainerDriverScrutinyRow
                                                   ?.driverSignature !=
                                               '')
                                         ClipRRect(
@@ -4537,7 +4915,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                               BorderRadius.circular(12.0),
                                           child: Image.network(
                                             getCORSProxyUrl(
-                                              containerDriverScrutinyRow!
+                                              driverSignatureContainerDriverScrutinyRow!
                                                   .driverSignature!,
                                             ),
                                             width: MediaQuery.sizeOf(context)
@@ -4670,13 +5048,13 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                               controller:
                                                   _model.textController12 ??=
                                                       TextEditingController(
-                                                text: kartScrutinycheckKartScrutinyCheckRow
+                                                text: touringVehicleScrutinyKartScrutinyCheckRow
                                                                 ?.scrutinisedBy !=
                                                             null &&
-                                                        kartScrutinycheckKartScrutinyCheckRow
+                                                        touringVehicleScrutinyKartScrutinyCheckRow
                                                                 ?.scrutinisedBy !=
                                                             ''
-                                                    ? kartScrutinycheckKartScrutinyCheckRow
+                                                    ? touringVehicleScrutinyKartScrutinyCheckRow
                                                         ?.scrutinisedBy
                                                     : currentUserDisplayName,
                                               ),
@@ -4819,12 +5197,12 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                               controller:
                                                   _model.textController13 ??=
                                                       TextEditingController(
-                                                text: kartScrutinycheckKartScrutinyCheckRow
+                                                text: touringVehicleScrutinyKartScrutinyCheckRow
                                                             ?.scrutinisedAt !=
                                                         null
                                                     ? dateTimeFormat(
                                                         "y-MMM-d h:MM a",
-                                                        kartScrutinycheckKartScrutinyCheckRow
+                                                        touringVehicleScrutinyKartScrutinyCheckRow
                                                             ?.scrutinisedAt)
                                                     : dateTimeFormat(
                                                         "y-MMM-d h:MM a",
@@ -5056,7 +5434,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                       .commentsTextFieldTextController ??=
                                                   TextEditingController(
                                                 text:
-                                                    kartScrutinycheckKartScrutinyCheckRow
+                                                    touringVehicleScrutinyKartScrutinyCheckRow
                                                         ?.remarks,
                                               ),
                                               focusNode: _model
@@ -5229,19 +5607,19 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                                     )
                                                                 ? (valueOrDefault<
                                                                         bool>(
-                                                                      _model.exhaustNumberTextController.text !=
+                                                                      _model.seatbeltSerialNoTextController.text !=
                                                                               '',
                                                                       false,
                                                                     ) &&
                                                                     valueOrDefault<
                                                                         bool>(
-                                                                      _model.exhaustRotaxSealNoTextController.text !=
+                                                                      _model.cubicCapacityTextController.text !=
                                                                               '',
                                                                       false,
                                                                     ) &&
                                                                     valueOrDefault<
                                                                         bool>(
-                                                                      _model.exhaustOrgSealNoTextController.text !=
+                                                                      _model.minimumweightTextController.text !=
                                                                               '',
                                                                       false,
                                                                     ))
@@ -5257,7 +5635,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                             .adaptive(
                                                           value: _model
                                                                   .scrutinyOKValue ??=
-                                                              kartScrutinycheckKartScrutinyCheckRow!
+                                                              touringVehicleScrutinyKartScrutinyCheckRow!
                                                                   .passed!,
                                                           onChanged:
                                                               (newValue) async {
@@ -5327,7 +5705,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                           tileColor: FlutterFlowTheme
                                                                   .of(context)
                                                               .secondaryBackground,
-                                                          activeColor:
+                                                          activeThumbColor:
                                                               FlutterFlowTheme.of(
                                                                       context)
                                                                   .alternate,
@@ -5564,10 +5942,10 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                 fit: BoxFit.cover,
                                               ),
                                             );
-                                          } else if (kartScrutinycheckKartScrutinyCheckRow
+                                          } else if (touringVehicleScrutinyKartScrutinyCheckRow
                                                       ?.scruitneerSign !=
                                                   null &&
-                                              kartScrutinycheckKartScrutinyCheckRow
+                                              touringVehicleScrutinyKartScrutinyCheckRow
                                                       ?.scruitneerSign !=
                                                   '') {
                                             return ClipRRect(
@@ -5575,7 +5953,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                   BorderRadius.circular(8.0),
                                               child: Image.network(
                                                 getCORSProxyUrl(
-                                                  kartScrutinycheckKartScrutinyCheckRow!
+                                                  touringVehicleScrutinyKartScrutinyCheckRow!
                                                       .scruitneerSign!,
                                                 ),
                                                 width:
@@ -5617,7 +5995,8 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                           ),
                         ),
                       ),
-                    if (kartScrutinycheckKartScrutinyCheckRow?.passed == true)
+                    if (touringVehicleScrutinyKartScrutinyCheckRow?.passed ==
+                        true)
                       Material(
                         color: Colors.transparent,
                         elevation: 10.0,
@@ -5668,181 +6047,99 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                     16.0, 0.0, 16.0, 0.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    if (valueOrDefault<bool>(
-                                          widget.category == 'MicroMAX',
+                                    await KartScrutinyCheckTable().update(
+                                      data: {
+                                        'chassis_make':
+                                            _model.makeModelTextController.text,
+                                        'chassis_number':
+                                            _model.cCNumberTextController.text,
+                                        'main_engine_number': _model
+                                            .engineNumberTextController.text,
+                                        'main_engine_seal_number': _model
+                                            .engineSealNoTextController.text,
+                                        'spare_engine_number': _model
+                                            .turboSealNumberTextController.text,
+                                        'spare_engine_seal_number': _model
+                                            .geraBoxSealNoTextController.text,
+                                        'spare_engine_shared_with': _model
+                                            .fMSCIHomologationNoTextController
+                                            .text,
+                                        'ballast_available':
+                                            _model.ballastValue,
+                                        'ballast_weight': _model
+                                            .ballastWeightTextController.text,
+                                        'chk_chassis':
+                                            _model.chkRearViewmirrorsValue,
+                                        'chk_axle': _model.chkNameAxlesValue,
+                                        'chk_wheels':
+                                            _model.chkemgyStickWheelsValue,
+                                        'chk_steering':
+                                            _model.chkAdverStickSteerValue,
+                                        'chk_seat_fitment':
+                                            _model.chkSeatFitValue,
+                                        'chk_bodyworks':
+                                            _model.chkRollbarBodyWorkValue,
+                                        'chk_bumper_front_fairing':
+                                            _model.chk2clearBumperFrontValue,
+                                        'chk_exhaust':
+                                            _model.chkStarterExhaustValue,
+                                        'chk_carburetor':
+                                            _model.chkWindowlassCarburetorValue,
+                                        'chk_battery': _model.chkBatteryValue,
+                                        'chk_kill_switch':
+                                            _model.chkKillSwitchValue,
+                                        'chk_racing_nos':
+                                            _model.chkCompNosValue,
+                                        'chk_fuel_lines':
+                                            _model.chkFuelLinesValue,
+                                        'chk_transponder':
+                                            _model.chkwindscreenwashValue,
+                                        'chk_chain_guard':
+                                            _model.chkOilcanChainGuardValue,
+                                        'chk_ballast_fix':
+                                            _model.chkBallastValue,
+                                        'chk_seat_mount':
+                                            _model.chkSeatMountValue,
+                                        'passed': valueOrDefault<bool>(
+                                          _model.scrutinyOKValue,
                                           false,
-                                        ) ||
-                                        valueOrDefault<bool>(
-                                          widget.category == 'MiniMAX',
-                                          false,
-                                        )) {
-                                      await KartScrutinyCheckTable().update(
-                                        data: {
-                                          'chassis_make':
-                                              _model.cCMakeTextController.text,
-                                          'chassis_number': _model
-                                              .cCNumberTextController.text,
-                                          'main_engine_number': _model
-                                              .engineNumberTextController.text,
-                                          'main_engine_seal_number': _model
-                                              .engineSealNoTextController.text,
-                                          'spare_engine_shared':
-                                              _model.spareEngineValue,
-                                          'spare_engine_number': _model
-                                              .spareEngineNoTextController.text,
-                                          'spare_engine_seal_number': _model
-                                              .spareEngSealNoTextController
-                                              .text,
-                                          'spare_engine_shared_with': _model
-                                              .spareKartNoTextController.text,
-                                          'ballast_available':
-                                              _model.ballastValue,
-                                          'ballast_weight': _model
-                                              .ballastWeightTextController.text,
-                                          'chk_chassis': _model.chkChassisValue,
-                                          'chk_axle': _model.chkAxlesValue,
-                                          'chk_wheels': _model.chkWheelsValue,
-                                          'chk_steering':
-                                              _model.chkSteeringValue,
-                                          'chk_seat_fitment':
-                                              _model.chkSeatFitValue,
-                                          'chk_bodyworks':
-                                              _model.chkBodyWorkValue,
-                                          'chk_bumper_front_fairing':
-                                              _model.chkBumperFrontValue,
-                                          'chk_exhaust': _model.chkExhaustValue,
-                                          'chk_carburetor':
-                                              _model.chkCarburetorValue,
-                                          'chk_battery': _model.chkBatteryValue,
-                                          'chk_kill_switch':
-                                              _model.chkKillSwitchValue,
-                                          'chk_racing_nos':
-                                              _model.chkRacingNosValue,
-                                          'chk_fuel_lines':
-                                              _model.chkFuelLinesValue,
-                                          'chk_transponder':
-                                              _model.chkTransponderValue,
-                                          'chk_chain_guard':
-                                              _model.chkChainGuardValue,
-                                          'chk_ballast_fix':
-                                              _model.chkBallastValue,
-                                          'chk_seat_mount':
-                                              _model.chkSeatMountValue,
-                                          'passed': valueOrDefault<bool>(
-                                            _model.scrutinyOKValue,
-                                            false,
-                                          ),
-                                          'remarks': _model
-                                              .commentsTextFieldTextController
-                                              .text,
-                                          'scrutinised_at':
-                                              supaSerialize<DateTime>(
-                                                  getCurrentTimestamp),
-                                          'scrutinised_by':
-                                              _model.textController12.text,
-                                          'scruitneerSign': _model
-                                                          .psScruitneerSignature !=
-                                                      null &&
-                                                  _model.psScruitneerSignature !=
-                                                      ''
-                                              ? _model.returnedSignatureCopy
-                                              : kartScrutinycheckKartScrutinyCheckRow
-                                                  ?.scruitneerSign,
-                                          'exhaust_serial_Num': _model
-                                              .exhaustNumberTextController.text,
-                                          'exhaust_Rotax_No': _model
-                                              .exhaustRotaxSealNoTextController
-                                              .text,
-                                          'exhaust_org_seal': _model
-                                              .exhaustOrgSealNoTextController
-                                              .text,
-                                        },
-                                        matchingRows: (rows) => rows.eqOrNull(
-                                          'id',
-                                          widget.kartScrutinyID,
                                         ),
-                                      );
-                                    } else {
-                                      await KartScrutinyCheckTable().update(
-                                        data: {
-                                          'chassis_make':
-                                              _model.cCMakeTextController.text,
-                                          'chassis_number': _model
-                                              .cCNumberTextController.text,
-                                          'main_engine_number': _model
-                                              .engineNumberTextController.text,
-                                          'main_engine_seal_number': _model
-                                              .engineSealNoTextController.text,
-                                          'spare_engine_shared':
-                                              _model.spareEngineValue,
-                                          'spare_engine_number': _model
-                                              .spareEngineNoTextController.text,
-                                          'spare_engine_seal_number': _model
-                                              .spareEngSealNoTextController
-                                              .text,
-                                          'spare_engine_shared_with': _model
-                                              .spareKartNoTextController.text,
-                                          'ballast_available':
-                                              _model.ballastValue,
-                                          'ballast_weight': _model
-                                              .ballastWeightTextController.text,
-                                          'chk_chassis': _model.chkChassisValue,
-                                          'chk_axle': _model.chkAxlesValue,
-                                          'chk_wheels': _model.chkWheelsValue,
-                                          'chk_steering':
-                                              _model.chkSteeringValue,
-                                          'chk_seat_fitment':
-                                              _model.chkSeatFitValue,
-                                          'chk_bodyworks':
-                                              _model.chkBodyWorkValue,
-                                          'chk_bumper_front_fairing':
-                                              _model.chkBumperFrontValue,
-                                          'chk_exhaust': _model.chkExhaustValue,
-                                          'chk_carburetor':
-                                              _model.chkCarburetorValue,
-                                          'chk_battery': _model.chkBatteryValue,
-                                          'chk_kill_switch':
-                                              _model.chkKillSwitchValue,
-                                          'chk_racing_nos':
-                                              _model.chkRacingNosValue,
-                                          'chk_fuel_lines':
-                                              _model.chkFuelLinesValue,
-                                          'chk_transponder':
-                                              _model.chkTransponderValue,
-                                          'chk_chain_guard':
-                                              _model.chkChainGuardValue,
-                                          'chk_ballast_fix':
-                                              _model.chkBallastValue,
-                                          'chk_seat_mount':
-                                              _model.chkSeatMountValue,
-                                          'passed': valueOrDefault<bool>(
-                                            _model.scrutinyOKValue,
-                                            false,
-                                          ),
-                                          'remarks': _model
-                                              .commentsTextFieldTextController
-                                              .text,
-                                          'scrutinised_at':
-                                              supaSerialize<DateTime>(
-                                                  getCurrentTimestamp),
-                                          'scrutinised_by':
-                                              _model.textController12.text,
-                                          'scruitneerSign': _model
-                                                          .psScruitneerSignature !=
-                                                      null &&
-                                                  _model.psScruitneerSignature !=
-                                                      ''
-                                              ? _model.returnedSignatureCopy
-                                              : kartScrutinycheckKartScrutinyCheckRow
-                                                  ?.scruitneerSign,
-                                        },
-                                        matchingRows: (rows) => rows.eqOrNull(
-                                          'id',
-                                          widget.kartScrutinyID,
-                                        ),
-                                      );
-                                    }
-
+                                        'remarks': _model
+                                            .commentsTextFieldTextController
+                                            .text,
+                                        'scrutinised_at':
+                                            supaSerialize<DateTime>(
+                                                getCurrentTimestamp),
+                                        'scrutinised_by':
+                                            _model.textController12.text,
+                                        'scruitneerSign': _model
+                                                        .psScruitneerSignature !=
+                                                    null &&
+                                                _model.psScruitneerSignature !=
+                                                    ''
+                                            ? _model.returnedSignatureCopy
+                                            : touringVehicleScrutinyKartScrutinyCheckRow
+                                                ?.scruitneerSign,
+                                        'exhaust_serial_Num': _model
+                                            .seatbeltSerialNoTextController
+                                            .text,
+                                        'exhaust_Rotax_No': _model
+                                            .cubicCapacityTextController.text,
+                                        'exhaust_org_seal': _model
+                                            .minimumweightTextController.text,
+                                        'chk_18':
+                                            _model.chkwindscreenlaminaValue,
+                                        'chk_19': _model.chktoweyeValue,
+                                        'chk_20': _model.chkdriverdoorValue,
+                                        'chk_21':
+                                            _model.chkfirewallbulkheadValue,
+                                        'chk_22': _model.chkfireextfixValue,
+                                      },
+                                      matchingRows: (rows) => rows.eqOrNull(
+                                        'id',
+                                        widget.kartScrutinyID,
+                                      ),
+                                    );
                                     await EventRegistrationsTable().update(
                                       data: {
                                         'kartOK': valueOrDefault<bool>(
@@ -5955,7 +6252,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                               return Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  if (kartScrutinycheckKartScrutinyCheckRow
+                                  if (touringVehicleScrutinyKartScrutinyCheckRow
                                           ?.isSubmited ==
                                       false)
                                     Padding(
@@ -5963,100 +6260,48 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                           16.0, 0.0, 16.0, 0.0),
                                       child: FFButtonWidget(
                                         onPressed: () async {
-                                          if (valueOrDefault<bool>(
-                                                widget.category == 'MicroMAX',
-                                                false,
-                                              ) ||
-                                              valueOrDefault<bool>(
-                                                widget.category == 'MiniMAX',
-                                                false,
-                                              )) {
-                                            await KartScrutinyCheckTable()
-                                                .update(
-                                              data: {
-                                                'chassis_make': _model
-                                                    .cCMakeTextController.text,
-                                                'chassis_number': _model
-                                                    .cCNumberTextController
-                                                    .text,
-                                                'main_engine_number': _model
-                                                    .engineNumberTextController
-                                                    .text,
-                                                'main_engine_seal_number': _model
-                                                    .engineSealNoTextController
-                                                    .text,
-                                                'spare_engine_shared':
-                                                    _model.spareEngineValue,
-                                                'spare_engine_number': _model
-                                                    .spareEngineNoTextController
-                                                    .text,
-                                                'spare_engine_seal_number': _model
-                                                    .spareEngSealNoTextController
-                                                    .text,
-                                                'spare_engine_shared_with': _model
-                                                    .spareKartNoTextController
-                                                    .text,
-                                                'ballast_available':
-                                                    _model.ballastValue,
-                                                'ballast_weight': _model
-                                                    .ballastWeightTextController
-                                                    .text,
-                                                'exhaust_serial_Num': _model
-                                                    .exhaustNumberTextController
-                                                    .text,
-                                                'exhaust_Rotax_No': _model
-                                                    .exhaustRotaxSealNoTextController
-                                                    .text,
-                                                'exhaust_org_seal': _model
-                                                    .exhaustOrgSealNoTextController
-                                                    .text,
-                                              },
-                                              matchingRows: (rows) =>
-                                                  rows.eqOrNull(
-                                                'id',
-                                                widget.kartScrutinyID,
-                                              ),
-                                            );
-                                          } else {
-                                            await KartScrutinyCheckTable()
-                                                .update(
-                                              data: {
-                                                'chassis_make': _model
-                                                    .cCMakeTextController.text,
-                                                'chassis_number': _model
-                                                    .cCNumberTextController
-                                                    .text,
-                                                'main_engine_number': _model
-                                                    .engineNumberTextController
-                                                    .text,
-                                                'main_engine_seal_number': _model
-                                                    .engineSealNoTextController
-                                                    .text,
-                                                'spare_engine_shared':
-                                                    _model.spareEngineValue,
-                                                'spare_engine_number': _model
-                                                    .spareEngineNoTextController
-                                                    .text,
-                                                'spare_engine_seal_number': _model
-                                                    .spareEngSealNoTextController
-                                                    .text,
-                                                'spare_engine_shared_with': _model
-                                                    .spareKartNoTextController
-                                                    .text,
-                                                'ballast_available':
-                                                    _model.ballastValue,
-                                                'ballast_weight': _model
-                                                    .ballastWeightTextController
-                                                    .text,
-                                              },
-                                              matchingRows: (rows) =>
-                                                  rows.eqOrNull(
-                                                'id',
-                                                widget.kartScrutinyID,
-                                              ),
-                                            );
-                                          }
-
+                                          await KartScrutinyCheckTable().update(
+                                            data: {
+                                              'chassis_make': _model
+                                                  .makeModelTextController.text,
+                                              'chassis_number': _model
+                                                  .cCNumberTextController.text,
+                                              'main_engine_number': _model
+                                                  .engineNumberTextController
+                                                  .text,
+                                              'main_engine_seal_number': _model
+                                                  .engineSealNoTextController
+                                                  .text,
+                                              'spare_engine_number': _model
+                                                  .turboSealNumberTextController
+                                                  .text,
+                                              'spare_engine_seal_number': _model
+                                                  .geraBoxSealNoTextController
+                                                  .text,
+                                              'spare_engine_shared_with': _model
+                                                  .fMSCIHomologationNoTextController
+                                                  .text,
+                                              'ballast_available':
+                                                  _model.ballastValue,
+                                              'ballast_weight': _model
+                                                  .ballastWeightTextController
+                                                  .text,
+                                              'exhaust_serial_Num': _model
+                                                  .seatbeltSerialNoTextController
+                                                  .text,
+                                              'exhaust_Rotax_No': _model
+                                                  .cubicCapacityTextController
+                                                  .text,
+                                              'exhaust_org_seal': _model
+                                                  .minimumweightTextController
+                                                  .text,
+                                            },
+                                            matchingRows: (rows) =>
+                                                rows.eqOrNull(
+                                              'id',
+                                              widget.kartScrutinyID,
+                                            ),
+                                          );
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             SnackBar(
@@ -6128,7 +6373,7 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                         ),
                                       ),
                                     ),
-                                  if (kartScrutinycheckKartScrutinyCheckRow
+                                  if (touringVehicleScrutinyKartScrutinyCheckRow
                                           ?.isSubmited ==
                                       false)
                                     Padding(
@@ -6137,9 +6382,9 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                       child: FFButtonWidget(
                                         onPressed: () async {
                                           _model.kartFormValidate = true;
-                                          if (_model.formKey2.currentState ==
+                                          if (_model.formKey.currentState ==
                                                   null ||
-                                              !_model.formKey2.currentState!
+                                              !_model.formKey.currentState!
                                                   .validate()) {
                                             _model.kartFormValidate = false;
                                           }
@@ -6179,111 +6424,52 @@ class _KartScrutinycheckWidgetState extends State<KartScrutinycheckWidget> {
                                                     ) ??
                                                     false;
                                             if (confirmDialogResponse) {
-                                              if (valueOrDefault<bool>(
-                                                    widget.category ==
-                                                        'MicroMAX',
-                                                    false,
-                                                  ) ||
-                                                  valueOrDefault<bool>(
-                                                    widget.category ==
-                                                        'MiniMAX',
-                                                    false,
-                                                  )) {
-                                                await KartScrutinyCheckTable()
-                                                    .update(
-                                                  data: {
-                                                    'chassis_make': _model
-                                                        .cCMakeTextController
-                                                        .text,
-                                                    'chassis_number': _model
-                                                        .cCNumberTextController
-                                                        .text,
-                                                    'main_engine_number': _model
-                                                        .engineNumberTextController
-                                                        .text,
-                                                    'main_engine_seal_number':
-                                                        _model
-                                                            .engineSealNoTextController
-                                                            .text,
-                                                    'spare_engine_shared':
-                                                        _model.spareEngineValue,
-                                                    'spare_engine_number': _model
-                                                        .spareEngineNoTextController
-                                                        .text,
-                                                    'spare_engine_seal_number':
-                                                        _model
-                                                            .spareEngSealNoTextController
-                                                            .text,
-                                                    'spare_engine_shared_with':
-                                                        _model
-                                                            .spareKartNoTextController
-                                                            .text,
-                                                    'ballast_available':
-                                                        _model.ballastValue,
-                                                    'ballast_weight': _model
-                                                        .ballastWeightTextController
-                                                        .text,
-                                                    'isSubmited': true,
-                                                    'exhaust_serial_Num': _model
-                                                        .exhaustNumberTextController
-                                                        .text,
-                                                    'exhaust_Rotax_No': _model
-                                                        .exhaustRotaxSealNoTextController
-                                                        .text,
-                                                    'exhaust_org_seal': _model
-                                                        .exhaustOrgSealNoTextController
-                                                        .text,
-                                                  },
-                                                  matchingRows: (rows) =>
-                                                      rows.eqOrNull(
-                                                    'id',
-                                                    widget.kartScrutinyID,
-                                                  ),
-                                                );
-                                              } else {
-                                                await KartScrutinyCheckTable()
-                                                    .update(
-                                                  data: {
-                                                    'chassis_make': _model
-                                                        .cCMakeTextController
-                                                        .text,
-                                                    'chassis_number': _model
-                                                        .cCNumberTextController
-                                                        .text,
-                                                    'main_engine_number': _model
-                                                        .engineNumberTextController
-                                                        .text,
-                                                    'main_engine_seal_number':
-                                                        _model
-                                                            .engineSealNoTextController
-                                                            .text,
-                                                    'spare_engine_shared':
-                                                        _model.spareEngineValue,
-                                                    'spare_engine_number': _model
-                                                        .spareEngineNoTextController
-                                                        .text,
-                                                    'spare_engine_seal_number':
-                                                        _model
-                                                            .spareEngSealNoTextController
-                                                            .text,
-                                                    'spare_engine_shared_with':
-                                                        _model
-                                                            .spareKartNoTextController
-                                                            .text,
-                                                    'ballast_available':
-                                                        _model.ballastValue,
-                                                    'ballast_weight': _model
-                                                        .ballastWeightTextController
-                                                        .text,
-                                                    'isSubmited': true,
-                                                  },
-                                                  matchingRows: (rows) =>
-                                                      rows.eqOrNull(
-                                                    'id',
-                                                    widget.kartScrutinyID,
-                                                  ),
-                                                );
-                                              }
+                                              await KartScrutinyCheckTable()
+                                                  .update(
+                                                data: {
+                                                  'chassis_make': _model
+                                                      .makeModelTextController
+                                                      .text,
+                                                  'chassis_number': _model
+                                                      .cCNumberTextController
+                                                      .text,
+                                                  'main_engine_number': _model
+                                                      .engineNumberTextController
+                                                      .text,
+                                                  'main_engine_seal_number': _model
+                                                      .engineSealNoTextController
+                                                      .text,
+                                                  'spare_engine_number': _model
+                                                      .turboSealNumberTextController
+                                                      .text,
+                                                  'spare_engine_seal_number': _model
+                                                      .geraBoxSealNoTextController
+                                                      .text,
+                                                  'spare_engine_shared_with': _model
+                                                      .fMSCIHomologationNoTextController
+                                                      .text,
+                                                  'ballast_available':
+                                                      _model.ballastValue,
+                                                  'ballast_weight': _model
+                                                      .ballastWeightTextController
+                                                      .text,
+                                                  'isSubmited': true,
+                                                  'exhaust_serial_Num': _model
+                                                      .seatbeltSerialNoTextController
+                                                      .text,
+                                                  'exhaust_Rotax_No': _model
+                                                      .cubicCapacityTextController
+                                                      .text,
+                                                  'exhaust_org_seal': _model
+                                                      .minimumweightTextController
+                                                      .text,
+                                                },
+                                                matchingRows: (rows) =>
+                                                    rows.eqOrNull(
+                                                  'id',
+                                                  widget.kartScrutinyID,
+                                                ),
+                                              );
 
                                               context.goNamed(
                                                   UserEventsListPageWidget

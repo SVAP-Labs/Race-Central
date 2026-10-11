@@ -137,6 +137,22 @@ class UsersRecord extends FirestoreRecord {
       _eventEmegencyDetails ?? UserEmergencyDetailsStruct();
   bool hasEventEmegencyDetails() => _eventEmegencyDetails != null;
 
+  // "user_id_proof" field.
+  String? _userIdProof;
+  String get userIdProof => _userIdProof ?? '';
+  bool hasUserIdProof() => _userIdProof != null;
+
+  // "user_detail_profile" field.
+  UserDetailsProfileStruct? _userDetailProfile;
+  UserDetailsProfileStruct get userDetailProfile =>
+      _userDetailProfile ?? UserDetailsProfileStruct();
+  bool hasUserDetailProfile() => _userDetailProfile != null;
+
+  // "gender" field.
+  String? _gender;
+  String get gender => _gender ?? '';
+  bool hasGender() => _gender != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -170,6 +186,13 @@ class UsersRecord extends FirestoreRecord {
             ? snapshotData['event_Emegency_Details']
             : UserEmergencyDetailsStruct.maybeFromMap(
                 snapshotData['event_Emegency_Details']);
+    _userIdProof = snapshotData['user_id_proof'] as String?;
+    _userDetailProfile =
+        snapshotData['user_detail_profile'] is UserDetailsProfileStruct
+            ? snapshotData['user_detail_profile']
+            : UserDetailsProfileStruct.maybeFromMap(
+                snapshotData['user_detail_profile']);
+    _gender = snapshotData['gender'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -201,8 +224,7 @@ class UsersRecord extends FirestoreRecord {
 
   @override
   bool operator ==(other) =>
-      other is UsersRecord &&
-      reference.path.hashCode == other.reference.path.hashCode;
+      other is UsersRecord && reference.path == other.reference.path;
 }
 
 Map<String, dynamic> createUsersRecordData({
@@ -230,6 +252,9 @@ Map<String, dynamic> createUsersRecordData({
   String? prefferedEntryNumber,
   UserAddressStruct? address,
   UserEmergencyDetailsStruct? eventEmegencyDetails,
+  String? userIdProof,
+  UserDetailsProfileStruct? userDetailProfile,
+  String? gender,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -257,6 +282,9 @@ Map<String, dynamic> createUsersRecordData({
       'preffered_entry_number': prefferedEntryNumber,
       'Address': UserAddressStruct().toMap(),
       'event_Emegency_Details': UserEmergencyDetailsStruct().toMap(),
+      'user_id_proof': userIdProof,
+      'user_detail_profile': UserDetailsProfileStruct().toMap(),
+      'gender': gender,
     }.withoutNulls,
   );
 
@@ -266,6 +294,10 @@ Map<String, dynamic> createUsersRecordData({
   // Handle nested data for "event_Emegency_Details" field.
   addUserEmergencyDetailsStructData(
       firestoreData, eventEmegencyDetails, 'event_Emegency_Details');
+
+  // Handle nested data for "user_detail_profile" field.
+  addUserDetailsProfileStructData(
+      firestoreData, userDetailProfile, 'user_detail_profile');
 
   return firestoreData;
 }
@@ -298,7 +330,10 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.alternateEmail == e2?.alternateEmail &&
         e1?.prefferedEntryNumber == e2?.prefferedEntryNumber &&
         e1?.address == e2?.address &&
-        e1?.eventEmegencyDetails == e2?.eventEmegencyDetails;
+        e1?.eventEmegencyDetails == e2?.eventEmegencyDetails &&
+        e1?.userIdProof == e2?.userIdProof &&
+        e1?.userDetailProfile == e2?.userDetailProfile &&
+        e1?.gender == e2?.gender;
   }
 
   @override
@@ -326,7 +361,10 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.alternateEmail,
         e?.prefferedEntryNumber,
         e?.address,
-        e?.eventEmegencyDetails
+        e?.eventEmegencyDetails,
+        e?.userIdProof,
+        e?.userDetailProfile,
+        e?.gender
       ]);
 
   @override

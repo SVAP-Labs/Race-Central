@@ -1,3 +1,4 @@
+import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/index.dart';
@@ -28,6 +29,10 @@ class WithADropPageModel extends FlutterFlowModel<WithADropPageWidget> {
   // State field(s) for statusDropdown widget.
   String? statusDropdownValue;
   FormFieldController<String>? statusDropdownValueController;
+  // Stores action output result for [Backend Call - Query Rows] action in Button widget.
+  List<ChampionshipCategoriesRow>? queriedEventCategory;
+  // Stores action output result for [Backend Call - Query Rows] action in Button widget.
+  List<ChampionshipCategoriesRow>? queriedEventCategoryVheicle;
 
   @override
   void initState(BuildContext context) {}

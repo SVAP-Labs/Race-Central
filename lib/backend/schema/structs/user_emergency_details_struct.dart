@@ -12,11 +12,23 @@ class UserEmergencyDetailsStruct extends FFFirebaseStruct {
     String? emergencyPhone,
     String? relationship,
     String? emergencyEmail,
+    String? emergencyAddressLane,
+    String? emergencyStreetlane,
+    String? emergencyCity,
+    String? emergencyState,
+    String? emergencyPincode,
+    String? emergencyCountry,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _emergencyName = emergencyName,
         _emergencyPhone = emergencyPhone,
         _relationship = relationship,
         _emergencyEmail = emergencyEmail,
+        _emergencyAddressLane = emergencyAddressLane,
+        _emergencyStreetlane = emergencyStreetlane,
+        _emergencyCity = emergencyCity,
+        _emergencyState = emergencyState,
+        _emergencyPincode = emergencyPincode,
+        _emergencyCountry = emergencyCountry,
         super(firestoreUtilData);
 
   // "emergency_name" field.
@@ -47,12 +59,60 @@ class UserEmergencyDetailsStruct extends FFFirebaseStruct {
 
   bool hasEmergencyEmail() => _emergencyEmail != null;
 
+  // "emergency_address_Lane" field.
+  String? _emergencyAddressLane;
+  String get emergencyAddressLane => _emergencyAddressLane ?? '';
+  set emergencyAddressLane(String? val) => _emergencyAddressLane = val;
+
+  bool hasEmergencyAddressLane() => _emergencyAddressLane != null;
+
+  // "emergency_streetlane" field.
+  String? _emergencyStreetlane;
+  String get emergencyStreetlane => _emergencyStreetlane ?? '';
+  set emergencyStreetlane(String? val) => _emergencyStreetlane = val;
+
+  bool hasEmergencyStreetlane() => _emergencyStreetlane != null;
+
+  // "emergency_city" field.
+  String? _emergencyCity;
+  String get emergencyCity => _emergencyCity ?? '';
+  set emergencyCity(String? val) => _emergencyCity = val;
+
+  bool hasEmergencyCity() => _emergencyCity != null;
+
+  // "emergency_state" field.
+  String? _emergencyState;
+  String get emergencyState => _emergencyState ?? '';
+  set emergencyState(String? val) => _emergencyState = val;
+
+  bool hasEmergencyState() => _emergencyState != null;
+
+  // "emergency_pincode" field.
+  String? _emergencyPincode;
+  String get emergencyPincode => _emergencyPincode ?? '';
+  set emergencyPincode(String? val) => _emergencyPincode = val;
+
+  bool hasEmergencyPincode() => _emergencyPincode != null;
+
+  // "emergency_country" field.
+  String? _emergencyCountry;
+  String get emergencyCountry => _emergencyCountry ?? '';
+  set emergencyCountry(String? val) => _emergencyCountry = val;
+
+  bool hasEmergencyCountry() => _emergencyCountry != null;
+
   static UserEmergencyDetailsStruct fromMap(Map<String, dynamic> data) =>
       UserEmergencyDetailsStruct(
         emergencyName: data['emergency_name'] as String?,
         emergencyPhone: data['emergency_phone'] as String?,
         relationship: data['relationship'] as String?,
         emergencyEmail: data['emergency_email'] as String?,
+        emergencyAddressLane: data['emergency_address_Lane'] as String?,
+        emergencyStreetlane: data['emergency_streetlane'] as String?,
+        emergencyCity: data['emergency_city'] as String?,
+        emergencyState: data['emergency_state'] as String?,
+        emergencyPincode: data['emergency_pincode'] as String?,
+        emergencyCountry: data['emergency_country'] as String?,
       );
 
   static UserEmergencyDetailsStruct? maybeFromMap(dynamic data) => data is Map
@@ -64,6 +124,12 @@ class UserEmergencyDetailsStruct extends FFFirebaseStruct {
         'emergency_phone': _emergencyPhone,
         'relationship': _relationship,
         'emergency_email': _emergencyEmail,
+        'emergency_address_Lane': _emergencyAddressLane,
+        'emergency_streetlane': _emergencyStreetlane,
+        'emergency_city': _emergencyCity,
+        'emergency_state': _emergencyState,
+        'emergency_pincode': _emergencyPincode,
+        'emergency_country': _emergencyCountry,
       }.withoutNulls;
 
   @override
@@ -82,6 +148,30 @@ class UserEmergencyDetailsStruct extends FFFirebaseStruct {
         ),
         'emergency_email': serializeParam(
           _emergencyEmail,
+          ParamType.String,
+        ),
+        'emergency_address_Lane': serializeParam(
+          _emergencyAddressLane,
+          ParamType.String,
+        ),
+        'emergency_streetlane': serializeParam(
+          _emergencyStreetlane,
+          ParamType.String,
+        ),
+        'emergency_city': serializeParam(
+          _emergencyCity,
+          ParamType.String,
+        ),
+        'emergency_state': serializeParam(
+          _emergencyState,
+          ParamType.String,
+        ),
+        'emergency_pincode': serializeParam(
+          _emergencyPincode,
+          ParamType.String,
+        ),
+        'emergency_country': serializeParam(
+          _emergencyCountry,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -109,6 +199,36 @@ class UserEmergencyDetailsStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        emergencyAddressLane: deserializeParam(
+          data['emergency_address_Lane'],
+          ParamType.String,
+          false,
+        ),
+        emergencyStreetlane: deserializeParam(
+          data['emergency_streetlane'],
+          ParamType.String,
+          false,
+        ),
+        emergencyCity: deserializeParam(
+          data['emergency_city'],
+          ParamType.String,
+          false,
+        ),
+        emergencyState: deserializeParam(
+          data['emergency_state'],
+          ParamType.String,
+          false,
+        ),
+        emergencyPincode: deserializeParam(
+          data['emergency_pincode'],
+          ParamType.String,
+          false,
+        ),
+        emergencyCountry: deserializeParam(
+          data['emergency_country'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -120,12 +240,28 @@ class UserEmergencyDetailsStruct extends FFFirebaseStruct {
         emergencyName == other.emergencyName &&
         emergencyPhone == other.emergencyPhone &&
         relationship == other.relationship &&
-        emergencyEmail == other.emergencyEmail;
+        emergencyEmail == other.emergencyEmail &&
+        emergencyAddressLane == other.emergencyAddressLane &&
+        emergencyStreetlane == other.emergencyStreetlane &&
+        emergencyCity == other.emergencyCity &&
+        emergencyState == other.emergencyState &&
+        emergencyPincode == other.emergencyPincode &&
+        emergencyCountry == other.emergencyCountry;
   }
 
   @override
-  int get hashCode => const ListEquality()
-      .hash([emergencyName, emergencyPhone, relationship, emergencyEmail]);
+  int get hashCode => const ListEquality().hash([
+        emergencyName,
+        emergencyPhone,
+        relationship,
+        emergencyEmail,
+        emergencyAddressLane,
+        emergencyStreetlane,
+        emergencyCity,
+        emergencyState,
+        emergencyPincode,
+        emergencyCountry
+      ]);
 }
 
 UserEmergencyDetailsStruct createUserEmergencyDetailsStruct({
@@ -133,6 +269,12 @@ UserEmergencyDetailsStruct createUserEmergencyDetailsStruct({
   String? emergencyPhone,
   String? relationship,
   String? emergencyEmail,
+  String? emergencyAddressLane,
+  String? emergencyStreetlane,
+  String? emergencyCity,
+  String? emergencyState,
+  String? emergencyPincode,
+  String? emergencyCountry,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -143,6 +285,12 @@ UserEmergencyDetailsStruct createUserEmergencyDetailsStruct({
       emergencyPhone: emergencyPhone,
       relationship: relationship,
       emergencyEmail: emergencyEmail,
+      emergencyAddressLane: emergencyAddressLane,
+      emergencyStreetlane: emergencyStreetlane,
+      emergencyCity: emergencyCity,
+      emergencyState: emergencyState,
+      emergencyPincode: emergencyPincode,
+      emergencyCountry: emergencyCountry,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/pages/components/driver_nav_bar/driver_nav_bar_widget.dart';
 import '/pages/user_pages/event_details/event_details_widget.dart';
 import '/pages/user_pages/iame_pages/iame_event_registration/iame_event_registration_widget.dart';
+import '/pages/user_pages/jk_pages/j_k_registration_component/j_k_registration_component_widget.dart';
 import '/pages/user_pages/meco_pages/event_registration_component/event_registration_component_widget.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
@@ -534,168 +535,206 @@ class _UserEventsListPageWidgetState extends State<UserEventsListPageWidget>
                                                                           .success,
                                                                 ),
                                                               ),
-                                                              FFButtonWidget(
-                                                                onPressed:
-                                                                    () async {
-                                                                  FFAppState()
-                                                                          .userChoosenEvent =
-                                                                      upComingEventsItem
-                                                                          .eventUid!;
-                                                                  safeSetState(
-                                                                      () {});
-                                                                  if (upComingEventsItem
-                                                                          .eventType ==
-                                                                      'Karting_IAME') {
-                                                                    await showModalBottomSheet(
-                                                                      isScrollControlled:
-                                                                          true,
-                                                                      backgroundColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      enableDrag:
-                                                                          false,
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) {
-                                                                        return WebViewAware(
-                                                                          child:
-                                                                              GestureDetector(
-                                                                            onTap:
-                                                                                () {
-                                                                              FocusScope.of(context).unfocus();
-                                                                              FocusManager.instance.primaryFocus?.unfocus();
-                                                                            },
+                                                              if (valueOrDefault<
+                                                                  bool>(
+                                                                upComingEventsItem
+                                                                        .eventRegEndDate! >=
+                                                                    getCurrentTimestamp,
+                                                                false,
+                                                              ))
+                                                                FFButtonWidget(
+                                                                  onPressed:
+                                                                      () async {
+                                                                    FFAppState()
+                                                                            .userChoosenEvent =
+                                                                        upComingEventsItem
+                                                                            .eventUid!;
+                                                                    safeSetState(
+                                                                        () {});
+                                                                    if (upComingEventsItem
+                                                                            .eventType ==
+                                                                        'Karting_IAME') {
+                                                                      await showModalBottomSheet(
+                                                                        isScrollControlled:
+                                                                            true,
+                                                                        backgroundColor:
+                                                                            Colors.transparent,
+                                                                        enableDrag:
+                                                                            false,
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (context) {
+                                                                          return WebViewAware(
                                                                             child:
-                                                                                Padding(
-                                                                              padding: MediaQuery.viewInsetsOf(context),
-                                                                              child: IameEventRegistrationWidget(
-                                                                                pEventUD: upComingEventsItem.eventUid!,
-                                                                                pChmpshipID: upComingEventsItem.eventChampionship!,
-                                                                                pBanner: upComingEventsItem.eventBanner!,
-                                                                                pLateFeeDate: upComingEventsItem.evenLateFeeDate!,
-                                                                                eventpColour: upComingEventsItem.eventPColour!,
-                                                                                eventpText: upComingEventsItem.eventPText!,
-                                                                                eventPayQR: upComingEventsItem.paymentQR!,
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                        );
-                                                                      },
-                                                                    ).then((value) =>
-                                                                        safeSetState(
-                                                                            () {}));
-                                                                  } else if (upComingEventsItem
-                                                                          .eventType ==
-                                                                      'Karting') {
-                                                                    await showModalBottomSheet(
-                                                                      isScrollControlled:
-                                                                          true,
-                                                                      backgroundColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      enableDrag:
-                                                                          false,
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) {
-                                                                        return WebViewAware(
-                                                                          child:
-                                                                              GestureDetector(
-                                                                            onTap:
-                                                                                () {
-                                                                              FocusScope.of(context).unfocus();
-                                                                              FocusManager.instance.primaryFocus?.unfocus();
-                                                                            },
-                                                                            child:
-                                                                                Padding(
-                                                                              padding: MediaQuery.viewInsetsOf(context),
-                                                                              child: EventRegistrationComponentWidget(
-                                                                                pEventUD: upComingEventsItem.eventUid!,
-                                                                                pChmpshipID: upComingEventsItem.eventChampionship!,
-                                                                                pBanner: upComingEventsItem.eventBanner!,
-                                                                                pLateFeeDate: upComingEventsItem.evenLateFeeDate!,
-                                                                                eventpColour: upComingEventsItem.eventPColour!,
-                                                                                eventpText: upComingEventsItem.eventPText!,
-                                                                                eventNote: valueOrDefault<String>(
-                                                                                  upComingEventsItem.eventNotes,
-                                                                                  '-',
+                                                                                GestureDetector(
+                                                                              onTap: () {
+                                                                                FocusScope.of(context).unfocus();
+                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                              },
+                                                                              child: Padding(
+                                                                                padding: MediaQuery.viewInsetsOf(context),
+                                                                                child: IameEventRegistrationWidget(
+                                                                                  pEventUD: upComingEventsItem.eventUid!,
+                                                                                  pChmpshipID: upComingEventsItem.eventChampionship!,
+                                                                                  pBanner: upComingEventsItem.eventBanner!,
+                                                                                  pLateFeeDate: upComingEventsItem.evenLateFeeDate!,
+                                                                                  eventpColour: upComingEventsItem.eventPColour!,
+                                                                                  eventpText: upComingEventsItem.eventPText!,
+                                                                                  eventPayQR: upComingEventsItem.paymentQR!,
                                                                                 ),
-                                                                                enableNote: upComingEventsItem.noteEnable,
                                                                               ),
                                                                             ),
+                                                                          );
+                                                                        },
+                                                                      ).then((value) =>
+                                                                          safeSetState(
+                                                                              () {}));
+                                                                    } else if (upComingEventsItem
+                                                                            .eventType ==
+                                                                        'Karting') {
+                                                                      await showModalBottomSheet(
+                                                                        isScrollControlled:
+                                                                            true,
+                                                                        backgroundColor:
+                                                                            Colors.transparent,
+                                                                        enableDrag:
+                                                                            false,
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (context) {
+                                                                          return WebViewAware(
+                                                                            child:
+                                                                                GestureDetector(
+                                                                              onTap: () {
+                                                                                FocusScope.of(context).unfocus();
+                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                              },
+                                                                              child: Padding(
+                                                                                padding: MediaQuery.viewInsetsOf(context),
+                                                                                child: EventRegistrationComponentWidget(
+                                                                                  pEventUD: upComingEventsItem.eventUid!,
+                                                                                  pChmpshipID: upComingEventsItem.eventChampionship!,
+                                                                                  pBanner: upComingEventsItem.eventBanner!,
+                                                                                  pLateFeeDate: upComingEventsItem.evenLateFeeDate!,
+                                                                                  eventpColour: upComingEventsItem.eventPColour!,
+                                                                                  eventpText: upComingEventsItem.eventPText!,
+                                                                                  eventNote: valueOrDefault<String>(
+                                                                                    upComingEventsItem.eventNotes,
+                                                                                    '-',
+                                                                                  ),
+                                                                                  enableNote: upComingEventsItem.noteEnable,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          );
+                                                                        },
+                                                                      ).then((value) =>
+                                                                          safeSetState(
+                                                                              () {}));
+                                                                    } else if (upComingEventsItem
+                                                                            .eventType ==
+                                                                        'Racing') {
+                                                                      await showModalBottomSheet(
+                                                                        isScrollControlled:
+                                                                            true,
+                                                                        backgroundColor:
+                                                                            Colors.transparent,
+                                                                        enableDrag:
+                                                                            false,
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (context) {
+                                                                          return WebViewAware(
+                                                                            child:
+                                                                                GestureDetector(
+                                                                              onTap: () {
+                                                                                FocusScope.of(context).unfocus();
+                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                              },
+                                                                              child: Padding(
+                                                                                padding: MediaQuery.viewInsetsOf(context),
+                                                                                child: JKRegistrationComponentWidget(
+                                                                                  pEventUD: upComingEventsItem.eventUid!,
+                                                                                  pChmpshipID: upComingEventsItem.eventChampionship!,
+                                                                                  pBanner: upComingEventsItem.eventBanner!,
+                                                                                  pLateFeeDate: upComingEventsItem.evenLateFeeDate!,
+                                                                                  eventpColour: upComingEventsItem.eventPColour!,
+                                                                                  eventpText: upComingEventsItem.eventPText!,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          );
+                                                                        },
+                                                                      ).then((value) =>
+                                                                          safeSetState(
+                                                                              () {}));
+                                                                    }
+                                                                  },
+                                                                  text:
+                                                                      'Register for Event',
+                                                                  options:
+                                                                      FFButtonOptions(
+                                                                    height:
+                                                                        28.0,
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            16.0,
+                                                                            0.0,
+                                                                            16.0,
+                                                                            0.0),
+                                                                    iconPadding:
+                                                                        EdgeInsetsDirectional.fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryBackground,
+                                                                    textStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .titleSmall
+                                                                        .override(
+                                                                          font:
+                                                                              GoogleFonts.interTight(
+                                                                            fontWeight:
+                                                                                FontWeight.w600,
+                                                                            fontStyle:
+                                                                                FlutterFlowTheme.of(context).titleSmall.fontStyle,
                                                                           ),
-                                                                        );
-                                                                      },
-                                                                    ).then((value) =>
-                                                                        safeSetState(
-                                                                            () {}));
-                                                                  }
-                                                                },
-                                                                text:
-                                                                    'Register for Event',
-                                                                options:
-                                                                    FFButtonOptions(
-                                                                  height: 28.0,
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          16.0,
-                                                                          0.0,
-                                                                          16.0,
-                                                                          0.0),
-                                                                  iconPadding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryBackground,
-                                                                  textStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .titleSmall
-                                                                      .override(
-                                                                        font: GoogleFonts
-                                                                            .interTight(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          fontSize:
+                                                                              12.0,
+                                                                          letterSpacing:
+                                                                              0.0,
                                                                           fontWeight:
                                                                               FontWeight.w600,
                                                                           fontStyle: FlutterFlowTheme.of(context)
                                                                               .titleSmall
                                                                               .fontStyle,
                                                                         ),
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryText,
-                                                                        fontSize:
-                                                                            12.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        fontStyle: FlutterFlowTheme.of(context)
-                                                                            .titleSmall
-                                                                            .fontStyle,
-                                                                      ),
-                                                                  elevation:
-                                                                      10.0,
-                                                                  borderSide:
-                                                                      BorderSide(
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .alternate,
-                                                                    width: 2.0,
-                                                                  ),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8.0),
-                                                                  hoverColor:
-                                                                      FlutterFlowTheme.of(
+                                                                    elevation:
+                                                                        10.0,
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      color: FlutterFlowTheme.of(
                                                                               context)
-                                                                          .success,
+                                                                          .alternate,
+                                                                      width:
+                                                                          2.0,
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                    hoverColor:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .success,
+                                                                  ),
                                                                 ),
-                                                              ),
                                                             ],
                                                           ),
                                                         ),
@@ -1117,6 +1156,8 @@ class _UserEventsListPageWidgetState extends State<UserEventsListPageWidget>
                                                                               listViewEventRegistrationsRow.category,
                                                                               'Loading..',
                                                                             ),
+                                                                            maxLines:
+                                                                                2,
                                                                             style: FlutterFlowTheme.of(context).titleMedium.override(
                                                                                   font: GoogleFonts.interTight(
                                                                                     fontWeight: FontWeight.w600,
@@ -1128,6 +1169,8 @@ class _UserEventsListPageWidgetState extends State<UserEventsListPageWidget>
                                                                                   fontWeight: FontWeight.w600,
                                                                                   fontStyle: FlutterFlowTheme.of(context).titleMedium.fontStyle,
                                                                                 ),
+                                                                            overflow:
+                                                                                TextOverflow.visible,
                                                                           ),
                                                                         ].divide(SizedBox(width: 8.0)),
                                                                       ),
@@ -1228,7 +1271,7 @@ class _UserEventsListPageWidgetState extends State<UserEventsListPageWidget>
                                                                                 listViewEventRegistrationsRow.eventId,
                                                                               ),
                                                                             );
-                                                                            if (_model.selectedEvent?.firstOrNull?.eventType ==
+                                                                            if (_model.selectedEventReg?.firstOrNull?.eventType ==
                                                                                 'Karting_IAME') {
                                                                               context.pushNamed(
                                                                                 IameRegistrationWidget.routeName,
@@ -1267,7 +1310,47 @@ class _UserEventsListPageWidgetState extends State<UserEventsListPageWidget>
                                                                                   ),
                                                                                 }.withoutNulls,
                                                                               );
-                                                                            } else {
+                                                                            } else if (_model.selectedEventReg?.firstOrNull?.eventType ==
+                                                                                'Racing') {
+                                                                              context.pushNamed(
+                                                                                JKRegistrationWidget.routeName,
+                                                                                queryParameters: {
+                                                                                  'eventID': serializeParam(
+                                                                                    listViewEventRegistrationsRow.eventId,
+                                                                                    ParamType.String,
+                                                                                  ),
+                                                                                  'driverID': serializeParam(
+                                                                                    listViewEventRegistrationsRow.driverId,
+                                                                                    ParamType.String,
+                                                                                  ),
+                                                                                  'category': serializeParam(
+                                                                                    listViewEventRegistrationsRow.category,
+                                                                                    ParamType.String,
+                                                                                  ),
+                                                                                  'banner': serializeParam(
+                                                                                    cardEventsRow.eventBanner,
+                                                                                    ParamType.String,
+                                                                                  ),
+                                                                                  'eventpColour': serializeParam(
+                                                                                    cardEventsRow.eventPColour,
+                                                                                    ParamType.String,
+                                                                                  ),
+                                                                                  'eventpText': serializeParam(
+                                                                                    cardEventsRow.eventPText,
+                                                                                    ParamType.String,
+                                                                                  ),
+                                                                                  'enableNote': serializeParam(
+                                                                                    false,
+                                                                                    ParamType.bool,
+                                                                                  ),
+                                                                                  'isReadOnly': serializeParam(
+                                                                                    true,
+                                                                                    ParamType.bool,
+                                                                                  ),
+                                                                                }.withoutNulls,
+                                                                              );
+                                                                            } else if (_model.selectedEventReg?.firstOrNull?.eventType ==
+                                                                                'Karting') {
                                                                               context.pushNamed(
                                                                                 MecoRegistrationWidget.routeName,
                                                                                 queryParameters: {
@@ -1419,154 +1502,184 @@ class _UserEventsListPageWidgetState extends State<UserEventsListPageWidget>
                                                                         ),
                                                                       );
                                                                     } else {
-                                                                      return Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            10.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                      return Visibility(
+                                                                        visible:
+                                                                            valueOrDefault<bool>(
+                                                                          cardEventsRow.eventRegEndDate! >=
+                                                                              getCurrentTimestamp,
+                                                                          false,
+                                                                        ),
                                                                         child:
-                                                                            FFButtonWidget(
-                                                                          onPressed:
-                                                                              () async {
-                                                                            _model.selectedEvent =
-                                                                                await EventsTable().queryRows(
-                                                                              queryFn: (q) => q.eqOrNull(
-                                                                                'event_uid',
-                                                                                listViewEventRegistrationsRow.eventId,
-                                                                              ),
-                                                                            );
-                                                                            if (_model.selectedEvent?.firstOrNull?.eventType ==
-                                                                                'Karting_IAME') {
-                                                                              context.pushNamed(
-                                                                                IameRegistrationWidget.routeName,
-                                                                                queryParameters: {
-                                                                                  'eventID': serializeParam(
-                                                                                    listViewEventRegistrationsRow.eventId,
-                                                                                    ParamType.String,
-                                                                                  ),
-                                                                                  'driverID': serializeParam(
-                                                                                    listViewEventRegistrationsRow.driverId,
-                                                                                    ParamType.String,
-                                                                                  ),
-                                                                                  'category': serializeParam(
-                                                                                    listViewEventRegistrationsRow.category,
-                                                                                    ParamType.String,
-                                                                                  ),
-                                                                                  'banner': serializeParam(
-                                                                                    _model.selectedEvent?.firstOrNull?.eventBanner,
-                                                                                    ParamType.String,
-                                                                                  ),
-                                                                                  'lateFeeDate': serializeParam(
-                                                                                    _model.selectedEvent?.firstOrNull?.evenLateFeeDate,
-                                                                                    ParamType.DateTime,
-                                                                                  ),
-                                                                                  'eventpColour': serializeParam(
-                                                                                    _model.selectedEvent?.firstOrNull?.eventPColour,
-                                                                                    ParamType.String,
-                                                                                  ),
-                                                                                  'eventpText': serializeParam(
-                                                                                    _model.selectedEvent?.firstOrNull?.eventPText,
-                                                                                    ParamType.String,
-                                                                                  ),
-                                                                                  'paymentQR': serializeParam(
-                                                                                    _model.selectedEvent?.firstOrNull?.paymentQR,
-                                                                                    ParamType.String,
-                                                                                  ),
-                                                                                }.withoutNulls,
+                                                                            Padding(
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              0.0,
+                                                                              10.0,
+                                                                              0.0,
+                                                                              0.0),
+                                                                          child:
+                                                                              FFButtonWidget(
+                                                                            onPressed:
+                                                                                () async {
+                                                                              _model.selectedEvent = await EventsTable().queryRows(
+                                                                                queryFn: (q) => q.eqOrNull(
+                                                                                  'event_uid',
+                                                                                  listViewEventRegistrationsRow.eventId,
+                                                                                ),
                                                                               );
-                                                                            } else {
-                                                                              context.pushNamed(
-                                                                                MecoRegistrationWidget.routeName,
-                                                                                queryParameters: {
-                                                                                  'eventID': serializeParam(
-                                                                                    listViewEventRegistrationsRow.eventId,
-                                                                                    ParamType.String,
-                                                                                  ),
-                                                                                  'driverID': serializeParam(
-                                                                                    listViewEventRegistrationsRow.driverId,
-                                                                                    ParamType.String,
-                                                                                  ),
-                                                                                  'category': serializeParam(
-                                                                                    listViewEventRegistrationsRow.category,
-                                                                                    ParamType.String,
-                                                                                  ),
-                                                                                  'banner': serializeParam(
-                                                                                    cardEventsRow.eventBanner,
-                                                                                    ParamType.String,
-                                                                                  ),
-                                                                                  'lateFeeDate': serializeParam(
-                                                                                    cardEventsRow.evenLateFeeDate,
-                                                                                    ParamType.DateTime,
-                                                                                  ),
-                                                                                  'eventpColour': serializeParam(
-                                                                                    cardEventsRow.eventPColour,
-                                                                                    ParamType.String,
-                                                                                  ),
-                                                                                  'eventpText': serializeParam(
-                                                                                    cardEventsRow.eventPText,
-                                                                                    ParamType.String,
-                                                                                  ),
-                                                                                  'eventNote': serializeParam(
-                                                                                    cardEventsRow.eventNotes,
-                                                                                    ParamType.String,
-                                                                                  ),
-                                                                                  'enableNote': serializeParam(
-                                                                                    cardEventsRow.noteEnable,
-                                                                                    ParamType.bool,
-                                                                                  ),
-                                                                                }.withoutNulls,
-                                                                              );
-                                                                            }
+                                                                              if (_model.selectedEvent?.firstOrNull?.eventType == 'Karting_IAME') {
+                                                                                context.pushNamed(
+                                                                                  IameRegistrationWidget.routeName,
+                                                                                  queryParameters: {
+                                                                                    'eventID': serializeParam(
+                                                                                      listViewEventRegistrationsRow.eventId,
+                                                                                      ParamType.String,
+                                                                                    ),
+                                                                                    'driverID': serializeParam(
+                                                                                      listViewEventRegistrationsRow.driverId,
+                                                                                      ParamType.String,
+                                                                                    ),
+                                                                                    'category': serializeParam(
+                                                                                      listViewEventRegistrationsRow.category,
+                                                                                      ParamType.String,
+                                                                                    ),
+                                                                                    'banner': serializeParam(
+                                                                                      _model.selectedEvent?.firstOrNull?.eventBanner,
+                                                                                      ParamType.String,
+                                                                                    ),
+                                                                                    'lateFeeDate': serializeParam(
+                                                                                      _model.selectedEvent?.firstOrNull?.evenLateFeeDate,
+                                                                                      ParamType.DateTime,
+                                                                                    ),
+                                                                                    'eventpColour': serializeParam(
+                                                                                      _model.selectedEvent?.firstOrNull?.eventPColour,
+                                                                                      ParamType.String,
+                                                                                    ),
+                                                                                    'eventpText': serializeParam(
+                                                                                      _model.selectedEvent?.firstOrNull?.eventPText,
+                                                                                      ParamType.String,
+                                                                                    ),
+                                                                                    'paymentQR': serializeParam(
+                                                                                      _model.selectedEvent?.firstOrNull?.paymentQR,
+                                                                                      ParamType.String,
+                                                                                    ),
+                                                                                  }.withoutNulls,
+                                                                                );
+                                                                              } else if (_model.selectedEvent?.firstOrNull?.eventType == 'Racing') {
+                                                                                context.pushNamed(
+                                                                                  JKRegistrationWidget.routeName,
+                                                                                  queryParameters: {
+                                                                                    'eventID': serializeParam(
+                                                                                      listViewEventRegistrationsRow.eventId,
+                                                                                      ParamType.String,
+                                                                                    ),
+                                                                                    'driverID': serializeParam(
+                                                                                      listViewEventRegistrationsRow.driverId,
+                                                                                      ParamType.String,
+                                                                                    ),
+                                                                                    'category': serializeParam(
+                                                                                      listViewEventRegistrationsRow.category,
+                                                                                      ParamType.String,
+                                                                                    ),
+                                                                                    'banner': serializeParam(
+                                                                                      cardEventsRow.eventBanner,
+                                                                                      ParamType.String,
+                                                                                    ),
+                                                                                    'eventpColour': serializeParam(
+                                                                                      cardEventsRow.eventPColour,
+                                                                                      ParamType.String,
+                                                                                    ),
+                                                                                    'eventpText': serializeParam(
+                                                                                      cardEventsRow.eventPText,
+                                                                                      ParamType.String,
+                                                                                    ),
+                                                                                    'enableNote': serializeParam(
+                                                                                      false,
+                                                                                      ParamType.bool,
+                                                                                    ),
+                                                                                    'isReadOnly': serializeParam(
+                                                                                      false,
+                                                                                      ParamType.bool,
+                                                                                    ),
+                                                                                  }.withoutNulls,
+                                                                                );
+                                                                              } else {
+                                                                                context.pushNamed(
+                                                                                  MecoRegistrationWidget.routeName,
+                                                                                  queryParameters: {
+                                                                                    'eventID': serializeParam(
+                                                                                      listViewEventRegistrationsRow.eventId,
+                                                                                      ParamType.String,
+                                                                                    ),
+                                                                                    'driverID': serializeParam(
+                                                                                      listViewEventRegistrationsRow.driverId,
+                                                                                      ParamType.String,
+                                                                                    ),
+                                                                                    'category': serializeParam(
+                                                                                      listViewEventRegistrationsRow.category,
+                                                                                      ParamType.String,
+                                                                                    ),
+                                                                                    'banner': serializeParam(
+                                                                                      cardEventsRow.eventBanner,
+                                                                                      ParamType.String,
+                                                                                    ),
+                                                                                    'lateFeeDate': serializeParam(
+                                                                                      cardEventsRow.evenLateFeeDate,
+                                                                                      ParamType.DateTime,
+                                                                                    ),
+                                                                                    'eventpColour': serializeParam(
+                                                                                      cardEventsRow.eventPColour,
+                                                                                      ParamType.String,
+                                                                                    ),
+                                                                                    'eventpText': serializeParam(
+                                                                                      cardEventsRow.eventPText,
+                                                                                      ParamType.String,
+                                                                                    ),
+                                                                                    'eventNote': serializeParam(
+                                                                                      cardEventsRow.eventNotes,
+                                                                                      ParamType.String,
+                                                                                    ),
+                                                                                    'enableNote': serializeParam(
+                                                                                      cardEventsRow.noteEnable,
+                                                                                      ParamType.bool,
+                                                                                    ),
+                                                                                  }.withoutNulls,
+                                                                                );
+                                                                              }
 
-                                                                            safeSetState(() {});
-                                                                          },
-                                                                          text:
-                                                                              'Continue Registration',
-                                                                          icon:
-                                                                              Icon(
-                                                                            Icons.send,
-                                                                            size:
-                                                                                15.0,
-                                                                          ),
-                                                                          options:
-                                                                              FFButtonOptions(
-                                                                            height:
-                                                                                30.0,
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                16.0,
-                                                                                0.0,
-                                                                                16.0,
-                                                                                0.0),
-                                                                            iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primaryBackground,
-                                                                            textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                  font: GoogleFonts.interTight(
+                                                                              safeSetState(() {});
+                                                                            },
+                                                                            text:
+                                                                                'Continue Registration',
+                                                                            icon:
+                                                                                Icon(
+                                                                              Icons.send,
+                                                                              size: 15.0,
+                                                                            ),
+                                                                            options:
+                                                                                FFButtonOptions(
+                                                                              height: 30.0,
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                                                                              iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                              color: FlutterFlowTheme.of(context).primaryBackground,
+                                                                              textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                    font: GoogleFonts.interTight(
+                                                                                      fontWeight: FontWeight.w500,
+                                                                                      fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                                    ),
+                                                                                    color: FlutterFlowTheme.of(context).tertiary,
+                                                                                    fontSize: 12.0,
+                                                                                    letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w500,
                                                                                     fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
                                                                                   ),
-                                                                                  color: FlutterFlowTheme.of(context).tertiary,
-                                                                                  fontSize: 12.0,
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w500,
-                                                                                  fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                                ),
-                                                                            elevation:
-                                                                                10.0,
-                                                                            borderSide:
-                                                                                BorderSide(
-                                                                              color: FlutterFlowTheme.of(context).alternate,
-                                                                              width: 2.0,
+                                                                              elevation: 10.0,
+                                                                              borderSide: BorderSide(
+                                                                                color: FlutterFlowTheme.of(context).alternate,
+                                                                                width: 2.0,
+                                                                              ),
+                                                                              borderRadius: BorderRadius.circular(8.0),
+                                                                              hoverColor: FlutterFlowTheme.of(context).success,
                                                                             ),
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(8.0),
-                                                                            hoverColor:
-                                                                                FlutterFlowTheme.of(context).success,
                                                                           ),
                                                                         ),
                                                                       );

@@ -20,8 +20,8 @@ class RaceResultsRow extends SupabaseDataRow {
   String get raceId => getField<String>('race_id')!;
   set raceId(String value) => setField<String>('race_id', value);
 
-  String get registrationId => getField<String>('registration_id')!;
-  set registrationId(String value) =>
+  String? get registrationId => getField<String>('registration_id');
+  set registrationId(String? value) =>
       setField<String>('registration_id', value);
 
   int? get entryNumber => getField<int>('entry_number');

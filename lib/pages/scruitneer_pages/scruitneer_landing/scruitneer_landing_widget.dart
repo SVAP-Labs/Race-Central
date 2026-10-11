@@ -411,6 +411,12 @@ class _ScruitneerLandingWidgetState extends State<ScruitneerLandingWidget> {
                                                                   .eventUid,
                                                               ParamType.String,
                                                             ),
+                                                            'champshipID':
+                                                                serializeParam(
+                                                              upComingEventsItem
+                                                                  .eventChampionship,
+                                                              ParamType.String,
+                                                            ),
                                                           }.withoutNulls,
                                                         );
                                                       },

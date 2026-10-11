@@ -3247,7 +3247,7 @@ class _SOMApprovedWidgetState extends State<SOMApprovedWidget> {
                                             tileColor:
                                                 FlutterFlowTheme.of(context)
                                                     .secondaryBackground,
-                                            activeColor:
+                                            activeThumbColor:
                                                 FlutterFlowTheme.of(context)
                                                     .alternate,
                                             activeTrackColor:
@@ -3847,7 +3847,7 @@ class _SOMApprovedWidgetState extends State<SOMApprovedWidget> {
                                             tileColor:
                                                 FlutterFlowTheme.of(context)
                                                     .secondaryBackground,
-                                            activeColor:
+                                            activeThumbColor:
                                                 FlutterFlowTheme.of(context)
                                                     .alternate,
                                             activeTrackColor:

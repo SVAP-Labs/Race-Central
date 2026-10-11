@@ -1,5 +1,5 @@
 import '/backend/supabase/supabase.dart';
-import '/components/error_component_widget.dart';
+import '/components/to_display_nothing_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/pages/user_pages/function_pages/as_a_pdf/as_a_pdf_widget.dart';
@@ -184,12 +184,17 @@ class _NoticeBoardPageWidgetState extends State<NoticeBoardPageWidget> {
                                               .map((e) => e)
                                               .toList();
                                       if (listOfNotice.isEmpty) {
-                                        return ErrorComponentWidget(
-                                          label:
-                                              'No Official Notice Published !!',
-                                          labelColour:
-                                              FlutterFlowTheme.of(context)
-                                                  .error,
+                                        return Container(
+                                          width:
+                                              MediaQuery.sizeOf(context).width *
+                                                  1.0,
+                                          child: ToDisplayNothingWidget(
+                                            icon: Icon(
+                                              Icons.sticky_note_2_outlined,
+                                              size: 25.0,
+                                            ),
+                                            message: 'No Notice Available',
+                                          ),
                                         );
                                       }
 

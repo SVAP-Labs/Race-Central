@@ -1,3 +1,4 @@
+import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/pages/components/driver_nav_bar/driver_nav_bar_widget.dart';
 import '/index.dart';
@@ -11,6 +12,10 @@ class UserHomePageModel extends FlutterFlowModel<UserHomePageWidget> {
 
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Backend Call - Query Rows] action in driverscruitny widget.
+  List<ChampionshipCategoriesRow>? queriedChampionshipCategory;
+  // Stores action output result for [Backend Call - Query Rows] action in kartscrutiny widget.
+  List<ChampionshipCategoriesRow>? fetchingEventCategortype;
   // Model for driverNavBar component.
   late DriverNavBarModel driverNavBarModel;
 

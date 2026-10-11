@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'with_a_drop_page_model.dart';
 export 'with_a_drop_page_model.dart';
 
@@ -24,9 +25,11 @@ class WithADropPageWidget extends StatefulWidget {
   const WithADropPageWidget({
     super.key,
     required this.eventID,
+    required this.champshipID,
   });
 
   final String? eventID;
+  final String? champshipID;
 
   static String routeName = 'WithADropPage';
   static String routePath = '/ScrutinySummary';
@@ -1049,29 +1052,128 @@ class _WithADropPageWidgetState extends State<WithADropPageWidget> {
                                                                         FFButtonWidget(
                                                                       onPressed:
                                                                           () async {
-                                                                        context
-                                                                            .pushNamed(
-                                                                          DriverScrutinycheckWidget
-                                                                              .routeName,
-                                                                          queryParameters:
-                                                                              {
-                                                                            'driverScrutinyID':
-                                                                                serializeParam(
-                                                                              driverListItem.driverScrutinyId,
-                                                                              ParamType.String,
-                                                                            ),
-                                                                            'eventRegID':
-                                                                                serializeParam(
-                                                                              driverListItem.id,
-                                                                              ParamType.String,
-                                                                            ),
-                                                                            'pCategory':
-                                                                                serializeParam(
-                                                                              driverListItem.category,
-                                                                              ParamType.String,
-                                                                            ),
-                                                                          }.withoutNulls,
+                                                                        _model.queriedEventCategory =
+                                                                            await ChampionshipCategoriesTable().queryRows(
+                                                                          queryFn: (q) => q
+                                                                              .eqOrNull(
+                                                                                'category_name',
+                                                                                driverListItem.category,
+                                                                              )
+                                                                              .eqOrNull(
+                                                                                'chship_id',
+                                                                                widget.champshipID,
+                                                                              ),
                                                                         );
+                                                                        if (_model.queriedEventCategory?.firstOrNull?.categoryType ==
+                                                                            'karting') {
+                                                                          context
+                                                                              .pushNamed(
+                                                                            KartDriverScrutinycheckWidget.routeName,
+                                                                            queryParameters:
+                                                                                {
+                                                                              'driverScrutinyID': serializeParam(
+                                                                                driverListItem.driverScrutinyId,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'eventRegID': serializeParam(
+                                                                                driverListItem.id,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'pCategory': serializeParam(
+                                                                                driverListItem.category,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                            }.withoutNulls,
+                                                                          );
+                                                                        } else if ((_model.queriedEventCategory?.firstOrNull?.categoryType == 'touring') ||
+                                                                            (_model.queriedEventCategory?.firstOrNull?.categoryType ==
+                                                                                'f4') ||
+                                                                            (_model.queriedEventCategory?.firstOrNull?.categoryType ==
+                                                                                'onemake_4w')) {
+                                                                          context
+                                                                              .pushNamed(
+                                                                            AdultDriverScrutinycheckWidget.routeName,
+                                                                            queryParameters:
+                                                                                {
+                                                                              'driverScrutinyID': serializeParam(
+                                                                                driverListItem.driverScrutinyId,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'eventRegID': serializeParam(
+                                                                                driverListItem.id,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'pCategory': serializeParam(
+                                                                                driverListItem.category,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                            }.withoutNulls,
+                                                                          );
+                                                                        } else if (_model.queriedEventCategory?.firstOrNull?.categoryType ==
+                                                                            'onemake_2w') {
+                                                                          context
+                                                                              .pushNamed(
+                                                                            TwoWheelDriverScrutinycheckWidget.routeName,
+                                                                            queryParameters:
+                                                                                {
+                                                                              'driverScrutinyID': serializeParam(
+                                                                                driverListItem.driverScrutinyId,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'eventRegID': serializeParam(
+                                                                                driverListItem.id,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'pCategory': serializeParam(
+                                                                                driverListItem.category,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                            }.withoutNulls,
+                                                                          );
+                                                                        } else {
+                                                                          await showDialog(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (alertDialogContext) {
+                                                                              return WebViewAware(
+                                                                                child: AlertDialog(
+                                                                                  title: Text('Error'),
+                                                                                  content: Text('Error in Fetching category '),
+                                                                                  actions: [
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                      child: Text('Ok'),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                          );
+
+                                                                          context
+                                                                              .pushNamed(
+                                                                            KartDriverScrutinycheckWidget.routeName,
+                                                                            queryParameters:
+                                                                                {
+                                                                              'driverScrutinyID': serializeParam(
+                                                                                driverListItem.driverScrutinyId,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'eventRegID': serializeParam(
+                                                                                driverListItem.id,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'pCategory': serializeParam(
+                                                                                driverListItem.category,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                            }.withoutNulls,
+                                                                          );
+                                                                        }
+
+                                                                        safeSetState(
+                                                                            () {});
                                                                       },
                                                                       text:
                                                                           'Driver Scrutiny',
@@ -1131,34 +1233,148 @@ class _WithADropPageWidgetState extends State<WithADropPageWidget> {
                                                                         FFButtonWidget(
                                                                       onPressed:
                                                                           () async {
-                                                                        context
-                                                                            .pushNamed(
-                                                                          KartScrutinycheckWidget
-                                                                              .routeName,
-                                                                          queryParameters:
-                                                                              {
-                                                                            'kartScrutinyID':
-                                                                                serializeParam(
-                                                                              driverListItem.kartScrutinyId,
-                                                                              ParamType.String,
-                                                                            ),
-                                                                            'eventRegistrationID':
-                                                                                serializeParam(
-                                                                              driverListItem.id,
-                                                                              ParamType.String,
-                                                                            ),
-                                                                            'driverScrutinyID':
-                                                                                serializeParam(
-                                                                              driverListItem.driverScrutinyId,
-                                                                              ParamType.String,
-                                                                            ),
-                                                                            'category':
-                                                                                serializeParam(
-                                                                              driverListItem.category,
-                                                                              ParamType.String,
-                                                                            ),
-                                                                          }.withoutNulls,
+                                                                        _model.queriedEventCategoryVheicle =
+                                                                            await ChampionshipCategoriesTable().queryRows(
+                                                                          queryFn: (q) => q
+                                                                              .eqOrNull(
+                                                                                'category_name',
+                                                                                driverListItem.category,
+                                                                              )
+                                                                              .eqOrNull(
+                                                                                'chship_id',
+                                                                                widget.champshipID,
+                                                                              ),
                                                                         );
+                                                                        if (_model.queriedEventCategoryVheicle?.firstOrNull?.categoryType ==
+                                                                            'touring') {
+                                                                          context
+                                                                              .pushNamed(
+                                                                            TouringVehicleScrutinyWidget.routeName,
+                                                                            queryParameters:
+                                                                                {
+                                                                              'kartScrutinyID': serializeParam(
+                                                                                driverListItem.kartScrutinyId,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'eventRegistrationID': serializeParam(
+                                                                                driverListItem.id,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'category': serializeParam(
+                                                                                driverListItem.category,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'driverScrutinyID': serializeParam(
+                                                                                driverListItem.driverScrutinyId,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                            }.withoutNulls,
+                                                                          );
+                                                                        } else if (_model.queriedEventCategoryVheicle?.firstOrNull?.categoryType ==
+                                                                            'karting') {
+                                                                          context
+                                                                              .pushNamed(
+                                                                            KartScrutinycheckWidget.routeName,
+                                                                            queryParameters:
+                                                                                {
+                                                                              'kartScrutinyID': serializeParam(
+                                                                                driverListItem.kartScrutinyId,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'eventRegistrationID': serializeParam(
+                                                                                driverListItem.id,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'driverScrutinyID': serializeParam(
+                                                                                driverListItem.driverScrutinyId,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'category': serializeParam(
+                                                                                driverListItem.category,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                            }.withoutNulls,
+                                                                          );
+                                                                        } else if ((_model.queriedEventCategoryVheicle?.firstOrNull?.categoryType ==
+                                                                                'onemake_4w') ||
+                                                                            (_model.queriedEventCategoryVheicle?.firstOrNull?.categoryType ==
+                                                                                'f4')) {
+                                                                          context
+                                                                              .pushNamed(
+                                                                            OpenWheelVehicleScrutinyWidget.routeName,
+                                                                            queryParameters:
+                                                                                {
+                                                                              'kartScrutinyID': serializeParam(
+                                                                                driverListItem.kartScrutinyId,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'eventRegistrationID': serializeParam(
+                                                                                driverListItem.id,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'category': serializeParam(
+                                                                                driverListItem.category,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'driverScrutinyID': serializeParam(
+                                                                                driverListItem.driverScrutinyId,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                            }.withoutNulls,
+                                                                          );
+                                                                        } else if (_model.queriedEventCategoryVheicle?.firstOrNull?.categoryType ==
+                                                                            'onemake_2w') {
+                                                                          context
+                                                                              .pushNamed(
+                                                                            TwoWheelerScrutinyWidget.routeName,
+                                                                            queryParameters:
+                                                                                {
+                                                                              'kartScrutinyID': serializeParam(
+                                                                                driverListItem.kartScrutinyId,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'eventRegistrationID': serializeParam(
+                                                                                driverListItem.id,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'category': serializeParam(
+                                                                                driverListItem.category,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'driverScrutinyID': serializeParam(
+                                                                                driverListItem.driverScrutinyId,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                            }.withoutNulls,
+                                                                          );
+                                                                        } else {
+                                                                          context
+                                                                              .pushNamed(
+                                                                            KartScrutinycheckWidget.routeName,
+                                                                            queryParameters:
+                                                                                {
+                                                                              'kartScrutinyID': serializeParam(
+                                                                                driverListItem.kartScrutinyId,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'eventRegistrationID': serializeParam(
+                                                                                driverListItem.id,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'driverScrutinyID': serializeParam(
+                                                                                driverListItem.driverScrutinyId,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'category': serializeParam(
+                                                                                driverListItem.category,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                            }.withoutNulls,
+                                                                          );
+                                                                        }
+
+                                                                        safeSetState(
+                                                                            () {});
                                                                       },
                                                                       text:
                                                                           'Kart Scrutiny',

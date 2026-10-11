@@ -169,10 +169,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => SealingSearchWidget(),
         ),
         FFRoute(
-          name: DriverScrutinycheckWidget.routeName,
-          path: DriverScrutinycheckWidget.routePath,
+          name: KartDriverScrutinycheckWidget.routeName,
+          path: KartDriverScrutinycheckWidget.routePath,
           requireAuth: true,
-          builder: (context, params) => DriverScrutinycheckWidget(
+          builder: (context, params) => KartDriverScrutinycheckWidget(
             driverScrutinyID: params.getParam(
               'driverScrutinyID',
               ParamType.String,
@@ -274,6 +274,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => WithADropPageWidget(
             eventID: params.getParam(
               'eventID',
+              ParamType.String,
+            ),
+            champshipID: params.getParam(
+              'champshipID',
               ParamType.String,
             ),
           ),
@@ -468,9 +472,158 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.String,
             ),
           ),
+        ),
+        FFRoute(
+          name: JKRegistrationWidget.routeName,
+          path: JKRegistrationWidget.routePath,
+          builder: (context, params) => JKRegistrationWidget(
+            eventID: params.getParam(
+              'eventID',
+              ParamType.String,
+            ),
+            driverID: params.getParam(
+              'driverID',
+              ParamType.String,
+            ),
+            category: params.getParam(
+              'category',
+              ParamType.String,
+            ),
+            banner: params.getParam(
+              'banner',
+              ParamType.String,
+            ),
+            eventpColour: params.getParam(
+              'eventpColour',
+              ParamType.String,
+            ),
+            eventpText: params.getParam(
+              'eventpText',
+              ParamType.String,
+            ),
+            eventNote: params.getParam(
+              'eventNote',
+              ParamType.String,
+            ),
+            enableNote: params.getParam(
+              'enableNote',
+              ParamType.bool,
+            ),
+            isReadOnly: params.getParam(
+              'isReadOnly',
+              ParamType.bool,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: AdultDriverScrutinycheckWidget.routeName,
+          path: AdultDriverScrutinycheckWidget.routePath,
+          requireAuth: true,
+          builder: (context, params) => AdultDriverScrutinycheckWidget(
+            driverScrutinyID: params.getParam(
+              'driverScrutinyID',
+              ParamType.String,
+            ),
+            eventRegID: params.getParam(
+              'eventRegID',
+              ParamType.String,
+            ),
+            pCategory: params.getParam(
+              'pCategory',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: OpenWheelVehicleScrutinyWidget.routeName,
+          path: OpenWheelVehicleScrutinyWidget.routePath,
+          requireAuth: true,
+          builder: (context, params) => OpenWheelVehicleScrutinyWidget(
+            kartScrutinyID: params.getParam(
+              'kartScrutinyID',
+              ParamType.String,
+            ),
+            eventRegistrationID: params.getParam(
+              'eventRegistrationID',
+              ParamType.String,
+            ),
+            driverScrutinyID: params.getParam(
+              'driverScrutinyID',
+              ParamType.String,
+            ),
+            category: params.getParam(
+              'category',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: TouringVehicleScrutinyWidget.routeName,
+          path: TouringVehicleScrutinyWidget.routePath,
+          requireAuth: true,
+          builder: (context, params) => TouringVehicleScrutinyWidget(
+            kartScrutinyID: params.getParam(
+              'kartScrutinyID',
+              ParamType.String,
+            ),
+            eventRegistrationID: params.getParam(
+              'eventRegistrationID',
+              ParamType.String,
+            ),
+            driverScrutinyID: params.getParam(
+              'driverScrutinyID',
+              ParamType.String,
+            ),
+            category: params.getParam(
+              'category',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: TwoWheelDriverScrutinycheckWidget.routeName,
+          path: TwoWheelDriverScrutinycheckWidget.routePath,
+          requireAuth: true,
+          builder: (context, params) => TwoWheelDriverScrutinycheckWidget(
+            driverScrutinyID: params.getParam(
+              'driverScrutinyID',
+              ParamType.String,
+            ),
+            eventRegID: params.getParam(
+              'eventRegID',
+              ParamType.String,
+            ),
+            pCategory: params.getParam(
+              'pCategory',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: TwoWheelerScrutinyWidget.routeName,
+          path: TwoWheelerScrutinyWidget.routePath,
+          requireAuth: true,
+          builder: (context, params) => TwoWheelerScrutinyWidget(
+            kartScrutinyID: params.getParam(
+              'kartScrutinyID',
+              ParamType.String,
+            ),
+            eventRegistrationID: params.getParam(
+              'eventRegistrationID',
+              ParamType.String,
+            ),
+            driverScrutinyID: params.getParam(
+              'driverScrutinyID',
+              ParamType.String,
+            ),
+            category: params.getParam(
+              'category',
+              ParamType.String,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
-      observers: [routeObserver],
+      observers: ffNavigatorObservers,
     );
 
 extension NavParamExtensions on Map<String, String?> {
@@ -678,6 +831,10 @@ class FFRoute {
                     duration: transitionInfo.duration,
                     reverseDuration: transitionInfo.duration,
                     alignment: transitionInfo.alignment,
+                    curve: transitionInfo.transitionType ==
+                            PageTransitionType.scale
+                        ? const Interval(0.0, 0.5)
+                        : Curves.linear,
                     child: child,
                   ).buildTransitions(
                     context,

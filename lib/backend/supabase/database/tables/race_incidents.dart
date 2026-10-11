@@ -78,4 +78,13 @@ class RaceIncidentsRow extends SupabaseDataRow {
   String? get forwardDecision => getField<String>('forward_decision');
   set forwardDecision(String? value) =>
       setField<String>('forward_decision', value);
+
+  DateTime? get decidedAt => getField<DateTime>('decided_at');
+  set decidedAt(DateTime? value) => setField<DateTime>('decided_at', value);
+
+  String? get source => getField<String>('source');
+  set source(String? value) => setField<String>('source', value);
+
+  int? get sourceLogId => getField<int>('source_log_id');
+  set sourceLogId(int? value) => setField<int>('source_log_id', value);
 }

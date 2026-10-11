@@ -23,9 +23,9 @@ export '/pages/scruitneer_pages/sealing_pages/karting_sealing/karting_sealing_wi
     show KartingSealingWidget;
 export '/pages/scruitneer_pages/sealing_search/sealing_search_widget.dart'
     show SealingSearchWidget;
-export '/pages/user_pages/meco_pages/driver_scrutinycheck/driver_scrutinycheck_widget.dart'
-    show DriverScrutinycheckWidget;
-export '/pages/user_pages/meco_pages/kart_scrutinycheck/kart_scrutinycheck_widget.dart'
+export '/pages/user_pages/02_driver_scruitny_pages/kart_driver_scrutinycheck/kart_driver_scrutinycheck_widget.dart'
+    show KartDriverScrutinycheckWidget;
+export '/pages/user_pages/01_vehicle_scrutiny_pages/kart_scrutinycheck/kart_scrutinycheck_widget.dart'
     show KartScrutinycheckWidget;
 export '/pages/scruitneer_pages/scruitneer_landing/scruitneer_landing_widget.dart'
     show ScruitneerLandingWidget;
@@ -65,3 +65,15 @@ export '/pages/user_pages/function_pages/livetiming/live_timing_view/live_timing
     show LiveTimingViewWidget;
 export '/pages/user_pages/iame_pages/iame_registration/iame_registration_widget.dart'
     show IameRegistrationWidget;
+export '/pages/user_pages/jk_pages/j_k_registration/j_k_registration_widget.dart'
+    show JKRegistrationWidget;
+export '/pages/user_pages/02_driver_scruitny_pages/adult_driver_scrutinycheck/adult_driver_scrutinycheck_widget.dart'
+    show AdultDriverScrutinycheckWidget;
+export '/pages/user_pages/01_vehicle_scrutiny_pages/open_wheel_vehicle_scrutiny/open_wheel_vehicle_scrutiny_widget.dart'
+    show OpenWheelVehicleScrutinyWidget;
+export '/pages/user_pages/01_vehicle_scrutiny_pages/touring_vehicle_scrutiny/touring_vehicle_scrutiny_widget.dart'
+    show TouringVehicleScrutinyWidget;
+export '/pages/user_pages/02_driver_scruitny_pages/two_wheel_driver_scrutinycheck/two_wheel_driver_scrutinycheck_widget.dart'
+    show TwoWheelDriverScrutinycheckWidget;
+export '/pages/user_pages/01_vehicle_scrutiny_pages/two_wheeler_scrutiny/two_wheeler_scrutiny_widget.dart'
+    show TwoWheelerScrutinyWidget;

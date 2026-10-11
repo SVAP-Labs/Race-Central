@@ -114,7 +114,7 @@ class RacingControlAppSupportRecord extends FirestoreRecord {
   @override
   bool operator ==(other) =>
       other is RacingControlAppSupportRecord &&
-      reference.path.hashCode == other.reference.path.hashCode;
+      reference.path == other.reference.path;
 }
 
 Map<String, dynamic> createRacingControlAppSupportRecordData({
@@ -154,16 +154,16 @@ class RacingControlAppSupportRecordDocumentEquality
 
   @override
   int hash(RacingControlAppSupportRecord? e) => const ListEquality().hash([
-        e?.kartingEvents,
-        e?.kartingTeams,
-        e?.kartingRounds,
-        e?.kartingYear,
+        const ListEquality().hash(e?.kartingEvents),
+        const ListEquality().hash(e?.kartingTeams),
+        const ListEquality().hash(e?.kartingRounds),
+        const ListEquality().hash(e?.kartingYear),
         e?.appMinimumVersion,
-        e?.kartingScruitneers,
-        e?.kartingEventsCode,
-        e?.kartTeamRepresentative,
+        const ListEquality().hash(e?.kartingScruitneers),
+        const ListEquality().hash(e?.kartingEventsCode),
+        const ListEquality().hash(e?.kartTeamRepresentative),
         e?.termsAndConditions,
-        e?.iameKartingTeams
+        const ListEquality().hash(e?.iameKartingTeams)
       ]);
 
   @override

@@ -468,8 +468,9 @@ class _Auth2CreateWidgetState extends State<Auth2CreateWidget>
                                               _model.passwordVisibility =
                                                   !_model.passwordVisibility);
                                         },
-                                        focusNode:
-                                            FocusNode(skipTraversal: true),
+                                        focusNode: _model
+                                            .passwordPasswordVisibilityFocusNode
+                                          ..skipTraversal = !(false),
                                         child: Icon(
                                           _model.passwordVisibility
                                               ? Icons.visibility_outlined
@@ -595,8 +596,9 @@ class _Auth2CreateWidgetState extends State<Auth2CreateWidget>
                                               !_model
                                                   .confirmPasswordVisibility);
                                         },
-                                        focusNode:
-                                            FocusNode(skipTraversal: true),
+                                        focusNode: _model
+                                            .confirmPasswordPasswordVisibilityFocusNode
+                                          ..skipTraversal = !(false),
                                         child: Icon(
                                           _model.confirmPasswordVisibility
                                               ? Icons.visibility_outlined

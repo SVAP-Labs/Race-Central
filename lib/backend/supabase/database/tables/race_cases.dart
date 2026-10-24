@@ -149,4 +149,21 @@ class RaceCasesRow extends SupabaseDataRow {
 
   DateTime? get decidedAt => getField<DateTime>('decided_at');
   set decidedAt(DateTime? value) => setField<DateTime>('decided_at', value);
+
+  String? get hearingDate => getField<String>('hearing_date');
+  set hearingDate(String? value) => setField<String>('hearing_date', value);
+
+  String? get hearingTime => getField<String>('hearing_time');
+  set hearingTime(String? value) => setField<String>('hearing_time', value);
+
+  bool? get hearingEnabled => getField<bool>('hearing_enabled');
+  set hearingEnabled(bool? value) => setField<bool>('hearing_enabled', value);
+
+  bool? get separateDecisions => getField<bool>('separate_decisions');
+  set separateDecisions(bool? value) =>
+      setField<bool>('separate_decisions', value);
+
+  dynamic get competitorDecisions => getField<dynamic>('competitor_decisions');
+  set competitorDecisions(dynamic value) =>
+      setField<dynamic>('competitor_decisions', value);
 }

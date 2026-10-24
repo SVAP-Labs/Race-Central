@@ -54,7 +54,10 @@ class FFAppState extends ChangeNotifier {
     secureStorage.setString('ff_appUserId', value);
   }
 
-  void deleteAppUserId() {
+  void deleteAppUserId({bool resetState = false}) {
+    if (resetState) {
+      _appUserId = '';
+    }
     secureStorage.delete(key: 'ff_appUserId');
   }
 
@@ -65,7 +68,10 @@ class FFAppState extends ChangeNotifier {
     secureStorage.setString('ff_organiserId', value);
   }
 
-  void deleteOrganiserId() {
+  void deleteOrganiserId({bool resetState = false}) {
+    if (resetState) {
+      _organiserId = '';
+    }
     secureStorage.delete(key: 'ff_organiserId');
   }
 
@@ -76,7 +82,10 @@ class FFAppState extends ChangeNotifier {
     secureStorage.setString('ff_organiserRole', value);
   }
 
-  void deleteOrganiserRole() {
+  void deleteOrganiserRole({bool resetState = false}) {
+    if (resetState) {
+      _organiserRole = '';
+    }
     secureStorage.delete(key: 'ff_organiserRole');
   }
 
@@ -87,7 +96,10 @@ class FFAppState extends ChangeNotifier {
     secureStorage.setString('ff_userChoosenEvent', value);
   }
 
-  void deleteUserChoosenEvent() {
+  void deleteUserChoosenEvent({bool resetState = false}) {
+    if (resetState) {
+      _userChoosenEvent = '';
+    }
     secureStorage.delete(key: 'ff_userChoosenEvent');
   }
 

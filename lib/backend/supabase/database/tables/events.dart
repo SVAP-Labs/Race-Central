@@ -162,4 +162,15 @@ class EventsRow extends SupabaseDataRow {
   String? get chiefScrutineerName => getField<String>('chief_scrutineer_name');
   set chiefScrutineerName(String? value) =>
       setField<String>('chief_scrutineer_name', value);
+
+  bool? get schedulePublished => getField<bool>('schedule_published');
+  set schedulePublished(bool? value) =>
+      setField<bool>('schedule_published', value);
+
+  bool? get programmePublished => getField<bool>('programme_published');
+  set programmePublished(bool? value) =>
+      setField<bool>('programme_published', value);
+
+  String? get programmeNote => getField<String>('programme_note');
+  set programmeNote(String? value) => setField<String>('programme_note', value);
 }

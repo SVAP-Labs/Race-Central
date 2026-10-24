@@ -188,6 +188,7 @@ class _OfEntryListPageWidgetState extends State<OfEntryListPageWidget> {
                                           widget.eventName,
                                           '-',
                                         ),
+                                        textAlign: TextAlign.center,
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
@@ -422,12 +423,8 @@ class _OfEntryListPageWidgetState extends State<OfEntryListPageWidget> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Row(
+                                    Column(
                                       mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
                                       children: [
                                         Text(
                                           'Confirmed Drivers',

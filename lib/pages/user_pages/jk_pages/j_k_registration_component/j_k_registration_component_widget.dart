@@ -324,15 +324,15 @@ class _JKRegistrationComponentWidgetState
                                 builder: (alertDialogContext) {
                                   return WebViewAware(
                                     child: AlertDialog(
-                                      title: Text(
-                                          'Check Registered Events Tab !!'),
+                                      title:
+                                          Text('Check Registered Events Tab !'),
                                       content: Text(
                                           'You have already registered for this category in the selected event.'),
                                       actions: [
                                         TextButton(
                                           onPressed: () =>
                                               Navigator.pop(alertDialogContext),
-                                          child: Text('Ok'),
+                                          child: Text('OK'),
                                         ),
                                       ],
                                     ),
@@ -346,10 +346,9 @@ class _JKRegistrationComponentWidgetState
                                     builder: (alertDialogContext) {
                                       return WebViewAware(
                                         child: AlertDialog(
-                                          title:
-                                              Text('Register for the Event  !'),
+                                          title: Text('Event Registration.'),
                                           content: Text(
-                                              'Proceed to Register for the Event !!'),
+                                              'Proceed to Register for the Event !'),
                                           actions: [
                                             TextButton(
                                               onPressed: () => Navigator.pop(
@@ -384,10 +383,10 @@ class _JKRegistrationComponentWidgetState
                                   builder: (alertDialogContext) {
                                     return WebViewAware(
                                       child: AlertDialog(
-                                        title: Text(
-                                            'Registration form created !!'),
+                                        title:
+                                            Text('Registration form created !'),
                                         content: Text(
-                                            'Please complete the registration .Check in Registered Events tab .'),
+                                            'Please complete the registration. Check in Registered Events tab.'),
                                         actions: [
                                           TextButton(
                                             onPressed: () => Navigator.pop(

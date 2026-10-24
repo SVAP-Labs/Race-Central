@@ -11,21 +11,17 @@ class TouringVehicleScrutinyModel
 
   String? psScruitneerSignature;
 
+  String? psMinimumVehicleWeight;
+
   ///  State fields for stateful widgets in this page.
 
   final formKey = GlobalKey<FormState>();
   // State field(s) for make_model widget.
-  FocusNode? makeModelFocusNode;
-  TextEditingController? makeModelTextController;
-  String? Function(BuildContext, String?)? makeModelTextControllerValidator;
-  String? _makeModelTextControllerValidator(BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Chassis Make is Required.';
-    }
-
-    return null;
-  }
-
+  String? makeModelValue;
+  FormFieldController<String>? makeModelValueController;
+  // State field(s) for FMSCI_homologationNo widget.
+  String? fMSCIHomologationNoValue;
+  FormFieldController<String>? fMSCIHomologationNoValueController;
   // State field(s) for CCNumber widget.
   FocusNode? cCNumberFocusNode;
   TextEditingController? cCNumberTextController;
@@ -38,24 +34,21 @@ class TouringVehicleScrutinyModel
     return null;
   }
 
-  // State field(s) for FMSCI_homologationNo widget.
-  FocusNode? fMSCIHomologationNoFocusNode;
-  TextEditingController? fMSCIHomologationNoTextController;
-  String? Function(BuildContext, String?)?
-      fMSCIHomologationNoTextControllerValidator;
-  String? _fMSCIHomologationNoTextControllerValidator(
+  // State field(s) for cubicCapacity widget.
+  FocusNode? cubicCapacityFocusNode;
+  TextEditingController? cubicCapacityTextController;
+  String? Function(BuildContext, String?)? cubicCapacityTextControllerValidator;
+  String? _cubicCapacityTextControllerValidator(
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
-      return 'FMSCI Homologation Number  is required';
+      return 'Cubic Capacity is required';
     }
 
     return null;
   }
 
-  // State field(s) for cubicCapacity widget.
-  FocusNode? cubicCapacityFocusNode;
-  TextEditingController? cubicCapacityTextController;
-  String? Function(BuildContext, String?)? cubicCapacityTextControllerValidator;
+  // State field(s) for Turbo widget.
+  bool? turboValue;
   // State field(s) for minimumweight widget.
   FocusNode? minimumweightFocusNode;
   TextEditingController? minimumweightTextController;
@@ -92,6 +85,13 @@ class TouringVehicleScrutinyModel
   FocusNode? ballastWeightFocusNode;
   TextEditingController? ballastWeightTextController;
   String? Function(BuildContext, String?)? ballastWeightTextControllerValidator;
+  // State field(s) for seatStandard widget.
+  String? seatStandardValue;
+  FormFieldController<String>? seatStandardValueController;
+  // State field(s) for SeatSerialNo widget.
+  FocusNode? seatSerialNoFocusNode;
+  TextEditingController? seatSerialNoTextController;
+  String? Function(BuildContext, String?)? seatSerialNoTextControllerValidator;
   // State field(s) for seatbeltStandard widget.
   String? seatbeltStandardValue;
   FormFieldController<String>? seatbeltStandardValueController;
@@ -148,12 +148,12 @@ class TouringVehicleScrutinyModel
   bool? chkfireextfixValue;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode1;
-  TextEditingController? textController12;
-  String? Function(BuildContext, String?)? textController12Validator;
+  TextEditingController? textController11;
+  String? Function(BuildContext, String?)? textController11Validator;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode2;
-  TextEditingController? textController13;
-  String? Function(BuildContext, String?)? textController13Validator;
+  TextEditingController? textController12;
+  String? Function(BuildContext, String?)? textController12Validator;
   // State field(s) for CommentsTextField widget.
   FocusNode? commentsTextFieldFocusNode;
   TextEditingController? commentsTextFieldTextController;
@@ -180,23 +180,16 @@ class TouringVehicleScrutinyModel
 
   @override
   void initState(BuildContext context) {
-    makeModelTextControllerValidator = _makeModelTextControllerValidator;
     cCNumberTextControllerValidator = _cCNumberTextControllerValidator;
-    fMSCIHomologationNoTextControllerValidator =
-        _fMSCIHomologationNoTextControllerValidator;
+    cubicCapacityTextControllerValidator =
+        _cubicCapacityTextControllerValidator;
     engineNumberTextControllerValidator = _engineNumberTextControllerValidator;
   }
 
   @override
   void dispose() {
-    makeModelFocusNode?.dispose();
-    makeModelTextController?.dispose();
-
     cCNumberFocusNode?.dispose();
     cCNumberTextController?.dispose();
-
-    fMSCIHomologationNoFocusNode?.dispose();
-    fMSCIHomologationNoTextController?.dispose();
 
     cubicCapacityFocusNode?.dispose();
     cubicCapacityTextController?.dispose();
@@ -219,14 +212,17 @@ class TouringVehicleScrutinyModel
     ballastWeightFocusNode?.dispose();
     ballastWeightTextController?.dispose();
 
+    seatSerialNoFocusNode?.dispose();
+    seatSerialNoTextController?.dispose();
+
     seatbeltSerialNoFocusNode?.dispose();
     seatbeltSerialNoTextController?.dispose();
 
     textFieldFocusNode1?.dispose();
-    textController12?.dispose();
+    textController11?.dispose();
 
     textFieldFocusNode2?.dispose();
-    textController13?.dispose();
+    textController12?.dispose();
 
     commentsTextFieldFocusNode?.dispose();
     commentsTextFieldTextController?.dispose();

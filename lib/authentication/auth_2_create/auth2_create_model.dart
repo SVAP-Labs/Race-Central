@@ -12,11 +12,13 @@ class Auth2CreateModel extends FlutterFlowModel<Auth2CreateWidget> {
   TextEditingController? emailAddressTextController;
   String? Function(BuildContext, String?)? emailAddressTextControllerValidator;
   // State field(s) for password widget.
+  late FocusNode passwordPasswordVisibilityFocusNode;
   FocusNode? passwordFocusNode;
   TextEditingController? passwordTextController;
   late bool passwordVisibility;
   String? Function(BuildContext, String?)? passwordTextControllerValidator;
   // State field(s) for confirm_password widget.
+  late FocusNode confirmPasswordPasswordVisibilityFocusNode;
   FocusNode? confirmPasswordFocusNode;
   TextEditingController? confirmPasswordTextController;
   late bool confirmPasswordVisibility;
@@ -29,7 +31,9 @@ class Auth2CreateModel extends FlutterFlowModel<Auth2CreateWidget> {
 
   @override
   void initState(BuildContext context) {
+    passwordPasswordVisibilityFocusNode = FocusNode();
     passwordVisibility = false;
+    confirmPasswordPasswordVisibilityFocusNode = FocusNode();
     confirmPasswordVisibility = false;
   }
 
@@ -40,8 +44,9 @@ class Auth2CreateModel extends FlutterFlowModel<Auth2CreateWidget> {
 
     passwordFocusNode?.dispose();
     passwordTextController?.dispose();
-
+    passwordPasswordVisibilityFocusNode.dispose();
     confirmPasswordFocusNode?.dispose();
     confirmPasswordTextController?.dispose();
+    confirmPasswordPasswordVisibilityFocusNode.dispose();
   }
 }

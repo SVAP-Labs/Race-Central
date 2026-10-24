@@ -443,10 +443,11 @@ class _RaceResultsWidgetState extends State<RaceResultsWidget> {
                                     borderRadius: 8.0,
                                     buttonSize: 40.0,
                                     fillColor:
-                                        FlutterFlowTheme.of(context).error,
+                                        FlutterFlowTheme.of(context).primary,
                                     icon: Icon(
                                       Icons.content_paste_search_sharp,
-                                      color: FlutterFlowTheme.of(context).info,
+                                      color:
+                                          FlutterFlowTheme.of(context).accent1,
                                       size: 24.0,
                                     ),
                                     onPressed: () async {

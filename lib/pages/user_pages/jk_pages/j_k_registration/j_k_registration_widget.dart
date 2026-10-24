@@ -11,6 +11,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
 import 'package:styled_divider/styled_divider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -73,6 +74,23 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       _model.psBannerImage = widget.banner;
       safeSetState(() {});
+      _model.queriedCategory = await EventCategoriesTable().queryRows(
+        queryFn: (q) => q
+            .eqOrNull(
+              'event_id',
+              widget.eventID,
+            )
+            .eqOrNull(
+              'category_name',
+              widget.category,
+            ),
+      );
+      _model.psIsRookieCategory = valueOrDefault<bool>(
+        _model.queriedCategory?.firstOrNull?.hasRookieCategory,
+        false,
+      );
+      _model.psCategory = widget.category;
+      safeSetState(() {});
       _model.apiResulto4e8 =
           await SupabaseDBAPIGroup.getUniqueEntryNumberCall.call(
         vEventId: widget.eventID,
@@ -114,23 +132,6 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
             valueOrDefault(currentUserDocument?.userIdProof, '');
         safeSetState(() {});
       }
-      _model.queriedCategory = await EventCategoriesTable().queryRows(
-        queryFn: (q) => q
-            .eqOrNull(
-              'event_id',
-              widget.eventID,
-            )
-            .eqOrNull(
-              'category_name',
-              widget.category,
-            ),
-      );
-      _model.psIsRookieCategory = valueOrDefault<bool>(
-        _model.queriedCategory?.firstOrNull?.hasRookieCategory,
-        false,
-      );
-      _model.psCategory = widget.category;
-      safeSetState(() {});
     });
 
     _model.vehicleMakeFocusNode ??= FocusNode();
@@ -151,9 +152,9 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
         TextEditingController(text: currentUserDocument?.address.city);
     _model.cityTextFocusNode ??= FocusNode();
 
-    _model.stateTextFieldTextController ??=
+    _model.stateTextTextController ??=
         TextEditingController(text: currentUserDocument?.address.state);
-    _model.stateTextFieldFocusNode ??= FocusNode();
+    _model.stateTextFocusNode ??= FocusNode();
 
     _model.zipcodeTextFieldTextController ??=
         TextEditingController(text: currentUserDocument?.address.pincode);
@@ -178,7 +179,7 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
       }(currentUserDocument!.eventEmegencyDetails.emergencyPhone),
       '+91',
     ));
-    _model.textFieldFocusNode ??= FocusNode();
+    _model.textFieldFocusNode1 ??= FocusNode();
 
     _model.emergencycontactTextFieldTextController1 ??= TextEditingController(
         text: (String var1) {
@@ -202,9 +203,9 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
         text: currentUserDocument?.eventEmegencyDetails.emergencyCity);
     _model.emergencyCityTextFocusNode ??= FocusNode();
 
-    _model.emergencyStateFieldTextController ??= TextEditingController(
+    _model.emergencyStateTextTextController ??= TextEditingController(
         text: currentUserDocument?.eventEmegencyDetails.emergencyState);
-    _model.emergencyStateFieldFocusNode ??= FocusNode();
+    _model.emergencyStateTextFocusNode ??= FocusNode();
 
     _model.emergencyZipcodeTextFieldTextController ??= TextEditingController(
         text: currentUserDocument?.eventEmegencyDetails.emergencyPincode);
@@ -254,7 +255,9 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
 
     _model.entrantManagerFocusNode ??= FocusNode();
 
-    _model.entrantMobileFocusNode ??= FocusNode();
+    _model.textFieldFocusNode2 ??= FocusNode();
+
+    _model.entrantMobileTextFieldFocusNode ??= FocusNode();
 
     _model.entrantemailFocusNode ??= FocusNode();
 
@@ -1704,13 +1707,13 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                                       title: Text(
                                                                           'Tyre Size'),
                                                                       content: Text(
-                                                                          '${_model.tyresizeDropDownValue}  choosen.'),
+                                                                          '${_model.tyresizeDropDownValue} is selected.'),
                                                                       actions: [
                                                                         TextButton(
                                                                           onPressed: () =>
                                                                               Navigator.pop(alertDialogContext),
                                                                           child:
-                                                                              Text('Ok'),
+                                                                              Text('OK'),
                                                                         ),
                                                                       ],
                                                                     ),
@@ -1933,8 +1936,8 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                   isMultiSelect: false,
                                                 ),
                                                 if (valueOrDefault<bool>(
-                                                  _model.aSNDropDownValue !=
-                                                      'FMSCI',
+                                                  _model.aSNDropDownValue ==
+                                                      'OTHERS',
                                                   false,
                                                 ))
                                                   Padding(
@@ -2554,8 +2557,8 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                       'NA',
                                                     );
                                                     _model.psCategoryTeamid =
-                                                        jKRegistrationEventRegistrationsRow!
-                                                            .teamName!;
+                                                        jKRegistrationEventRegistrationsRow
+                                                            ?.teamName;
                                                     safeSetState(() {});
                                                     await _model
                                                         .pageViewController
@@ -2688,69 +2691,105 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                         ),
                                                       );
                                                     } else {
-                                                      await EventRegistrationsTable()
-                                                          .update(
-                                                        data: {
-                                                          'fmsci_licenseNumber':
-                                                              _model
-                                                                  .fmsciLicenseTextController
-                                                                  .text,
-                                                          'vehicleModel': _model
-                                                              .vehicleMakeTextController
-                                                              .text,
-                                                          'issuing_ASN': _model
-                                                              .issuingAsnTextController
-                                                              .text,
-                                                          'isRookie':
-                                                              valueOrDefault<
-                                                                  bool>(
-                                                            _model
-                                                                .rookiecheckboxValue,
-                                                            false,
+                                                      if (valueOrDefault<bool>(
+                                                        (_model
+                                                                    .queriedCategory
+                                                                    ?.firstOrNull
+                                                                    ?.categoryType !=
+                                                                'onemake_2w') &&
+                                                            (_model.fmsciLicenseTextController
+                                                                        .text ==
+                                                                    ''),
+                                                        false,
+                                                      )) {
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                          SnackBar(
+                                                            content: Text(
+                                                              'FMSCI License Number is Missing!!',
+                                                              style: TextStyle(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryBackground,
+                                                              ),
+                                                            ),
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    4000),
+                                                            backgroundColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
                                                           ),
-                                                          'tyre_size': _model
-                                                              .tyresizeDropDownValue,
-                                                        },
-                                                        matchingRows: (rows) =>
-                                                            rows.eqOrNull(
-                                                          'id',
+                                                        );
+                                                      } else {
+                                                        await EventRegistrationsTable()
+                                                            .update(
+                                                          data: {
+                                                            'fmsci_licenseNumber':
+                                                                _model
+                                                                    .fmsciLicenseTextController
+                                                                    .text,
+                                                            'vehicleModel': _model
+                                                                .vehicleMakeTextController
+                                                                .text,
+                                                            'issuing_ASN': _model
+                                                                        .aSNDropDownValue ==
+                                                                    'FMSCI'
+                                                                ? 'FMSCI'
+                                                                : _model
+                                                                    .issuingAsnTextController
+                                                                    .text,
+                                                            'isRookie':
+                                                                valueOrDefault<
+                                                                    bool>(
+                                                              _model
+                                                                  .rookiecheckboxValue,
+                                                              false,
+                                                            ),
+                                                            'tyre_size': _model
+                                                                .tyresizeDropDownValue,
+                                                          },
+                                                          matchingRows:
+                                                              (rows) =>
+                                                                  rows.eqOrNull(
+                                                            'id',
+                                                            jKRegistrationEventRegistrationsRow
+                                                                ?.id,
+                                                          ),
+                                                        );
+                                                        _model.psPdfUrl =
+                                                            valueOrDefault<
+                                                                String>(
                                                           jKRegistrationEventRegistrationsRow
-                                                              ?.id,
-                                                        ),
-                                                      );
-                                                      _model.psPdfUrl =
-                                                          valueOrDefault<
-                                                              String>(
-                                                        jKRegistrationEventRegistrationsRow
-                                                            ?.attachmentLink,
-                                                        'NA',
-                                                      );
-                                                      _model.psCategoryTeamid =
-                                                          valueOrDefault<
-                                                              String>(
-                                                        jKRegistrationEventRegistrationsRow
-                                                            ?.teamName,
-                                                        'Team Name',
-                                                      );
-                                                      safeSetState(() {});
-                                                      if (valueOrDefault<
-                                                                  String>(
-                                                                jKRegistrationEventRegistrationsRow
-                                                                    ?.teamName,
-                                                                'Team Name',
-                                                              ) ==
-                                                              '') {
+                                                              ?.attachmentLink,
+                                                          'NA',
+                                                        );
                                                         _model.psCategoryTeamid =
-                                                            'Team Name';
+                                                            jKRegistrationEventRegistrationsRow
+                                                                ?.teamName;
                                                         safeSetState(() {});
+                                                        if (valueOrDefault<
+                                                                    String>(
+                                                                  jKRegistrationEventRegistrationsRow
+                                                                      ?.teamName,
+                                                                  'Team Name',
+                                                                ) ==
+                                                                '') {
+                                                          _model.psCategoryTeamid =
+                                                              'Team Name';
+                                                          safeSetState(() {});
+                                                        }
+                                                        await _model
+                                                            .pageViewController
+                                                            ?.nextPage(
+                                                          duration: Duration(
+                                                              milliseconds:
+                                                                  300),
+                                                          curve: Curves.ease,
+                                                        );
                                                       }
-                                                      await _model
-                                                          .pageViewController
-                                                          ?.nextPage(
-                                                        duration: Duration(
-                                                            milliseconds: 300),
-                                                        curve: Curves.ease,
-                                                      );
                                                     }
                                                   },
                                                   text: 'Save & Next',
@@ -4853,13 +4892,13 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                                 1.0,
                                                         child: TextFormField(
                                                           controller: _model
-                                                              .stateTextFieldTextController,
+                                                              .stateTextTextController,
                                                           focusNode: _model
-                                                              .stateTextFieldFocusNode,
+                                                              .stateTextFocusNode,
                                                           onChanged: (_) =>
                                                               EasyDebounce
                                                                   .debounce(
-                                                            '_model.stateTextFieldTextController',
+                                                            '_model.stateTextTextController',
                                                             Duration(
                                                                 milliseconds:
                                                                     2000),
@@ -4921,8 +4960,6 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                                             .labelMedium
                                                                             .fontStyle,
                                                                       ),
-                                                                      fontSize:
-                                                                          10.0,
                                                                       letterSpacing:
                                                                           0.0,
                                                                       fontWeight: FlutterFlowTheme.of(
@@ -4998,14 +5035,14 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                                             .isReadOnly ==
                                                                         true) &&
                                                                     _model
-                                                                        .stateTextFieldTextController!
+                                                                        .stateTextTextController!
                                                                         .text
                                                                         .isNotEmpty
                                                                 ? InkWell(
                                                                     onTap:
                                                                         () async {
                                                                       _model
-                                                                          .stateTextFieldTextController
+                                                                          .stateTextTextController
                                                                           ?.clear();
                                                                       safeSetState(
                                                                           () {});
@@ -5052,7 +5089,7 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                           enableInteractiveSelection:
                                                               true,
                                                           validator: _model
-                                                              .stateTextFieldTextControllerValidator
+                                                              .stateTextTextControllerValidator
                                                               .asValidator(
                                                                   context),
                                                           inputFormatters: [
@@ -5832,7 +5869,8 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                         .uploadedFileUrl_idProofUpload;
                                                     safeSetState(() {});
                                                   },
-                                                  text: 'Upload ID Proof',
+                                                  text:
+                                                      'Upload ID Proof (Only Image)',
                                                   icon: Icon(
                                                     Icons.upload_file,
                                                     size: 20.0,
@@ -6431,7 +6469,7 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                               controller: _model
                                                                   .textController12,
                                                               focusNode: _model
-                                                                  .textFieldFocusNode,
+                                                                  .textFieldFocusNode1,
                                                               autofocus: false,
                                                               enabled: true,
                                                               readOnly: widget
@@ -6590,7 +6628,7 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                                   null,
                                                               keyboardType:
                                                                   (FFKeyboardType
-                                                                          .number)
+                                                                          .signedDecimal)
                                                                       .flutterValue,
                                                               cursorColor:
                                                                   FlutterFlowTheme.of(
@@ -6813,7 +6851,7 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                                   ),
                                                               keyboardType:
                                                                   (FFKeyboardType
-                                                                          .number)
+                                                                          .signedDecimal)
                                                                       .flutterValue,
                                                               cursorColor:
                                                                   FlutterFlowTheme.of(
@@ -7817,13 +7855,13 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                                 1.0,
                                                         child: TextFormField(
                                                           controller: _model
-                                                              .emergencyStateFieldTextController,
+                                                              .emergencyStateTextTextController,
                                                           focusNode: _model
-                                                              .emergencyStateFieldFocusNode,
+                                                              .emergencyStateTextFocusNode,
                                                           onChanged: (_) =>
                                                               EasyDebounce
                                                                   .debounce(
-                                                            '_model.emergencyStateFieldTextController',
+                                                            '_model.emergencyStateTextTextController',
                                                             Duration(
                                                                 milliseconds:
                                                                     2000),
@@ -7872,7 +7910,7 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                                           .fontStyle,
                                                                     ),
                                                             hintText:
-                                                                'State / Region',
+                                                                'State/Region',
                                                             hintStyle:
                                                                 FlutterFlowTheme.of(
                                                                         context)
@@ -7887,8 +7925,6 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                                             .labelMedium
                                                                             .fontStyle,
                                                                       ),
-                                                                      fontSize:
-                                                                          10.0,
                                                                       letterSpacing:
                                                                           0.0,
                                                                       fontWeight: FlutterFlowTheme.of(
@@ -7964,14 +8000,14 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                                             .isReadOnly ==
                                                                         true) &&
                                                                     _model
-                                                                        .emergencyStateFieldTextController!
+                                                                        .emergencyStateTextTextController!
                                                                         .text
                                                                         .isNotEmpty
                                                                 ? InkWell(
                                                                     onTap:
                                                                         () async {
                                                                       _model
-                                                                          .emergencyStateFieldTextController
+                                                                          .emergencyStateTextTextController
                                                                           ?.clear();
                                                                       safeSetState(
                                                                           () {});
@@ -8018,7 +8054,7 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                           enableInteractiveSelection:
                                                               true,
                                                           validator: _model
-                                                              .emergencyStateFieldTextControllerValidator
+                                                              .emergencyStateTextTextControllerValidator
                                                               .asValidator(
                                                                   context),
                                                           inputFormatters: [
@@ -9750,8 +9786,7 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                                     .fontStyle,
                                                               ),
                                                       keyboardType:
-                                                          (FFKeyboardType
-                                                                  .number)
+                                                          (FFKeyboardType.text)
                                                               .flutterValue,
                                                       cursorColor:
                                                           FlutterFlowTheme.of(
@@ -11164,7 +11199,7 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                         .emergencyCityTextTextController
                                                         .text,
                                                     emergencyState: _model
-                                                        .emergencyStateFieldTextController
+                                                        .emergencyStateTextTextController
                                                         .text,
                                                     emergencyPincode: _model
                                                         .emergencyZipcodeTextFieldTextController
@@ -11195,7 +11230,7 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                           .cityTextTextController
                                                           .text,
                                                       state: _model
-                                                          .stateTextFieldTextController
+                                                          .stateTextTextController
                                                           .text,
                                                       pincode: _model
                                                           .zipcodeTextFieldTextController
@@ -11265,7 +11300,7 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                           .cityTextTextController
                                                           .text,
                                                       'state': _model
-                                                          .stateTextFieldTextController
+                                                          .stateTextTextController
                                                           .text,
                                                       'zipcode': _model
                                                           .zipcodeTextFieldTextController
@@ -11642,6 +11677,34 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                             safeSetState(() =>
                                                                 _model.teamNameValue =
                                                                     val);
+                                                            _model.psCategoryTeamid =
+                                                                containerChampionshipTeamsRowList
+                                                                    .where((e) =>
+                                                                        valueOrDefault<
+                                                                            bool>(
+                                                                          e.id ==
+                                                                              _model.teamNameValue,
+                                                                          false,
+                                                                        ))
+                                                                    .toList()
+                                                                    .firstOrNull
+                                                                    ?.teamName;
+                                                            safeSetState(() {});
+                                                            _model.queryTeamName =
+                                                                await ChampionshipTeamsTable()
+                                                                    .queryRows(
+                                                              queryFn: (q) =>
+                                                                  q.eqOrNull(
+                                                                'id',
+                                                                _model
+                                                                    .teamNameValue,
+                                                              ),
+                                                            );
+                                                            _model.psCategoryTeamid =
+                                                                _model
+                                                                    .queryTeamName
+                                                                    ?.firstOrNull
+                                                                    ?.teamName;
                                                             safeSetState(() {
                                                               _model.entrantManagerTextController
                                                                       ?.text =
@@ -11656,21 +11719,64 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                                       .toList()
                                                                       .firstOrNull!
                                                                       .teamManager!;
+                                                              _model
+                                                                  .entrantManagerFocusNode
+                                                                  ?.requestFocus();
+                                                              WidgetsBinding
+                                                                  .instance
+                                                                  .addPostFrameCallback(
+                                                                      (_) {
+                                                                _model.entrantManagerTextController
+                                                                        ?.selection =
+                                                                    TextSelection(
+                                                                  baseOffset: 0,
+                                                                  extentOffset: _model
+                                                                      .entrantManagerTextController!
+                                                                      .text
+                                                                      .length,
+                                                                );
+                                                              });
                                                             });
                                                             safeSetState(() {
-                                                              _model.entrantMobileTextController
+                                                              _model.entrantMobileTextFieldTextController
                                                                       ?.text =
-                                                                  containerChampionshipTeamsRowList
-                                                                      .where((e) =>
-                                                                          valueOrDefault<
-                                                                              bool>(
-                                                                            e.id ==
-                                                                                _model.teamNameValue,
-                                                                            false,
-                                                                          ))
-                                                                      .toList()
-                                                                      .firstOrNull!
-                                                                      .teamManagerMobile!;
+                                                                  ((String
+                                                                      var1) {
+                                                                return var1
+                                                                    .split('-')
+                                                                    .last;
+                                                              }(valueOrDefault<
+                                                                      String>(
+                                                                containerChampionshipTeamsRowList
+                                                                    .where((e) =>
+                                                                        valueOrDefault<
+                                                                            bool>(
+                                                                          e.id ==
+                                                                              _model.teamNameValue,
+                                                                          false,
+                                                                        ))
+                                                                    .toList()
+                                                                    .firstOrNull
+                                                                    ?.teamManagerMobile,
+                                                                '-',
+                                                              )));
+                                                              _model
+                                                                  .entrantMobileTextFieldFocusNode
+                                                                  ?.requestFocus();
+                                                              WidgetsBinding
+                                                                  .instance
+                                                                  .addPostFrameCallback(
+                                                                      (_) {
+                                                                _model.entrantMobileTextFieldTextController
+                                                                        ?.selection =
+                                                                    TextSelection(
+                                                                  baseOffset: 0,
+                                                                  extentOffset: _model
+                                                                      .entrantMobileTextFieldTextController!
+                                                                      .text
+                                                                      .length,
+                                                                );
+                                                              });
                                                             });
                                                             safeSetState(() {
                                                               _model.entrantemailTextController
@@ -11686,19 +11792,26 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                                       .toList()
                                                                       .firstOrNull!
                                                                       .teamEmail!;
+                                                              _model
+                                                                  .entrantemailFocusNode
+                                                                  ?.requestFocus();
+                                                              WidgetsBinding
+                                                                  .instance
+                                                                  .addPostFrameCallback(
+                                                                      (_) {
+                                                                _model.entrantemailTextController
+                                                                        ?.selection =
+                                                                    TextSelection(
+                                                                  baseOffset: 0,
+                                                                  extentOffset: _model
+                                                                      .entrantemailTextController!
+                                                                      .text
+                                                                      .length,
+                                                                );
+                                                              });
                                                             });
-                                                            _model.psCategoryTeamid =
-                                                                containerChampionshipTeamsRowList
-                                                                    .where((e) =>
-                                                                        valueOrDefault<
-                                                                            bool>(
-                                                                          e.id ==
-                                                                              _model.teamNameValue,
-                                                                          false,
-                                                                        ))
-                                                                    .toList()
-                                                                    .firstOrNull!
-                                                                    .teamName;
+
+                                                            safeSetState(() {});
                                                           },
                                                           width:
                                                               MediaQuery.sizeOf(
@@ -11733,8 +11846,13 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                                         .bodyMedium
                                                                         .fontStyle,
                                                                   ),
-                                                          hintText: _model
-                                                              .psCategoryTeamid,
+                                                          hintText: _model.psCategoryTeamid ==
+                                                                      null ||
+                                                                  _model.psCategoryTeamid ==
+                                                                      ''
+                                                              ? 'Choose Team Name'
+                                                              : _model
+                                                                  .psCategoryTeamid,
                                                           icon: Icon(
                                                             Icons
                                                                 .keyboard_arrow_down_rounded,
@@ -12006,49 +12124,264 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                           ),
                                                         ),
                                                       ),
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                -1.0, 0.0),
-                                                        child: Container(
-                                                          width:
-                                                              MediaQuery.sizeOf(
+                                                      Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Expanded(
+                                                            child: Container(
+                                                              width: 30.0,
+                                                              child:
+                                                                  TextFormField(
+                                                                controller: _model
+                                                                        .textController31 ??=
+                                                                    TextEditingController(
+                                                                  text: valueOrDefault<
+                                                                      String>(
+                                                                    (String
+                                                                        var1) {
+                                                                      return var1
+                                                                          .split(
+                                                                              '-')
+                                                                          .first;
+                                                                    }(valueOrDefault<
+                                                                        String>(
+                                                                      jKRegistrationEventRegistrationsRow
+                                                                          ?.teamMangerPhone,
+                                                                      '+91',
+                                                                    )),
+                                                                    '+91',
+                                                                  ),
+                                                                ),
+                                                                focusNode: _model
+                                                                    .textFieldFocusNode2,
+                                                                autofocus:
+                                                                    false,
+                                                                enabled: true,
+                                                                readOnly: widget
+                                                                        .isReadOnly ==
+                                                                    true,
+                                                                obscureText:
+                                                                    false,
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                  isDense: true,
+                                                                  labelText:
+                                                                      'Code',
+                                                                  labelStyle: FlutterFlowTheme.of(
                                                                           context)
+                                                                      .labelMedium
+                                                                      .override(
+                                                                        font: GoogleFonts
+                                                                            .inter(
+                                                                          fontWeight: FlutterFlowTheme.of(context)
+                                                                              .labelMedium
+                                                                              .fontWeight,
+                                                                          fontStyle: FlutterFlowTheme.of(context)
+                                                                              .labelMedium
+                                                                              .fontStyle,
+                                                                        ),
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight: FlutterFlowTheme.of(context)
+                                                                            .labelMedium
+                                                                            .fontWeight,
+                                                                        fontStyle: FlutterFlowTheme.of(context)
+                                                                            .labelMedium
+                                                                            .fontStyle,
+                                                                      ),
+                                                                  hintText:
+                                                                      '+91',
+                                                                  hintStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelMedium
+                                                                      .override(
+                                                                        font: GoogleFonts
+                                                                            .inter(
+                                                                          fontWeight: FlutterFlowTheme.of(context)
+                                                                              .labelMedium
+                                                                              .fontWeight,
+                                                                          fontStyle: FlutterFlowTheme.of(context)
+                                                                              .labelMedium
+                                                                              .fontStyle,
+                                                                        ),
+                                                                        fontSize:
+                                                                            10.0,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight: FlutterFlowTheme.of(context)
+                                                                            .labelMedium
+                                                                            .fontWeight,
+                                                                        fontStyle: FlutterFlowTheme.of(context)
+                                                                            .labelMedium
+                                                                            .fontStyle,
+                                                                      ),
+                                                                  enabledBorder:
+                                                                      OutlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .alternate,
+                                                                      width:
+                                                                          1.0,
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                  ),
+                                                                  focusedBorder:
+                                                                      OutlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .alternate,
+                                                                      width:
+                                                                          1.0,
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                  ),
+                                                                  errorBorder:
+                                                                      OutlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .error,
+                                                                      width:
+                                                                          1.0,
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                  ),
+                                                                  focusedErrorBorder:
+                                                                      OutlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .error,
+                                                                      width:
+                                                                          1.0,
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                  ),
+                                                                  filled: true,
+                                                                  fillColor: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryBackground,
+                                                                ),
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      font: GoogleFonts
+                                                                          .inter(
+                                                                        fontWeight: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .fontWeight,
+                                                                        fontStyle: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .fontStyle,
+                                                                      ),
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .fontWeight,
+                                                                      fontStyle: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .fontStyle,
+                                                                    ),
+                                                                maxLength: 5,
+                                                                buildCounter: (context,
+                                                                        {required currentLength,
+                                                                        required isFocused,
+                                                                        maxLength}) =>
+                                                                    null,
+                                                                keyboardType:
+                                                                    (FFKeyboardType
+                                                                            .signedDecimal)
+                                                                        .flutterValue,
+                                                                cursorColor:
+                                                                    FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryText,
+                                                                enableInteractiveSelection:
+                                                                    true,
+                                                                validator: _model
+                                                                    .textController31Validator
+                                                                    .asValidator(
+                                                                        context),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Align(
+                                                            alignment:
+                                                                AlignmentDirectional(
+                                                                    -1.0, 0.0),
+                                                            child: Container(
+                                                              width: MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
                                                                       .width *
-                                                                  1.0,
-                                                          child: TextFormField(
-                                                            controller: _model
-                                                                    .entrantMobileTextController ??=
-                                                                TextEditingController(
-                                                              text: jKRegistrationEventRegistrationsRow
-                                                                  ?.teamMangerPhone,
-                                                            ),
-                                                            focusNode: _model
-                                                                .entrantMobileFocusNode,
-                                                            onChanged: (_) =>
-                                                                EasyDebounce
-                                                                    .debounce(
-                                                              '_model.entrantMobileTextController',
-                                                              Duration(
-                                                                  milliseconds:
-                                                                      2000),
-                                                              () =>
-                                                                  safeSetState(
-                                                                      () {}),
-                                                            ),
-                                                            autofocus: false,
-                                                            enabled: true,
-                                                            readOnly: widget
-                                                                    .isReadOnly ==
-                                                                true,
-                                                            obscureText: false,
-                                                            decoration:
-                                                                InputDecoration(
-                                                              isDense: true,
-                                                              labelText:
-                                                                  'Mobile Number Of Entrant / Team ',
-                                                              labelStyle:
-                                                                  FlutterFlowTheme.of(
+                                                                  0.7,
+                                                              child:
+                                                                  TextFormField(
+                                                                controller: _model
+                                                                        .entrantMobileTextFieldTextController ??=
+                                                                    TextEditingController(
+                                                                  text: (String
+                                                                      var1) {
+                                                                    return var1
+                                                                        .split(
+                                                                            '-')
+                                                                        .last;
+                                                                  }(valueOrDefault<
+                                                                      String>(
+                                                                    jKRegistrationEventRegistrationsRow
+                                                                        ?.teamMangerPhone,
+                                                                    '-',
+                                                                  )),
+                                                                ),
+                                                                focusNode: _model
+                                                                    .entrantMobileTextFieldFocusNode,
+                                                                onChanged: (_) =>
+                                                                    EasyDebounce
+                                                                        .debounce(
+                                                                  '_model.entrantMobileTextFieldTextController',
+                                                                  Duration(
+                                                                      milliseconds:
+                                                                          2000),
+                                                                  () =>
+                                                                      safeSetState(
+                                                                          () {}),
+                                                                ),
+                                                                autofocus:
+                                                                    false,
+                                                                enabled: true,
+                                                                readOnly: widget
+                                                                        .isReadOnly ==
+                                                                    true,
+                                                                obscureText:
+                                                                    false,
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                  isDense: true,
+                                                                  labelText:
+                                                                      'Mobile Number Of Entrant / Team ',
+                                                                  labelStyle: FlutterFlowTheme.of(
                                                                           context)
                                                                       .labelMedium
                                                                       .override(
@@ -12072,8 +12405,9 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                                             .labelMedium
                                                                             .fontStyle,
                                                                       ),
-                                                              hintStyle:
-                                                                  FlutterFlowTheme.of(
+                                                                  hintText:
+                                                                      'Team Manager Contact',
+                                                                  hintStyle: FlutterFlowTheme.of(
                                                                           context)
                                                                       .labelMedium
                                                                       .override(
@@ -12086,6 +12420,8 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                                               .labelMedium
                                                                               .fontStyle,
                                                                         ),
+                                                                        fontSize:
+                                                                            10.0,
                                                                         letterSpacing:
                                                                             0.0,
                                                                         fontWeight: FlutterFlowTheme.of(context)
@@ -12095,139 +12431,135 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                                             .labelMedium
                                                                             .fontStyle,
                                                                       ),
-                                                              enabledBorder:
-                                                                  OutlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide(
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .alternate,
-                                                                  width: 1.0,
-                                                                ),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
+                                                                  enabledBorder:
+                                                                      OutlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .alternate,
+                                                                      width:
+                                                                          1.0,
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
                                                                             8.0),
-                                                              ),
-                                                              focusedBorder:
-                                                                  OutlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide(
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .alternate,
-                                                                  width: 1.0,
-                                                                ),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                              ),
-                                                              errorBorder:
-                                                                  OutlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide(
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .error,
-                                                                  width: 1.0,
-                                                                ),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                              ),
-                                                              focusedErrorBorder:
-                                                                  OutlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide(
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .error,
-                                                                  width: 1.0,
-                                                                ),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                              ),
-                                                              filled: true,
-                                                              fillColor: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondaryBackground,
-                                                              prefixIcon: Icon(
-                                                                Icons
-                                                                    .phone_in_talk,
-                                                              ),
-                                                              suffixIcon: !(widget
-                                                                              .isReadOnly ==
-                                                                          true) &&
-                                                                      _model
-                                                                          .entrantMobileTextController!
-                                                                          .text
-                                                                          .isNotEmpty
-                                                                  ? InkWell(
-                                                                      onTap:
-                                                                          () async {
-                                                                        _model
-                                                                            .entrantMobileTextController
-                                                                            ?.clear();
-                                                                        safeSetState(
-                                                                            () {});
-                                                                      },
-                                                                      child:
-                                                                          Icon(
-                                                                        Icons
-                                                                            .clear,
-                                                                        size:
-                                                                            22,
-                                                                      ),
-                                                                    )
-                                                                  : null,
-                                                            ),
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  font:
-                                                                      GoogleFonts
-                                                                          .inter(
-                                                                    fontWeight: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontStyle,
                                                                   ),
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                  focusedBorder:
+                                                                      OutlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .alternate,
+                                                                      width:
+                                                                          1.0,
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                  ),
+                                                                  errorBorder:
+                                                                      OutlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .error,
+                                                                      width:
+                                                                          1.0,
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                  ),
+                                                                  focusedErrorBorder:
+                                                                      OutlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .error,
+                                                                      width:
+                                                                          1.0,
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                  ),
+                                                                  filled: true,
+                                                                  fillColor: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyMedium
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
+                                                                      .secondaryBackground,
+                                                                  prefixIcon:
+                                                                      Icon(
+                                                                    Icons
+                                                                        .phone_in_talk,
+                                                                  ),
+                                                                  suffixIcon: !(widget.isReadOnly ==
+                                                                              true) &&
+                                                                          _model
+                                                                              .entrantMobileTextFieldTextController!
+                                                                              .text
+                                                                              .isNotEmpty
+                                                                      ? InkWell(
+                                                                          onTap:
+                                                                              () async {
+                                                                            _model.entrantMobileTextFieldTextController?.clear();
+                                                                            safeSetState(() {});
+                                                                          },
+                                                                          child:
+                                                                              Icon(
+                                                                            Icons.clear,
+                                                                            size:
+                                                                                22,
+                                                                          ),
+                                                                        )
+                                                                      : null,
                                                                 ),
-                                                            keyboardType:
-                                                                (FFKeyboardType
-                                                                        .phone)
-                                                                    .flutterValue,
-                                                            cursorColor:
-                                                                FlutterFlowTheme.of(
+                                                                style: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .primaryText,
-                                                            enableInteractiveSelection:
-                                                                true,
-                                                            validator: _model
-                                                                .entrantMobileTextControllerValidator
-                                                                .asValidator(
-                                                                    context),
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      font: GoogleFonts
+                                                                          .inter(
+                                                                        fontWeight: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .fontWeight,
+                                                                        fontStyle: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .fontStyle,
+                                                                      ),
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .fontWeight,
+                                                                      fontStyle: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .fontStyle,
+                                                                    ),
+                                                                keyboardType:
+                                                                    (FFKeyboardType
+                                                                            .signedDecimal)
+                                                                        .flutterValue,
+                                                                cursorColor:
+                                                                    FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryText,
+                                                                enableInteractiveSelection:
+                                                                    true,
+                                                                validator: _model
+                                                                    .entrantMobileTextFieldTextControllerValidator
+                                                                    .asValidator(
+                                                                        context),
+                                                              ),
+                                                            ),
                                                           ),
-                                                        ),
+                                                        ].divide(SizedBox(
+                                                            width: 5.0)),
                                                       ),
                                                       Align(
                                                         alignment:
@@ -12650,6 +12982,35 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                                       .validate()) {
                                                                 return;
                                                               }
+                                                              if (_model
+                                                                      .teamNameValue ==
+                                                                  null) {
+                                                                await showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (alertDialogContext) {
+                                                                    return WebViewAware(
+                                                                      child:
+                                                                          AlertDialog(
+                                                                        title: Text(
+                                                                            'Team Name not chosen !!'),
+                                                                        content:
+                                                                            Text('Please choose your Team'),
+                                                                        actions: [
+                                                                          TextButton(
+                                                                            onPressed: () =>
+                                                                                Navigator.pop(alertDialogContext),
+                                                                            child:
+                                                                                Text('Ok'),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                );
+                                                                return;
+                                                              }
                                                               await EventRegistrationsTable()
                                                                   .update(
                                                                 data: {
@@ -12662,9 +13023,7 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                                           .entrantemailTextController
                                                                           .text,
                                                                   'teamMangerPhone':
-                                                                      _model
-                                                                          .entrantMobileTextController
-                                                                          .text,
+                                                                      '${_model.textController31.text}-${_model.entrantMobileTextFieldTextController.text}',
                                                                   'teamName': _model
                                                                       .psCategoryTeamid,
                                                                 },
@@ -13179,6 +13538,66 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                 BorderRadius.circular(8.0),
                                           ),
                                         ),
+                                        FFButtonWidget(
+                                          onPressed: () async {
+                                            await actions.previewButton(
+                                              widget.eventID!,
+                                              widget.driverID!,
+                                              widget.category!,
+                                            );
+                                          },
+                                          text: 'Preview',
+                                          options: FFButtonOptions(
+                                            height: 40.0,
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    16.0, 0.0, 16.0, 0.0),
+                                            iconPadding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
+                                            color: colorFromCssString(
+                                              widget.eventpColour,
+                                              defaultColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                            ),
+                                            textStyle: FlutterFlowTheme.of(
+                                                    context)
+                                                .titleSmall
+                                                .override(
+                                                  font: GoogleFonts.interTight(
+                                                    fontWeight:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .titleSmall
+                                                            .fontWeight,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .titleSmall
+                                                            .fontStyle,
+                                                  ),
+                                                  color: colorFromCssString(
+                                                    widget.eventpText!,
+                                                    defaultColor: Colors.black,
+                                                  ),
+                                                  letterSpacing: 0.0,
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .titleSmall
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .titleSmall
+                                                          .fontStyle,
+                                                ),
+                                            elevation: 0.0,
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                        ),
                                         if (valueOrDefault<bool>(
                                           jKRegistrationEventRegistrationsRow
                                                   ?.status ==
@@ -13285,7 +13704,7 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                   BorderRadius.circular(8.0),
                                             ),
                                           ),
-                                      ].divide(SizedBox(width: 50.0)),
+                                      ].divide(SizedBox(width: 25.0)),
                                     ),
                                   ),
                                   Padding(
@@ -13445,9 +13864,9 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                                   child:
                                                                       AlertDialog(
                                                                     title: Text(
-                                                                        'Event Registration  !!'),
+                                                                        'Event Registration  !'),
                                                                     content: Text(
-                                                                        'Submit the form for Event Entry . No Further Modification Allowed !!'),
+                                                                        'Submit the form for Event Entry ? No Further Modification Allowed !'),
                                                                     actions: [
                                                                       TextButton(
                                                                         onPressed: () => Navigator.pop(
@@ -13461,7 +13880,7 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                                             alertDialogContext,
                                                                             true),
                                                                         child: Text(
-                                                                            'Yes, Submit'),
+                                                                            'Confirm & Submit'),
                                                                       ),
                                                                     ],
                                                                   ),
@@ -13495,16 +13914,16 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                                           return WebViewAware(
                                                             child: AlertDialog(
                                                               title: Text(
-                                                                  'Successful !!'),
+                                                                  'Successful !'),
                                                               content: Text(
-                                                                  'Entry Registered  !!'),
+                                                                  'Entry has been Registered !'),
                                                               actions: [
                                                                 TextButton(
                                                                   onPressed: () =>
                                                                       Navigator.pop(
                                                                           alertDialogContext),
                                                                   child: Text(
-                                                                      'Ok'),
+                                                                      'OK'),
                                                                 ),
                                                               ],
                                                             ),
@@ -13598,7 +14017,7 @@ class _JKRegistrationWidgetState extends State<JKRegistrationWidget> {
                                             }
                                           },
                                         ),
-                                      ],
+                                      ].divide(SizedBox(width: 30.0)),
                                     ),
                                   ),
                                   Container(

@@ -11,6 +11,7 @@ class Auth2LoginModel extends FlutterFlowModel<Auth2LoginWidget> {
   TextEditingController? emailAddressTextController;
   String? Function(BuildContext, String?)? emailAddressTextControllerValidator;
   // State field(s) for password widget.
+  late FocusNode passwordPasswordVisibilityFocusNode;
   FocusNode? passwordFocusNode;
   TextEditingController? passwordTextController;
   late bool passwordVisibility;
@@ -18,6 +19,7 @@ class Auth2LoginModel extends FlutterFlowModel<Auth2LoginWidget> {
 
   @override
   void initState(BuildContext context) {
+    passwordPasswordVisibilityFocusNode = FocusNode();
     passwordVisibility = false;
   }
 
@@ -28,5 +30,6 @@ class Auth2LoginModel extends FlutterFlowModel<Auth2LoginWidget> {
 
     passwordFocusNode?.dispose();
     passwordTextController?.dispose();
+    passwordPasswordVisibilityFocusNode.dispose();
   }
 }

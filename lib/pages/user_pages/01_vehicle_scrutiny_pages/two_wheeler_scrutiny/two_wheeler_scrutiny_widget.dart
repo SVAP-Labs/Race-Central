@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/ff_builtin_enums.dart';
@@ -53,8 +54,6 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => TwoWheelerScrutinyModel());
-
-    _model.makeModelFocusNode ??= FocusNode();
 
     _model.cCNumberFocusNode ??= FocusNode();
 
@@ -309,8 +308,8 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Container(
-                                          width: 38.0,
-                                          height: 34.0,
+                                          width: 32.0,
+                                          height: 32.0,
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
                                                 .alternate,
@@ -321,7 +320,7 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                             Icons.person_rounded,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondaryText,
-                                            size: 24.0,
+                                            size: 20.0,
                                           ),
                                         ),
                                         Column(
@@ -414,8 +413,8 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Container(
-                                          width: 38.0,
-                                          height: 34.0,
+                                          width: 32.0,
+                                          height: 32.0,
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
                                                 .alternate,
@@ -426,7 +425,7 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                             Icons.directions_car,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondaryText,
-                                            size: 24.0,
+                                            size: 20.0,
                                           ),
                                         ),
                                         Column(
@@ -481,8 +480,8 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Container(
-                                          width: 38.0,
-                                          height: 34.0,
+                                          width: 32.0,
+                                          height: 32.0,
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
                                                 .alternate,
@@ -493,7 +492,7 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                             Icons.group_rounded,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondaryText,
-                                            size: 24.0,
+                                            size: 20.0,
                                           ),
                                         ),
                                         Column(
@@ -677,112 +676,129 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                                         ),
                                                   ),
                                                 ),
-                                                TextFormField(
-                                                  controller: _model
-                                                          .makeModelTextController ??=
-                                                      TextEditingController(
-                                                    text:
-                                                        twoWheelerScrutinyKartScrutinyCheckRow
-                                                            ?.chassisMake,
+                                                FutureBuilder<
+                                                    List<
+                                                        RacingControlAppSupportRecord>>(
+                                                  future:
+                                                      queryRacingControlAppSupportRecordOnce(
+                                                    singleRecord: true,
                                                   ),
-                                                  focusNode:
-                                                      _model.makeModelFocusNode,
-                                                  obscureText: false,
-                                                  decoration: InputDecoration(
-                                                    hintText:
-                                                        'Enter Chassis make',
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .alternate,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
+                                                  builder: (context, snapshot) {
+                                                    // Customize what your widget looks like when it's loading.
+                                                    if (!snapshot.hasData) {
+                                                      return Center(
+                                                        child: SizedBox(
+                                                          width: 40.0,
+                                                          height: 40.0,
+                                                          child: SpinKitWave(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
                                                                 .primary,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    errorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            Color(0x00000000),
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    focusedErrorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            Color(0x00000000),
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    filled: true,
-                                                    fillColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .primaryBackground,
-                                                    contentPadding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                12.0,
-                                                                10.0,
-                                                                12.0,
-                                                                10.0),
-                                                  ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        font: GoogleFonts.inter(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
+                                                            size: 40.0,
+                                                          ),
                                                         ),
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontStyle,
+                                                      );
+                                                    }
+                                                    List<RacingControlAppSupportRecord>
+                                                        makeModelRacingControlAppSupportRecordList =
+                                                        snapshot.data!;
+                                                    // Return an empty Container when the item does not exist.
+                                                    if (snapshot
+                                                        .data!.isEmpty) {
+                                                      return Container();
+                                                    }
+                                                    final makeModelRacingControlAppSupportRecord =
+                                                        makeModelRacingControlAppSupportRecordList
+                                                                .isNotEmpty
+                                                            ? makeModelRacingControlAppSupportRecordList
+                                                                .first
+                                                            : null;
+
+                                                    return FlutterFlowDropDown<
+                                                        String>(
+                                                      controller: _model
+                                                              .makeModelValueController ??=
+                                                          FormFieldController<
+                                                              String>(
+                                                        _model.makeModelValue ??=
+                                                            twoWheelerScrutinyKartScrutinyCheckRow
+                                                                ?.chassisMake,
                                                       ),
-                                                  validator: _model
-                                                      .makeModelTextControllerValidator
-                                                      .asValidator(context),
+                                                      options: makeModelRacingControlAppSupportRecord!
+                                                          .fmsciHomologated2WVehicles
+                                                          .map((e) =>
+                                                              e.homologationNo)
+                                                          .toList(),
+                                                      onChanged: (val) =>
+                                                          safeSetState(() =>
+                                                              _model.makeModelValue =
+                                                                  val),
+                                                      width: MediaQuery.sizeOf(
+                                                                  context)
+                                                              .width *
+                                                          1.0,
+                                                      height: 40.0,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                font:
+                                                                    GoogleFonts
+                                                                        .inter(
+                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontWeight,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontStyle,
+                                                                ),
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontWeight,
+                                                                fontStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                              ),
+                                                      hintText:
+                                                          'Select Homologation No.',
+                                                      icon: Icon(
+                                                        Icons
+                                                            .keyboard_arrow_down_rounded,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                        size: 24.0,
+                                                      ),
+                                                      fillColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryBackground,
+                                                      elevation: 2.0,
+                                                      borderColor:
+                                                          Colors.transparent,
+                                                      borderWidth: 0.0,
+                                                      borderRadius: 8.0,
+                                                      margin:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  12.0,
+                                                                  0.0,
+                                                                  12.0,
+                                                                  0.0),
+                                                      hidesUnderline: true,
+                                                      isOverButton: false,
+                                                      isSearchable: false,
+                                                      isMultiSelect: false,
+                                                    );
+                                                  },
                                                 ),
                                               ],
                                             ),
@@ -843,7 +859,8 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                                       _model.cCNumberFocusNode,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
-                                                    hintText: 'Enter number',
+                                                    hintText:
+                                                        'Enter Chassis number',
                                                     enabledBorder:
                                                         OutlineInputBorder(
                                                       borderSide: BorderSide(
@@ -939,134 +956,146 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                                 ),
                                               ],
                                             ),
-                                            Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 0.0, 4.0),
-                                                  child: Text(
-                                                    'FMSCI Homologation No',
+                                            if (false)
+                                              Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                                0.0, 4.0),
+                                                    child: Text(
+                                                      'FMSCI Homologation No',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium
+                                                              .override(
+                                                                font:
+                                                                    GoogleFonts
+                                                                        .inter(
+                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelMedium
+                                                                      .fontWeight,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelMedium
+                                                                      .fontStyle,
+                                                                ),
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMedium
+                                                                    .fontWeight,
+                                                                fontStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMedium
+                                                                    .fontStyle,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                  TextFormField(
+                                                    controller: _model
+                                                            .fMSCIHomologationNoTextController ??=
+                                                        TextEditingController(
+                                                      text: twoWheelerScrutinyKartScrutinyCheckRow
+                                                          ?.spareEngineSharedWith,
+                                                    ),
+                                                    focusNode: _model
+                                                        .fMSCIHomologationNoFocusNode,
+                                                    obscureText: false,
+                                                    decoration: InputDecoration(
+                                                      hintText:
+                                                          'Driver name / kart no.',
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .alternate,
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      focusedBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      errorBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color:
+                                                              Color(0x00000000),
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      focusedErrorBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color:
+                                                              Color(0x00000000),
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      filled: true,
+                                                      fillColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryBackground,
+                                                      contentPadding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  12.0,
+                                                                  10.0,
+                                                                  12.0,
+                                                                  10.0),
+                                                    ),
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .labelMedium
+                                                        .bodyMedium
                                                         .override(
                                                           font:
                                                               GoogleFonts.inter(
                                                             fontWeight:
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .labelMedium
+                                                                    .bodyMedium
                                                                     .fontWeight,
                                                             fontStyle:
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .labelMedium
+                                                                    .bodyMedium
                                                                     .fontStyle,
                                                           ),
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          fontSize: 14.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .labelMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .labelMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                  ),
-                                                ),
-                                                TextFormField(
-                                                  controller: _model
-                                                          .fMSCIHomologationNoTextController ??=
-                                                      TextEditingController(
-                                                    text: twoWheelerScrutinyKartScrutinyCheckRow
-                                                        ?.spareEngineSharedWith,
-                                                  ),
-                                                  focusNode: _model
-                                                      .fMSCIHomologationNoFocusNode,
-                                                  obscureText: false,
-                                                  decoration: InputDecoration(
-                                                    hintText:
-                                                        'Driver name / kart no.',
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .alternate,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    errorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            Color(0x00000000),
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    focusedErrorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            Color(0x00000000),
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    filled: true,
-                                                    fillColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .primaryBackground,
-                                                    contentPadding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                12.0,
-                                                                10.0,
-                                                                12.0,
-                                                                10.0),
-                                                  ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        font: GoogleFonts.inter(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
                                                                   .bodyMedium
                                                                   .fontWeight,
                                                           fontStyle:
@@ -1075,275 +1104,264 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                                                   .bodyMedium
                                                                   .fontStyle,
                                                         ),
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontStyle,
-                                                      ),
-                                                  validator: _model
-                                                      .fMSCIHomologationNoTextControllerValidator
-                                                      .asValidator(context),
-                                                ),
-                                              ],
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 10.0, 0.0, 0.0),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    children: [
-                                                      Expanded(
-                                                        child: TextFormField(
-                                                          controller: _model
-                                                                  .cubicCapacityTextController ??=
-                                                              TextEditingController(
-                                                            text: twoWheelerScrutinyKartScrutinyCheckRow
-                                                                ?.exhaustRotaxNo,
-                                                          ),
-                                                          focusNode: _model
-                                                              .cubicCapacityFocusNode,
-                                                          obscureText: false,
-                                                          decoration:
-                                                              InputDecoration(
-                                                            labelText:
-                                                                'Cubic Capacity',
-                                                            hintText:
-                                                                'Enter Rotax seal no.',
-                                                            enabledBorder:
-                                                                OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                                width: 1.0,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                            ),
-                                                            focusedBorder:
-                                                                OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primary,
-                                                                width: 1.0,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                            ),
-                                                            errorBorder:
-                                                                OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: Color(
-                                                                    0x00000000),
-                                                                width: 1.0,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                            ),
-                                                            focusedErrorBorder:
-                                                                OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: Color(
-                                                                    0x00000000),
-                                                                width: 1.0,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                            ),
-                                                            filled: true,
-                                                            fillColor: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryBackground,
-                                                            contentPadding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        12.0,
-                                                                        10.0,
-                                                                        12.0,
-                                                                        10.0),
-                                                          ),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                font:
-                                                                    GoogleFonts
-                                                                        .inter(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                              ),
-                                                          validator: _model
-                                                              .cubicCapacityTextControllerValidator
-                                                              .asValidator(
-                                                                  context),
-                                                        ),
-                                                      ),
-                                                      Expanded(
-                                                        child: TextFormField(
-                                                          controller: _model
-                                                                  .minimumweightTextController ??=
-                                                              TextEditingController(
-                                                            text: twoWheelerScrutinyKartScrutinyCheckRow
-                                                                ?.exhaustOrgSeal,
-                                                          ),
-                                                          focusNode: _model
-                                                              .minimumweightFocusNode,
-                                                          obscureText: false,
-                                                          decoration:
-                                                              InputDecoration(
-                                                            labelText:
-                                                                'Vehicle Min Weight',
-                                                            hintText:
-                                                                'Enter Org seal no.',
-                                                            enabledBorder:
-                                                                OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                                width: 1.0,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                            ),
-                                                            focusedBorder:
-                                                                OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primary,
-                                                                width: 1.0,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                            ),
-                                                            errorBorder:
-                                                                OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: Color(
-                                                                    0x00000000),
-                                                                width: 1.0,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                            ),
-                                                            focusedErrorBorder:
-                                                                OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: Color(
-                                                                    0x00000000),
-                                                                width: 1.0,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                            ),
-                                                            filled: true,
-                                                            fillColor: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryBackground,
-                                                            contentPadding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        12.0,
-                                                                        10.0,
-                                                                        12.0,
-                                                                        10.0),
-                                                          ),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                font:
-                                                                    GoogleFonts
-                                                                        .inter(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                              ),
-                                                          validator: _model
-                                                              .minimumweightTextControllerValidator
-                                                              .asValidator(
-                                                                  context),
-                                                        ),
-                                                      ),
-                                                    ].divide(
-                                                        SizedBox(width: 5.0)),
+                                                    validator: _model
+                                                        .fMSCIHomologationNoTextControllerValidator
+                                                        .asValidator(context),
                                                   ),
                                                 ],
                                               ),
-                                            ),
+                                            if (false)
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 10.0, 0.0, 0.0),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      children: [
+                                                        Expanded(
+                                                          child: TextFormField(
+                                                            controller: _model
+                                                                    .cubicCapacityTextController ??=
+                                                                TextEditingController(
+                                                              text: twoWheelerScrutinyKartScrutinyCheckRow
+                                                                  ?.exhaustRotaxNo,
+                                                            ),
+                                                            focusNode: _model
+                                                                .cubicCapacityFocusNode,
+                                                            obscureText: false,
+                                                            decoration:
+                                                                InputDecoration(
+                                                              labelText:
+                                                                  'Cubic Capacity',
+                                                              hintText: 'CC',
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .alternate,
+                                                                  width: 1.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary,
+                                                                  width: 1.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
+                                                              errorBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: Color(
+                                                                      0x00000000),
+                                                                  width: 1.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
+                                                              focusedErrorBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: Color(
+                                                                      0x00000000),
+                                                                  width: 1.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
+                                                              filled: true,
+                                                              fillColor: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primaryBackground,
+                                                              contentPadding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          12.0,
+                                                                          10.0,
+                                                                          12.0,
+                                                                          10.0),
+                                                            ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  font:
+                                                                      GoogleFonts
+                                                                          .inter(
+                                                                    fontWeight: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .fontWeight,
+                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .fontStyle,
+                                                                  ),
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontWeight,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontStyle,
+                                                                ),
+                                                            validator: _model
+                                                                .cubicCapacityTextControllerValidator
+                                                                .asValidator(
+                                                                    context),
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: TextFormField(
+                                                            controller: _model
+                                                                    .minimumweightTextController ??=
+                                                                TextEditingController(
+                                                              text: twoWheelerScrutinyKartScrutinyCheckRow
+                                                                  ?.exhaustOrgSeal,
+                                                            ),
+                                                            focusNode: _model
+                                                                .minimumweightFocusNode,
+                                                            obscureText: false,
+                                                            decoration:
+                                                                InputDecoration(
+                                                              labelText:
+                                                                  'Vehicle Min Weight',
+                                                              hintText:
+                                                                  'Minimum Weight',
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .alternate,
+                                                                  width: 1.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary,
+                                                                  width: 1.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
+                                                              errorBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: Color(
+                                                                      0x00000000),
+                                                                  width: 1.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
+                                                              focusedErrorBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: Color(
+                                                                      0x00000000),
+                                                                  width: 1.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
+                                                              filled: true,
+                                                              fillColor: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primaryBackground,
+                                                              contentPadding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          12.0,
+                                                                          10.0,
+                                                                          12.0,
+                                                                          10.0),
+                                                            ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  font:
+                                                                      GoogleFonts
+                                                                          .inter(
+                                                                    fontWeight: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .fontWeight,
+                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .fontStyle,
+                                                                  ),
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontWeight,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontStyle,
+                                                                ),
+                                                            validator: _model
+                                                                .minimumweightTextControllerValidator
+                                                                .asValidator(
+                                                                    context),
+                                                          ),
+                                                        ),
+                                                      ].divide(
+                                                          SizedBox(width: 5.0)),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                           ].divide(SizedBox(height: 5.0)),
                                         ),
                                       ),
@@ -1419,7 +1437,8 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                                       .engineNumberFocusNode,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
-                                                    hintText: 'Enter number',
+                                                    hintText:
+                                                        'Enter Engine number',
                                                     enabledBorder:
                                                         OutlineInputBorder(
                                                       borderSide: BorderSide(
@@ -1525,7 +1544,7 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                                       .fromSTEB(
                                                           0.0, 0.0, 0.0, 4.0),
                                                   child: Text(
-                                                    'Engine Seal No.',
+                                                    'Engine Seal No (if applicable)',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .labelMedium
@@ -1571,7 +1590,8 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                                       .engineSealNoFocusNode,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
-                                                    hintText: 'Enter seal no.',
+                                                    hintText:
+                                                        'Enter Engine seal no.',
                                                     enabledBorder:
                                                         OutlineInputBorder(
                                                       borderSide: BorderSide(
@@ -1667,163 +1687,8 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                                 ),
                                               ],
                                             ),
-                                            Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 0.0, 4.0),
-                                                  child: Text(
-                                                    'Turbo/Restrictor Seal No',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .labelMedium
-                                                        .override(
-                                                          font:
-                                                              GoogleFonts.inter(
-                                                            fontWeight:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelMedium
-                                                                    .fontWeight,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelMedium
-                                                                    .fontStyle,
-                                                          ),
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .labelMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .labelMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                  ),
-                                                ),
-                                                TextFormField(
-                                                  controller: _model
-                                                          .turboSealNumberTextController ??=
-                                                      TextEditingController(
-                                                    text:
-                                                        twoWheelerScrutinyKartScrutinyCheckRow
-                                                            ?.spareEngineNumber,
-                                                  ),
-                                                  focusNode: _model
-                                                      .turboSealNumberFocusNode,
-                                                  obscureText: false,
-                                                  decoration: InputDecoration(
-                                                    hintText: 'Enter number',
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .alternate,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    errorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            Color(0x00000000),
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    focusedErrorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            Color(0x00000000),
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    filled: true,
-                                                    fillColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .primaryBackground,
-                                                    contentPadding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                12.0,
-                                                                10.0,
-                                                                12.0,
-                                                                10.0),
-                                                  ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        font: GoogleFonts.inter(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontStyle,
-                                                      ),
-                                                  validator: _model
-                                                      .turboSealNumberTextControllerValidator
-                                                      .asValidator(context),
-                                                ),
-                                              ],
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 5.0),
-                                              child: Column(
+                                            if (false)
+                                              Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
@@ -1834,7 +1699,7 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                                             .fromSTEB(0.0, 0.0,
                                                                 0.0, 4.0),
                                                     child: Text(
-                                                      'Gear Box Seal No.',
+                                                      'Turbo/Restrictor Seal No',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -1854,7 +1719,7 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                                                 ),
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .secondaryText,
+                                                                    .error,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight: FlutterFlowTheme.of(
@@ -1870,17 +1735,16 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                                   ),
                                                   TextFormField(
                                                     controller: _model
-                                                            .geraBoxSealNoTextController ??=
+                                                            .turboSealNumberTextController ??=
                                                         TextEditingController(
                                                       text: twoWheelerScrutinyKartScrutinyCheckRow
-                                                          ?.spareEngineSealNumber,
+                                                          ?.spareEngineNumber,
                                                     ),
                                                     focusNode: _model
-                                                        .geraBoxSealNoFocusNode,
+                                                        .turboSealNumberFocusNode,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
-                                                      hintText:
-                                                          'Enter seal no.',
+                                                      hintText: 'Enter number',
                                                       enabledBorder:
                                                           OutlineInputBorder(
                                                         borderSide: BorderSide(
@@ -1970,118 +1834,282 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                                                   .fontStyle,
                                                         ),
                                                     validator: _model
-                                                        .geraBoxSealNoTextControllerValidator
+                                                        .turboSealNumberTextControllerValidator
                                                         .asValidator(context),
                                                   ),
                                                 ],
                                               ),
-                                            ),
+                                            if (false)
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 0.0, 0.0, 5.0),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  4.0),
+                                                      child: Text(
+                                                        'Gear Box Seal No.',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .labelMedium
+                                                                .override(
+                                                                  font:
+                                                                      GoogleFonts
+                                                                          .inter(
+                                                                    fontWeight: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .labelMedium
+                                                                        .fontWeight,
+                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .labelMedium
+                                                                        .fontStyle,
+                                                                  ),
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .error,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelMedium
+                                                                      .fontWeight,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelMedium
+                                                                      .fontStyle,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                    TextFormField(
+                                                      controller: _model
+                                                              .geraBoxSealNoTextController ??=
+                                                          TextEditingController(
+                                                        text: twoWheelerScrutinyKartScrutinyCheckRow
+                                                            ?.spareEngineSealNumber,
+                                                      ),
+                                                      focusNode: _model
+                                                          .geraBoxSealNoFocusNode,
+                                                      obscureText: false,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        hintText:
+                                                            'Enter seal no.',
+                                                        enabledBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .alternate,
+                                                            width: 1.0,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
+                                                        ),
+                                                        focusedBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primary,
+                                                            width: 1.0,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
+                                                        ),
+                                                        errorBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                            color: Color(
+                                                                0x00000000),
+                                                            width: 1.0,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
+                                                        ),
+                                                        focusedErrorBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                            color: Color(
+                                                                0x00000000),
+                                                            width: 1.0,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
+                                                        ),
+                                                        filled: true,
+                                                        fillColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryBackground,
+                                                        contentPadding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    12.0,
+                                                                    10.0,
+                                                                    12.0,
+                                                                    10.0),
+                                                      ),
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                font:
+                                                                    GoogleFonts
+                                                                        .inter(
+                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontWeight,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontStyle,
+                                                                ),
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontWeight,
+                                                                fontStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                              ),
+                                                      validator: _model
+                                                          .geraBoxSealNoTextControllerValidator
+                                                          .asValidator(context),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                           ].divide(SizedBox(height: 5.0)),
                                         ),
                                       ),
-                                      StyledDivider(
-                                        height: 1.0,
-                                        thickness: 2.0,
-                                        indent: 50.0,
-                                        endIndent: 50.0,
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                        lineStyle: DividerLineStyle.dashed,
-                                      ),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Material(
-                                              color: Colors.transparent,
-                                              child: Theme(
-                                                data: ThemeData(
-                                                  checkboxTheme:
-                                                      CheckboxThemeData(
-                                                    visualDensity:
-                                                        VisualDensity.compact,
-                                                    materialTapTargetSize:
-                                                        MaterialTapTargetSize
-                                                            .shrinkWrap,
+                                      if (false)
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Material(
+                                                color: Colors.transparent,
+                                                child: Theme(
+                                                  data: ThemeData(
+                                                    checkboxTheme:
+                                                        CheckboxThemeData(
+                                                      visualDensity:
+                                                          VisualDensity.compact,
+                                                      materialTapTargetSize:
+                                                          MaterialTapTargetSize
+                                                              .shrinkWrap,
+                                                    ),
+                                                    unselectedWidgetColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .alternate,
                                                   ),
-                                                  unselectedWidgetColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .alternate,
-                                                ),
-                                                child: CheckboxListTile(
-                                                  value: _model.ballastValue ??=
-                                                      twoWheelerScrutinyKartScrutinyCheckRow!
-                                                          .ballastAvailable!,
-                                                  onChanged: (newValue) async {
-                                                    safeSetState(() =>
-                                                        _model.ballastValue =
-                                                            newValue!);
-                                                  },
-                                                  title: Text(
-                                                    'Do you have a Ballast ?',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .titleLarge
-                                                        .override(
-                                                          font: GoogleFonts
-                                                              .interTight(
-                                                            fontWeight:
-                                                                FlutterFlowTheme.of(
+                                                  child: CheckboxListTile(
+                                                    value: _model
+                                                            .ballastValue ??=
+                                                        twoWheelerScrutinyKartScrutinyCheckRow!
+                                                            .ballastAvailable!,
+                                                    onChanged:
+                                                        (newValue) async {
+                                                      safeSetState(() =>
+                                                          _model.ballastValue =
+                                                              newValue!);
+                                                    },
+                                                    title: Text(
+                                                      'Do you have a Ballast ?',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .titleLarge
+                                                              .override(
+                                                                font: GoogleFonts
+                                                                    .interTight(
+                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .titleLarge
+                                                                      .fontWeight,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .titleLarge
+                                                                      .fontStyle,
+                                                                ),
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                fontSize: 18.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight: FlutterFlowTheme.of(
                                                                         context)
                                                                     .titleLarge
                                                                     .fontWeight,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
+                                                                fontStyle: FlutterFlowTheme.of(
                                                                         context)
                                                                     .titleLarge
                                                                     .fontStyle,
-                                                          ),
-                                                          fontSize: 18.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontStyle,
-                                                        ),
-                                                  ),
-                                                  tileColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .secondaryBackground,
-                                                  activeColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .primary,
-                                                  checkColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .info,
-                                                  dense: false,
-                                                  controlAffinity:
-                                                      ListTileControlAffinity
-                                                          .trailing,
-                                                  contentPadding:
-                                                      EdgeInsetsDirectional
-                                                          .fromSTEB(0.0, 0.0,
-                                                              12.0, 0.0),
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
+                                                              ),
+                                                    ),
+                                                    tileColor: FlutterFlowTheme
+                                                            .of(context)
+                                                        .secondaryBackground,
+                                                    activeColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primary,
+                                                    checkColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .info,
+                                                    dense: false,
+                                                    controlAffinity:
+                                                        ListTileControlAffinity
+                                                            .trailing,
+                                                    contentPadding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                                12.0, 0.0),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8.0),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
+                                          ],
+                                        ),
                                       if (_model.ballastValue ?? true)
                                         Container(
                                           width: 339.1,
@@ -2246,26 +2274,39 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                   ),
                                 ),
                               ),
-                              Container(
-                                decoration: BoxDecoration(),
-                                child: Padding(
-                                  padding: EdgeInsets.all(16.0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        (FFCrossAxisAlignment.start)
-                                            .flutterValue,
-                                    textBaseline: TextBaseline.alphabetic,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 0.0, 4.0),
-                                        child: Text(
-                                          'Seat & Seat Belt',
-                                          style: FlutterFlowTheme.of(context)
-                                              .labelMedium
-                                              .override(
-                                                font: GoogleFonts.inter(
+                              if (false)
+                                Container(
+                                  decoration: BoxDecoration(),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(16.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          (FFCrossAxisAlignment.start)
+                                              .flutterValue,
+                                      textBaseline: TextBaseline.alphabetic,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 4.0),
+                                          child: Text(
+                                            'Seat & Seat Belt',
+                                            style: FlutterFlowTheme.of(context)
+                                                .labelMedium
+                                                .override(
+                                                  font: GoogleFonts.inter(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .labelMedium
+                                                            .fontStyle,
+                                                  ),
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .error,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w600,
                                                   fontStyle:
                                                       FlutterFlowTheme.of(
@@ -2273,37 +2314,41 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                                           .labelMedium
                                                           .fontStyle,
                                                 ),
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
+                                          ),
+                                        ),
+                                        FlutterFlowDropDown<String>(
+                                          controller: _model
+                                                  .seatbeltStandardValueController ??=
+                                              FormFieldController<String>(
+                                            _model.seatbeltStandardValue ??=
+                                                twoWheelerScrutinyKartScrutinyCheckRow
+                                                    ?.seatBeltStandard,
+                                          ),
+                                          options: ['FIA 8853-2016'],
+                                          onChanged: (val) => safeSetState(() =>
+                                              _model.seatbeltStandardValue =
+                                                  val),
+                                          width:
+                                              MediaQuery.sizeOf(context).width *
+                                                  1.0,
+                                          height: 40.0,
+                                          textStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .bodyMedium
+                                              .override(
+                                                font: GoogleFonts.inter(
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
                                                 letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .fontStyle,
-                                              ),
-                                        ),
-                                      ),
-                                      FlutterFlowDropDown<String>(
-                                        controller: _model
-                                                .seatbeltStandardValueController ??=
-                                            FormFieldController<String>(
-                                          _model.seatbeltStandardValue ??=
-                                              twoWheelerScrutinyKartScrutinyCheckRow
-                                                  ?.seatBeltStandard,
-                                        ),
-                                        options: ['FIA 8853-2016'],
-                                        onChanged: (val) => safeSetState(() =>
-                                            _model.seatbeltStandardValue = val),
-                                        width:
-                                            MediaQuery.sizeOf(context).width *
-                                                1.0,
-                                        height: 40.0,
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              font: GoogleFonts.inter(
                                                 fontWeight:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -2313,98 +2358,102 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                                         .bodyMedium
                                                         .fontStyle,
                                               ),
-                                              letterSpacing: 0.0,
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
-                                            ),
-                                        hintText: 'Select...',
-                                        icon: Icon(
-                                          Icons.keyboard_arrow_down_rounded,
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                          size: 24.0,
-                                        ),
-                                        fillColor: FlutterFlowTheme.of(context)
-                                            .primaryBackground,
-                                        elevation: 10.0,
-                                        borderColor: Colors.transparent,
-                                        borderWidth: 0.0,
-                                        borderRadius: 8.0,
-                                        margin: EdgeInsetsDirectional.fromSTEB(
-                                            12.0, 0.0, 12.0, 0.0),
-                                        hidesUnderline: true,
-                                        isOverButton: false,
-                                        isSearchable: false,
-                                        isMultiSelect: false,
-                                      ),
-                                      TextFormField(
-                                        controller: _model
-                                                .seatbeltSerialNoTextController ??=
-                                            TextEditingController(
-                                          text:
-                                              twoWheelerScrutinyKartScrutinyCheckRow
-                                                  ?.exhaustSerialNum,
-                                        ),
-                                        focusNode:
-                                            _model.seatbeltSerialNoFocusNode,
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          hintText: 'Enter number',
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
+                                          hintText: 'Select...',
+                                          icon: Icon(
+                                            Icons.keyboard_arrow_down_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            size: 24.0,
                                           ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          focusedErrorBorder:
-                                              OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          filled: true,
                                           fillColor:
                                               FlutterFlowTheme.of(context)
                                                   .primaryBackground,
-                                          contentPadding:
+                                          elevation: 10.0,
+                                          borderColor: Colors.transparent,
+                                          borderWidth: 0.0,
+                                          borderRadius: 8.0,
+                                          margin:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  12.0, 10.0, 12.0, 10.0),
+                                                  12.0, 0.0, 12.0, 0.0),
+                                          hidesUnderline: true,
+                                          isOverButton: false,
+                                          isSearchable: false,
+                                          isMultiSelect: false,
                                         ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              font: GoogleFonts.inter(
+                                        TextFormField(
+                                          controller: _model
+                                                  .seatbeltSerialNoTextController ??=
+                                              TextEditingController(
+                                            text:
+                                                twoWheelerScrutinyKartScrutinyCheckRow
+                                                    ?.exhaustSerialNum,
+                                          ),
+                                          focusNode:
+                                              _model.seatbeltSerialNoFocusNode,
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            hintText: 'Enter number',
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            errorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            focusedErrorBorder:
+                                                OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            filled: true,
+                                            fillColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .primaryBackground,
+                                            contentPadding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    12.0, 10.0, 12.0, 10.0),
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                font: GoogleFonts.inter(
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                                letterSpacing: 0.0,
                                                 fontWeight:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -2414,24 +2463,14 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                                         .bodyMedium
                                                         .fontStyle,
                                               ),
-                                              letterSpacing: 0.0,
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
-                                            ),
-                                        validator: _model
-                                            .seatbeltSerialNoTextControllerValidator
-                                            .asValidator(context),
-                                      ),
-                                    ].divide(SizedBox(height: 5.0)),
+                                          validator: _model
+                                              .seatbeltSerialNoTextControllerValidator
+                                              .asValidator(context),
+                                        ),
+                                      ].divide(SizedBox(height: 5.0)),
+                                    ),
                                   ),
                                 ),
-                              ),
                             ],
                           ),
                         ),
@@ -5268,7 +5307,7 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                             ),
                                             TextFormField(
                                               controller:
-                                                  _model.textController12 ??=
+                                                  _model.textController11 ??=
                                                       TextEditingController(
                                                 text: twoWheelerScrutinyKartScrutinyCheckRow
                                                                 ?.scrutinisedBy !=
@@ -5366,7 +5405,7 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                                                 .fontStyle,
                                                       ),
                                               validator: _model
-                                                  .textController12Validator
+                                                  .textController11Validator
                                                   .asValidator(context),
                                             ),
                                           ],
@@ -5417,7 +5456,7 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                             ),
                                             TextFormField(
                                               controller:
-                                                  _model.textController13 ??=
+                                                  _model.textController12 ??=
                                                       TextEditingController(
                                                 text: twoWheelerScrutinyKartScrutinyCheckRow
                                                             ?.scrutinisedAt !=
@@ -5518,7 +5557,7 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                               keyboardType:
                                                   TextInputType.datetime,
                                               validator: _model
-                                                  .textController13Validator
+                                                  .textController12Validator
                                                   .asValidator(context),
                                             ),
                                           ],
@@ -6270,25 +6309,13 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                   onPressed: () async {
                                     await KartScrutinyCheckTable().update(
                                       data: {
-                                        'chassis_make':
-                                            _model.makeModelTextController.text,
+                                        'chassis_make': _model.makeModelValue,
                                         'chassis_number':
                                             _model.cCNumberTextController.text,
                                         'main_engine_number': _model
                                             .engineNumberTextController.text,
                                         'main_engine_seal_number': _model
                                             .engineSealNoTextController.text,
-                                        'spare_engine_number': _model
-                                            .turboSealNumberTextController.text,
-                                        'spare_engine_seal_number': _model
-                                            .geraBoxSealNoTextController.text,
-                                        'spare_engine_shared_with': _model
-                                            .fMSCIHomologationNoTextController
-                                            .text,
-                                        'ballast_available':
-                                            _model.ballastValue,
-                                        'ballast_weight': _model
-                                            .ballastWeightTextController.text,
                                         'chk_chassis':
                                             _model.chkRearViewmirrorsValue,
                                         'chk_axle': _model.chkNameAxlesValue,
@@ -6332,7 +6359,7 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                             supaSerialize<DateTime>(
                                                 getCurrentTimestamp),
                                         'scrutinised_by':
-                                            _model.textController12.text,
+                                            _model.textController11.text,
                                         'scruitneerSign': _model
                                                         .psScruitneerSignature !=
                                                     null &&
@@ -6341,13 +6368,6 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                             ? _model.returnedSignatureCopy
                                             : twoWheelerScrutinyKartScrutinyCheckRow
                                                 ?.scruitneerSign,
-                                        'exhaust_serial_Num': _model
-                                            .seatbeltSerialNoTextController
-                                            .text,
-                                        'exhaust_Rotax_No': _model
-                                            .cubicCapacityTextController.text,
-                                        'exhaust_org_seal': _model
-                                            .minimumweightTextController.text,
                                         'chk_18':
                                             _model.chkwindscreenlaminaValue,
                                         'chk_19': _model.chktoweyeValue,
@@ -6483,8 +6503,8 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                         onPressed: () async {
                                           await KartScrutinyCheckTable().update(
                                             data: {
-                                              'chassis_make': _model
-                                                  .makeModelTextController.text,
+                                              'chassis_make':
+                                                  _model.makeModelValue,
                                               'chassis_number': _model
                                                   .cCNumberTextController.text,
                                               'main_engine_number': _model
@@ -6492,29 +6512,6 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                                   .text,
                                               'main_engine_seal_number': _model
                                                   .engineSealNoTextController
-                                                  .text,
-                                              'spare_engine_number': _model
-                                                  .turboSealNumberTextController
-                                                  .text,
-                                              'spare_engine_seal_number': _model
-                                                  .geraBoxSealNoTextController
-                                                  .text,
-                                              'spare_engine_shared_with': _model
-                                                  .fMSCIHomologationNoTextController
-                                                  .text,
-                                              'ballast_available':
-                                                  _model.ballastValue,
-                                              'ballast_weight': _model
-                                                  .ballastWeightTextController
-                                                  .text,
-                                              'exhaust_serial_Num': _model
-                                                  .seatbeltSerialNoTextController
-                                                  .text,
-                                              'exhaust_Rotax_No': _model
-                                                  .cubicCapacityTextController
-                                                  .text,
-                                              'exhaust_org_seal': _model
-                                                  .minimumweightTextController
                                                   .text,
                                             },
                                             matchingRows: (rows) =>
@@ -6648,9 +6645,8 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                               await KartScrutinyCheckTable()
                                                   .update(
                                                 data: {
-                                                  'chassis_make': _model
-                                                      .makeModelTextController
-                                                      .text,
+                                                  'chassis_make':
+                                                      _model.makeModelValue,
                                                   'chassis_number': _model
                                                       .cCNumberTextController
                                                       .text,
@@ -6663,27 +6659,7 @@ class _TwoWheelerScrutinyWidgetState extends State<TwoWheelerScrutinyWidget> {
                                                   'spare_engine_number': _model
                                                       .turboSealNumberTextController
                                                       .text,
-                                                  'spare_engine_seal_number': _model
-                                                      .geraBoxSealNoTextController
-                                                      .text,
-                                                  'spare_engine_shared_with': _model
-                                                      .fMSCIHomologationNoTextController
-                                                      .text,
-                                                  'ballast_available':
-                                                      _model.ballastValue,
-                                                  'ballast_weight': _model
-                                                      .ballastWeightTextController
-                                                      .text,
                                                   'isSubmited': true,
-                                                  'exhaust_serial_Num': _model
-                                                      .seatbeltSerialNoTextController
-                                                      .text,
-                                                  'exhaust_Rotax_No': _model
-                                                      .cubicCapacityTextController
-                                                      .text,
-                                                  'exhaust_org_seal': _model
-                                                      .minimumweightTextController
-                                                      .text,
                                                 },
                                                 matchingRows: (rows) =>
                                                     rows.eqOrNull(

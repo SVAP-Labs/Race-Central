@@ -82,4 +82,7 @@ class EventCategoriesRow extends SupabaseDataRow {
 
   String? get categoryType => getField<String>('category_type');
   set categoryType(String? value) => setField<String>('category_type', value);
+
+  bool? get isTurboAllowed => getField<bool>('isTurboAllowed');
+  set isTurboAllowed(bool? value) => setField<bool>('isTurboAllowed', value);
 }

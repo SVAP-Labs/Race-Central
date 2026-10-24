@@ -89,21 +89,11 @@ class AdultDriverScrutinycheckModel
   // State field(s) for glovesStandard widget.
   String? glovesStandardValue;
   FormFieldController<String>? glovesStandardValueController;
-  // State field(s) for glovesSerialNumber widget.
-  FocusNode? glovesSerialNumberFocusNode;
-  TextEditingController? glovesSerialNumberTextController;
-  String? Function(BuildContext, String?)?
-      glovesSerialNumberTextControllerValidator;
   // State field(s) for shoesCheckbox widget.
   bool? shoesCheckboxValue;
   // State field(s) for shoesStandard widget.
   String? shoesStandardValue;
   FormFieldController<String>? shoesStandardValueController;
-  // State field(s) for shoesSerialNumber widget.
-  FocusNode? shoesSerialNumberFocusNode;
-  TextEditingController? shoesSerialNumberTextController;
-  String? Function(BuildContext, String?)?
-      shoesSerialNumberTextControllerValidator;
   // State field(s) for socksStandard widget.
   String? socksStandardValue;
   FormFieldController<String>? socksStandardValueController;
@@ -116,8 +106,8 @@ class AdultDriverScrutinycheckModel
       scrutineerNameTextControllerValidator;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode;
-  TextEditingController? textController7;
-  String? Function(BuildContext, String?)? textController7Validator;
+  TextEditingController? textController5;
+  String? Function(BuildContext, String?)? textController5Validator;
   // State field(s) for RemarksTextField widget.
   FocusNode? remarksTextFieldFocusNode;
   TextEditingController? remarksTextFieldTextController;
@@ -163,17 +153,11 @@ class AdultDriverScrutinycheckModel
     overallProtSerialNumberFocusNode?.dispose();
     overallProtSerialNumberTextController?.dispose();
 
-    glovesSerialNumberFocusNode?.dispose();
-    glovesSerialNumberTextController?.dispose();
-
-    shoesSerialNumberFocusNode?.dispose();
-    shoesSerialNumberTextController?.dispose();
-
     scrutineerNameFocusNode?.dispose();
     scrutineerNameTextController?.dispose();
 
     textFieldFocusNode?.dispose();
-    textController7?.dispose();
+    textController5?.dispose();
 
     remarksTextFieldFocusNode?.dispose();
     remarksTextFieldTextController?.dispose();

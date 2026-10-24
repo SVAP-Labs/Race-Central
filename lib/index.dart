@@ -77,3 +77,5 @@ export '/pages/user_pages/02_driver_scruitny_pages/two_wheel_driver_scrutinychec
     show TwoWheelDriverScrutinycheckWidget;
 export '/pages/user_pages/01_vehicle_scrutiny_pages/two_wheeler_scrutiny/two_wheeler_scrutiny_widget.dart'
     show TwoWheelerScrutinyWidget;
+export '/pages/user_pages/01_vehicle_scrutiny_pages/onemake4_w_scrutiny_form/onemake4_w_scrutiny_form_widget.dart'
+    show Onemake4WScrutinyFormWidget;

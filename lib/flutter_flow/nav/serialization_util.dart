@@ -292,8 +292,12 @@ dynamic deserializeParam<T>(
         switch (T) {
           case AppUsersRow:
             return AppUsersRow(data);
+          case CarsRow:
+            return CarsRow(data);
           case ChampionshipCategoriesRow:
             return ChampionshipCategoriesRow(data);
+          case ChampionshipCategoryCarsRow:
+            return ChampionshipCategoryCarsRow(data);
           case ChampionshipTeamsRow:
             return ChampionshipTeamsRow(data);
           case DriverScrutinyRow:
@@ -350,18 +354,26 @@ dynamic deserializeParam<T>(
             return RaceScheduleRow(data);
           case RaceTracksRow:
             return RaceTracksRow(data);
+          case RegistrationDocumentChecksRow:
+            return RegistrationDocumentChecksRow(data);
+          case RegistrationPaymentsRow:
+            return RegistrationPaymentsRow(data);
           case RegulationDocsRow:
             return RegulationDocsRow(data);
           case RegulationPagesRow:
             return RegulationPagesRow(data);
           case ResultPublicationsRow:
             return ResultPublicationsRow(data);
+          case RolesRow:
+            return RolesRow(data);
           case SealingRow:
             return SealingRow(data);
           case StewardsCasesRow:
             return StewardsCasesRow(data);
           case TeamsRow:
             return TeamsRow(data);
+          case TrackLayoutsRow:
+            return TrackLayoutsRow(data);
           case TyreLotTyresRow:
             return TyreLotTyresRow(data);
           case TyreLotsRow:

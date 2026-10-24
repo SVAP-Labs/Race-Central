@@ -438,7 +438,9 @@ class _Auth2LoginWidgetState extends State<Auth2LoginWidget>
                                             _model.passwordVisibility =
                                                 !_model.passwordVisibility);
                                       },
-                                      focusNode: FocusNode(skipTraversal: true),
+                                      focusNode: _model
+                                          .passwordPasswordVisibilityFocusNode
+                                        ..skipTraversal = !(false),
                                       child: Icon(
                                         _model.passwordVisibility
                                             ? Icons.visibility_outlined

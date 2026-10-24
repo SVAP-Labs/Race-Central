@@ -73,4 +73,13 @@ class RaceLogsRow extends SupabaseDataRow {
 
   dynamic get occurrences => getField<dynamic>('occurrences');
   set occurrences(dynamic value) => setField<dynamic>('occurrences', value);
+
+  String? get trackId => getField<String>('track_id');
+  set trackId(String? value) => setField<String>('track_id', value);
+
+  double? get posX => getField<double>('pos_x');
+  set posX(double? value) => setField<double>('pos_x', value);
+
+  double? get posY => getField<double>('pos_y');
+  set posY(double? value) => setField<double>('pos_y', value);
 }

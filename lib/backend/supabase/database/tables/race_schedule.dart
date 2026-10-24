@@ -36,8 +36,8 @@ class RaceScheduleRow extends SupabaseDataRow {
   set scheduledStart(PostgresTime value) =>
       setField<PostgresTime>('scheduled_start', value);
 
-  PostgresTime get scheduledEnd => getField<PostgresTime>('scheduled_end')!;
-  set scheduledEnd(PostgresTime value) =>
+  PostgresTime? get scheduledEnd => getField<PostgresTime>('scheduled_end');
+  set scheduledEnd(PostgresTime? value) =>
       setField<PostgresTime>('scheduled_end', value);
 
   String? get status => getField<String>('status');
@@ -48,4 +48,16 @@ class RaceScheduleRow extends SupabaseDataRow {
 
   String? get categoryName => getField<String>('categoryName');
   set categoryName(String? value) => setField<String>('categoryName', value);
+
+  String? get raceId => getField<String>('race_id');
+  set raceId(String? value) => setField<String>('race_id', value);
+
+  String? get kind => getField<String>('kind');
+  set kind(String? value) => setField<String>('kind', value);
+
+  String? get note => getField<String>('note');
+  set note(String? value) => setField<String>('note', value);
+
+  int? get sortOrder => getField<int>('sort_order');
+  set sortOrder(int? value) => setField<int>('sort_order', value);
 }

@@ -2,12 +2,10 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/ff_builtin_enums.dart';
-import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/form_field_controller.dart';
 import '/pages/scruitneer_pages/sealing_pages/components/signature_component/signature_component_widget.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
@@ -81,15 +79,21 @@ class _TwoWheelDriverScrutinycheckWidgetState
       );
     });
 
+    _model.helmetStandardFocusNode ??= FocusNode();
+
     _model.helmetSerialNumberFocusNode ??= FocusNode();
+
+    _model.fhrStandardFocusNode ??= FocusNode();
 
     _model.fhrSerialNumberFocusNode ??= FocusNode();
 
+    _model.overallProtStandardFocusNode ??= FocusNode();
+
     _model.overallProtSerialNumberFocusNode ??= FocusNode();
 
-    _model.glovesSerialNumberFocusNode ??= FocusNode();
+    _model.glovesStandardFocusNode ??= FocusNode();
 
-    _model.shoesSerialNumberFocusNode ??= FocusNode();
+    _model.shoesStandardFocusNode ??= FocusNode();
 
     _model.scrutineerNameFocusNode ??= FocusNode();
 
@@ -785,60 +789,133 @@ class _TwoWheelDriverScrutinycheckWidgetState
                                             ),
                                         ],
                                       ),
-                                      FlutterFlowDropDown<String>(
-                                        controller: _model
-                                                .helmetStandardValueController ??=
-                                            FormFieldController<String>(
-                                          _model.helmetStandardValue ??=
-                                              twoWheelDriverScrutinycheckDriverScrutinyRow
-                                                  ?.helmetStandard,
-                                        ),
-                                        options: [
-                                          'FIA 8860-2018',
-                                          'FIA 8860-2018-ABP',
-                                          'FIA 8860-2010',
-                                          'FIA 8859-2024',
-                                          'FIA 8859-2024-ABP',
-                                          'FIA 8859-2015'
-                                        ],
-                                        onChanged: (val) => safeSetState(() =>
-                                            _model.helmetStandardValue = val),
-                                        width: double.infinity,
-                                        height: 40.0,
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              font: GoogleFonts.inter(
+                                      Container(
+                                        width:
+                                            MediaQuery.sizeOf(context).width *
+                                                1.0,
+                                        child: TextFormField(
+                                          controller: _model
+                                                  .helmetStandardTextController ??=
+                                              TextEditingController(
+                                            text:
+                                                twoWheelDriverScrutinycheckDriverScrutinyRow
+                                                    ?.helmetStandard,
+                                          ),
+                                          focusNode:
+                                              _model.helmetStandardFocusNode,
+                                          onChanged: (_) =>
+                                              EasyDebounce.debounce(
+                                            '_model.helmetStandardTextController',
+                                            Duration(milliseconds: 2000),
+                                            () => safeSetState(() {}),
+                                          ),
+                                          autofocus: false,
+                                          textInputAction: TextInputAction.next,
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            hintText: 'Enter helmet standard',
+                                            hintStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      font: GoogleFonts.inter(
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontStyle,
+                                                      ),
+                                                      color: Color(0xFF57636C),
+                                                      fontSize: 14.0,
+                                                      letterSpacing: 0.0,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .fontStyle,
+                                                    ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFDFEDEC),
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFF06D5CD),
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                            ),
+                                            errorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFC4454D),
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                            ),
+                                            focusedErrorBorder:
+                                                OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFC4454D),
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                            ),
+                                            filled: true,
+                                            fillColor: Colors.white,
+                                            suffixIcon: _model
+                                                    .helmetStandardTextController!
+                                                    .text
+                                                    .isNotEmpty
+                                                ? InkWell(
+                                                    onTap: () async {
+                                                      _model
+                                                          .helmetStandardTextController
+                                                          ?.clear();
+                                                      safeSetState(() {});
+                                                    },
+                                                    child: Icon(
+                                                      Icons.clear,
+                                                      color: Color(0xFF57636C),
+                                                      size: 22.0,
+                                                    ),
+                                                  )
+                                                : null,
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                font: GoogleFonts.inter(
+                                                  fontWeight: FontWeight.normal,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                                color: Color(0xFF101518),
+                                                fontSize: 14.0,
+                                                letterSpacing: 0.0,
                                                 fontWeight: FontWeight.normal,
                                                 fontStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
                                                         .fontStyle,
                                               ),
-                                              color: Color(0xFF101518),
-                                              fontSize: 14.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.normal,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
-                                            ),
-                                        hintText: 'Select Helmet Standard',
-                                        icon: Icon(
-                                          Icons.keyboard_arrow_down_rounded,
-                                          color: Color(0xFF57636C),
-                                          size: 24.0,
+                                          validator: _model
+                                              .helmetStandardTextControllerValidator
+                                              .asValidator(context),
                                         ),
-                                        fillColor: Colors.white,
-                                        elevation: 2.0,
-                                        borderColor: Color(0xFFDFEDEC),
-                                        borderWidth: 1.0,
-                                        borderRadius: 10.0,
-                                        margin: EdgeInsets.all(10.0),
-                                        hidesUnderline: true,
-                                        isSearchable: false,
-                                        isMultiSelect: false,
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
@@ -1055,7 +1132,7 @@ class _TwoWheelDriverScrutinycheckWidgetState
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             10.0, 0.0, 0.0, 0.0),
                                         child: Text(
-                                          'FHR STANDARD',
+                                          'PADDING / ARMOR',
                                           style: FlutterFlowTheme.of(context)
                                               .labelMedium
                                               .override(
@@ -1138,60 +1215,126 @@ class _TwoWheelDriverScrutinycheckWidgetState
                                         ),
                                     ],
                                   ),
-                                  FlutterFlowDropDown<String>(
-                                    controller:
-                                        _model.fhrStandardValueController ??=
-                                            FormFieldController<String>(
-                                      _model.fhrStandardValue ??=
-                                          twoWheelDriverScrutinycheckDriverScrutinyRow
-                                              ?.bodyProtectionStandard,
-                                    ),
-                                    options: ['To be added'],
-                                    onChanged: (val) => safeSetState(
-                                        () => _model.fhrStandardValue = val),
+                                  Container(
                                     width: double.infinity,
-                                    height: 40.0,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          font: GoogleFonts.inter(
+                                    child: TextFormField(
+                                      controller:
+                                          _model.fhrStandardTextController ??=
+                                              TextEditingController(
+                                        text:
+                                            twoWheelDriverScrutinycheckDriverScrutinyRow
+                                                ?.bodyProtectionStandard,
+                                      ),
+                                      focusNode: _model.fhrStandardFocusNode,
+                                      onChanged: (_) => EasyDebounce.debounce(
+                                        '_model.fhrStandardTextController',
+                                        Duration(milliseconds: 2000),
+                                        () => safeSetState(() {}),
+                                      ),
+                                      textInputAction: TextInputAction.next,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        hintText: 'Enter FHR standard',
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              font: GoogleFonts.inter(
+                                                fontWeight: FontWeight.normal,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                              color: Color(0xFF57636C),
+                                              fontSize: 14.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.normal,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0xFFDFEDEC),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0xFF06D5CD),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0xFFC4454D),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0xFFC4454D),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        suffixIcon: _model
+                                                .fhrStandardTextController!
+                                                .text
+                                                .isNotEmpty
+                                            ? InkWell(
+                                                onTap: () async {
+                                                  _model
+                                                      .fhrStandardTextController
+                                                      ?.clear();
+                                                  safeSetState(() {});
+                                                },
+                                                child: Icon(
+                                                  Icons.clear,
+                                                  size: 22,
+                                                ),
+                                              )
+                                            : null,
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.inter(
+                                              fontWeight: FontWeight.normal,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                            color: Color(0xFF101518),
+                                            fontSize: 14.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.normal,
                                             fontStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium
                                                     .fontStyle,
                                           ),
-                                          color: Color(0xFF101518),
-                                          fontSize: 14.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.normal,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                    hintText: 'Select FHR Standard',
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      color: Color(0xFF57636C),
-                                      size: 24.0,
+                                      validator: _model
+                                          .fhrStandardTextControllerValidator
+                                          .asValidator(context),
                                     ),
-                                    fillColor: Colors.white,
-                                    elevation: 2.0,
-                                    borderColor: Color(0xFFDFEDEC),
-                                    borderWidth: 1.0,
-                                    borderRadius: 10.0,
-                                    margin: EdgeInsets.all(10.0),
-                                    hidesUnderline: true,
-                                    isOverButton: false,
-                                    isSearchable: false,
-                                    isMultiSelect: false,
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         10.0, 0.0, 0.0, 0.0),
                                     child: Text(
-                                      'FHR SERIAL NUMBER',
+                                      'PADDING SERIAL NUMBER',
                                       style: FlutterFlowTheme.of(context)
                                           .labelMedium
                                           .override(
@@ -1351,7 +1494,7 @@ class _TwoWheelDriverScrutinycheckWidgetState
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             5.0, 0.0, 0.0, 0.0),
                                         child: Text(
-                                          'PROTECTIVE CLOTHING STANDARD',
+                                          'OVERALLS SUIT STANDARD',
                                           style: FlutterFlowTheme.of(context)
                                               .labelMedium
                                               .override(
@@ -1434,54 +1577,124 @@ class _TwoWheelDriverScrutinycheckWidgetState
                                         ),
                                     ],
                                   ),
-                                  FlutterFlowDropDown<String>(
-                                    controller: _model
-                                            .overallProtStandardValueController ??=
-                                        FormFieldController<String>(
-                                      _model.overallProtStandardValue ??=
-                                          twoWheelDriverScrutinycheckDriverScrutinyRow
-                                              ?.overallsStandard,
-                                    ),
-                                    options: ['FIA 8870-2018'],
-                                    onChanged: (val) => safeSetState(() =>
-                                        _model.overallProtStandardValue = val),
-                                    width:
-                                        MediaQuery.sizeOf(context).width * 1.0,
-                                    height: 40.0,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          font: GoogleFonts.inter(
+                                  Container(
+                                    width: double.infinity,
+                                    child: TextFormField(
+                                      controller: _model
+                                              .overallProtStandardTextController ??=
+                                          TextEditingController(
+                                        text:
+                                            twoWheelDriverScrutinycheckDriverScrutinyRow
+                                                ?.overallsStandard,
+                                      ),
+                                      focusNode:
+                                          _model.overallProtStandardFocusNode,
+                                      onChanged: (_) => EasyDebounce.debounce(
+                                        '_model.overallProtStandardTextController',
+                                        Duration(milliseconds: 2000),
+                                        () => safeSetState(() {}),
+                                      ),
+                                      autofocus: false,
+                                      textInputAction: TextInputAction.next,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        hintText:
+                                            'Enter Body Protection standard',
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              font: GoogleFonts.inter(
+                                                fontWeight: FontWeight.normal,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                              color: Color(0xFF57636C),
+                                              fontSize: 14.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.normal,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0xFFDFEDEC),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0xFF06D5CD),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0xFFC4454D),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0xFFC4454D),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        suffixIcon: _model
+                                                .overallProtStandardTextController!
+                                                .text
+                                                .isNotEmpty
+                                            ? InkWell(
+                                                onTap: () async {
+                                                  _model
+                                                      .overallProtStandardTextController
+                                                      ?.clear();
+                                                  safeSetState(() {});
+                                                },
+                                                child: Icon(
+                                                  Icons.clear,
+                                                  color: Color(0xFF57636C),
+                                                  size: 22.0,
+                                                ),
+                                              )
+                                            : null,
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.inter(
+                                              fontWeight: FontWeight.normal,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                            color: Color(0xFF101518),
+                                            fontSize: 14.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.normal,
                                             fontStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium
                                                     .fontStyle,
                                           ),
-                                          color: Color(0xFF101518),
-                                          fontSize: 14.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.normal,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                    hintText: 'Select Body Protection Standard',
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      color: Color(0xFF57636C),
-                                      size: 24.0,
+                                      validator: _model
+                                          .overallProtStandardTextControllerValidator
+                                          .asValidator(context),
                                     ),
-                                    fillColor: Colors.white,
-                                    elevation: 2.0,
-                                    borderColor: Color(0xFFDFEDEC),
-                                    borderWidth: 1.0,
-                                    borderRadius: 10.0,
-                                    margin: EdgeInsets.all(10.0),
-                                    hidesUnderline: true,
-                                    isSearchable: false,
-                                    isMultiSelect: false,
                                   ),
                                   Column(
                                     mainAxisSize: MainAxisSize.max,
@@ -1492,7 +1705,7 @@ class _TwoWheelDriverScrutinycheckWidgetState
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             5.0, 0.0, 0.0, 0.0),
                                         child: Text(
-                                          'PROTECTIVE CLOTHING SERIAL NUMBER',
+                                          'OVERALLS SUIT SERIAL NUMBER',
                                           style: FlutterFlowTheme.of(context)
                                               .labelMedium
                                               .override(
@@ -1696,178 +1909,6 @@ class _TwoWheelDriverScrutinycheckWidgetState
                                     ),
                               ),
                               Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment:
-                                    (FFMainAxisAlignment.start).flutterValue,
-                                crossAxisAlignment:
-                                    (FFCrossAxisAlignment.start).flutterValue,
-                                textBaseline: TextBaseline.alphabetic,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10.0, 0.0, 0.0, 0.0),
-                                    child: Text(
-                                      'BALACLAVA STANDARD',
-                                      style: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .override(
-                                            font: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w600,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelMedium
-                                                      .fontStyle,
-                                            ),
-                                            color: Color(0xFF57636C),
-                                            fontSize: 14.0,
-                                            letterSpacing: 1.0,
-                                            fontWeight: FontWeight.w600,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .fontStyle,
-                                          ),
-                                    ),
-                                  ),
-                                  FlutterFlowDropDown<String>(
-                                    controller: _model
-                                            .balaclavaStandardValueController ??=
-                                        FormFieldController<String>(null),
-                                    options: ['FIA 8856-2018', 'FIA 8856-2000'],
-                                    onChanged: (val) => safeSetState(() =>
-                                        _model.balaclavaStandardValue = val),
-                                    width:
-                                        MediaQuery.sizeOf(context).width * 1.0,
-                                    height: 40.0,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          font: GoogleFonts.inter(
-                                            fontWeight: FontWeight.normal,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
-                                          ),
-                                          color: Color(0xFF101518),
-                                          fontSize: 14.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.normal,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                    hintText: 'Select Balaclava Standard',
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      color: Color(0xFF57636C),
-                                      size: 24.0,
-                                    ),
-                                    fillColor: Colors.white,
-                                    elevation: 2.0,
-                                    borderColor: Color(0xFFDFEDEC),
-                                    borderWidth: 1.0,
-                                    borderRadius: 10.0,
-                                    margin: EdgeInsets.all(10.0),
-                                    hidesUnderline: true,
-                                    isOverButton: false,
-                                    isSearchable: false,
-                                    isMultiSelect: false,
-                                  ),
-                                ].divide(SizedBox(height: 6.0)),
-                              ),
-                              Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment:
-                                    (FFMainAxisAlignment.start).flutterValue,
-                                crossAxisAlignment:
-                                    (FFCrossAxisAlignment.start).flutterValue,
-                                textBaseline: TextBaseline.alphabetic,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10.0, 0.0, 0.0, 0.0),
-                                    child: Text(
-                                      'UNDERGARMENTS STANDARD',
-                                      style: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .override(
-                                            font: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w600,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelMedium
-                                                      .fontStyle,
-                                            ),
-                                            color: Color(0xFF57636C),
-                                            fontSize: 14.0,
-                                            letterSpacing: 1.0,
-                                            fontWeight: FontWeight.w600,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .fontStyle,
-                                          ),
-                                    ),
-                                  ),
-                                  FlutterFlowDropDown<String>(
-                                    controller: _model
-                                            .undergarmentsStandardValueController ??=
-                                        FormFieldController<String>(null),
-                                    options: ['FIA 8856-2018', 'FIA 8856-2000'],
-                                    onChanged: (val) => safeSetState(() =>
-                                        _model.undergarmentsStandardValue =
-                                            val),
-                                    width:
-                                        MediaQuery.sizeOf(context).width * 1.0,
-                                    height: 40.0,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          font: GoogleFonts.inter(
-                                            fontWeight: FontWeight.normal,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
-                                          ),
-                                          color: Color(0xFF101518),
-                                          fontSize: 14.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.normal,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                    hintText: 'Select Undergarments Standard',
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      color: Color(0xFF57636C),
-                                      size: 24.0,
-                                    ),
-                                    fillColor: Colors.white,
-                                    elevation: 2.0,
-                                    borderColor: Color(0xFFDFEDEC),
-                                    borderWidth: 1.0,
-                                    borderRadius: 10.0,
-                                    margin: EdgeInsets.all(10.0),
-                                    hidesUnderline: true,
-                                    isOverButton: false,
-                                    isSearchable: false,
-                                    isMultiSelect: false,
-                                  ),
-                                ].divide(SizedBox(height: 6.0)),
-                              ),
-                              StyledDivider(
-                                thickness: 2.0,
-                                indent: 50.0,
-                                endIndent: 50.0,
-                                color: FlutterFlowTheme.of(context).alternate,
-                                lineStyle: DividerLineStyle.dashed,
-                              ),
-                              Column(
                                 mainAxisSize: MainAxisSize.max,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -1963,165 +2004,28 @@ class _TwoWheelDriverScrutinycheckWidgetState
                                         ),
                                     ],
                                   ),
-                                  FlutterFlowDropDown<String>(
-                                    controller:
-                                        _model.glovesStandardValueController ??=
-                                            FormFieldController<String>(
-                                      _model.glovesStandardValue ??=
-                                          twoWheelDriverScrutinycheckDriverScrutinyRow
-                                              ?.glovesStandard,
-                                    ),
-                                    options: [
-                                      'FIA 8877-2022',
-                                      'FIA 8856-2000',
-                                      'FIA 8856-2018'
-                                    ],
-                                    onChanged: (val) => safeSetState(
-                                        () => _model.glovesStandardValue = val),
+                                  Container(
                                     width: double.infinity,
-                                    height: 40.0,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          font: GoogleFonts.inter(
-                                            fontWeight: FontWeight.normal,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
-                                          ),
-                                          color: Color(0xFF101518),
-                                          fontSize: 14.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.normal,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                    hintText: 'Select Gloves Standard',
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      color: Color(0xFF57636C),
-                                      size: 24.0,
-                                    ),
-                                    fillColor: Colors.white,
-                                    elevation: 2.0,
-                                    borderColor: Color(0xFFDFEDEC),
-                                    borderWidth: 1.0,
-                                    borderRadius: 10.0,
-                                    margin: EdgeInsets.all(10.0),
-                                    hidesUnderline: true,
-                                    isSearchable: false,
-                                    isMultiSelect: false,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 5.0, 0.0, 0.0),
-                                    child: Container(
-                                      width: MediaQuery.sizeOf(context).width *
-                                          1.0,
-                                      child: TextFormField(
-                                        controller: _model
-                                                .glovesSerialNumberTextController ??=
-                                            TextEditingController(
-                                          text:
-                                              twoWheelDriverScrutinycheckDriverScrutinyRow
-                                                  ?.glovesSerialNumber,
-                                        ),
-                                        focusNode:
-                                            _model.glovesSerialNumberFocusNode,
-                                        onChanged: (_) => EasyDebounce.debounce(
-                                          '_model.glovesSerialNumberTextController',
-                                          Duration(milliseconds: 2000),
-                                          () => safeSetState(() {}),
-                                        ),
-                                        autofocus: false,
-                                        textInputAction: TextInputAction.next,
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          labelText:
-                                              'Left & Right Glove serial number',
-                                          hintText:
-                                              'Enter Both left and right gloves serial number',
-                                          hintStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .bodyMedium
-                                              .override(
-                                                font: GoogleFonts.inter(
-                                                  fontWeight: FontWeight.normal,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
-                                                ),
-                                                color: Color(0xFF57636C),
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.normal,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
-                                              ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFDFEDEC),
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFC4454D),
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                          ),
-                                          focusedErrorBorder:
-                                              OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFC4454D),
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                          ),
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          suffixIcon: _model
-                                                  .glovesSerialNumberTextController!
-                                                  .text
-                                                  .isNotEmpty
-                                              ? InkWell(
-                                                  onTap: () async {
-                                                    _model
-                                                        .glovesSerialNumberTextController
-                                                        ?.clear();
-                                                    safeSetState(() {});
-                                                  },
-                                                  child: Icon(
-                                                    Icons.clear,
-                                                    color: Color(0xFF57636C),
-                                                    size: 22.0,
-                                                  ),
-                                                )
-                                              : null,
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
+                                    child: TextFormField(
+                                      controller: _model
+                                              .glovesStandardTextController ??=
+                                          TextEditingController(
+                                        text:
+                                            twoWheelDriverScrutinycheckDriverScrutinyRow
+                                                ?.glovesStandard,
+                                      ),
+                                      focusNode: _model.glovesStandardFocusNode,
+                                      onChanged: (_) => EasyDebounce.debounce(
+                                        '_model.glovesStandardTextController',
+                                        Duration(milliseconds: 2000),
+                                        () => safeSetState(() {}),
+                                      ),
+                                      autofocus: false,
+                                      textInputAction: TextInputAction.next,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        hintText: 'Enter Gloves standard',
+                                        hintStyle: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
                                               font: GoogleFonts.inter(
@@ -2131,7 +2035,7 @@ class _TwoWheelDriverScrutinycheckWidgetState
                                                         .bodyMedium
                                                         .fontStyle,
                                               ),
-                                              color: Color(0xFF101518),
+                                              color: Color(0xFF57636C),
                                               fontSize: 14.0,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.normal,
@@ -2140,10 +2044,81 @@ class _TwoWheelDriverScrutinycheckWidgetState
                                                       .bodyMedium
                                                       .fontStyle,
                                             ),
-                                        validator: _model
-                                            .glovesSerialNumberTextControllerValidator
-                                            .asValidator(context),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0xFFDFEDEC),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0xFF06D5CD),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0xFFC4454D),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0xFFC4454D),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        suffixIcon: _model
+                                                .glovesStandardTextController!
+                                                .text
+                                                .isNotEmpty
+                                            ? InkWell(
+                                                onTap: () async {
+                                                  _model
+                                                      .glovesStandardTextController
+                                                      ?.clear();
+                                                  safeSetState(() {});
+                                                },
+                                                child: Icon(
+                                                  Icons.clear,
+                                                  color: Color(0xFF57636C),
+                                                  size: 22.0,
+                                                ),
+                                              )
+                                            : null,
                                       ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.inter(
+                                              fontWeight: FontWeight.normal,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                            color: Color(0xFF101518),
+                                            fontSize: 14.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.normal,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                      validator: _model
+                                          .glovesStandardTextControllerValidator
+                                          .asValidator(context),
                                     ),
                                   ),
                                 ].divide(SizedBox(height: 6.0)),
@@ -2251,166 +2226,28 @@ class _TwoWheelDriverScrutinycheckWidgetState
                                         ),
                                     ],
                                   ),
-                                  FlutterFlowDropDown<String>(
-                                    controller:
-                                        _model.shoesStandardValueController ??=
-                                            FormFieldController<String>(
-                                      _model.shoesStandardValue ??=
-                                          twoWheelDriverScrutinycheckDriverScrutinyRow
-                                              ?.shoesStandard,
-                                    ),
-                                    options: [
-                                      'FIA 8877-2022',
-                                      'FIA 8856-2018',
-                                      'FIA 8856-2000'
-                                    ],
-                                    onChanged: (val) => safeSetState(
-                                        () => _model.shoesStandardValue = val),
-                                    width:
-                                        MediaQuery.sizeOf(context).width * 1.0,
-                                    height: 40.0,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          font: GoogleFonts.inter(
-                                            fontWeight: FontWeight.normal,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
-                                          ),
-                                          color: Color(0xFF101518),
-                                          fontSize: 14.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.normal,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                    hintText: 'Select Shoes Standard',
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      color: Color(0xFF57636C),
-                                      size: 24.0,
-                                    ),
-                                    fillColor: Colors.white,
-                                    elevation: 2.0,
-                                    borderColor: Color(0xFFDFEDEC),
-                                    borderWidth: 1.0,
-                                    borderRadius: 10.0,
-                                    margin: EdgeInsets.all(10.0),
-                                    hidesUnderline: true,
-                                    isSearchable: false,
-                                    isMultiSelect: false,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 5.0, 0.0, 0.0),
-                                    child: Container(
-                                      width: MediaQuery.sizeOf(context).width *
-                                          1.0,
-                                      child: TextFormField(
-                                        controller: _model
-                                                .shoesSerialNumberTextController ??=
-                                            TextEditingController(
-                                          text:
-                                              twoWheelDriverScrutinycheckDriverScrutinyRow
-                                                  ?.shoesSerialNumber,
-                                        ),
-                                        focusNode:
-                                            _model.shoesSerialNumberFocusNode,
-                                        onChanged: (_) => EasyDebounce.debounce(
-                                          '_model.shoesSerialNumberTextController',
-                                          Duration(milliseconds: 2000),
-                                          () => safeSetState(() {}),
-                                        ),
-                                        autofocus: false,
-                                        textInputAction: TextInputAction.next,
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          labelText:
-                                              'Left & Right shoe serial number',
-                                          hintText:
-                                              'Enter Both left and right shoes serial number',
-                                          hintStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .bodyMedium
-                                              .override(
-                                                font: GoogleFonts.inter(
-                                                  fontWeight: FontWeight.normal,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
-                                                ),
-                                                color: Color(0xFF57636C),
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.normal,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
-                                              ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFDFEDEC),
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFC4454D),
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                          ),
-                                          focusedErrorBorder:
-                                              OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFC4454D),
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                          ),
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          suffixIcon: _model
-                                                  .shoesSerialNumberTextController!
-                                                  .text
-                                                  .isNotEmpty
-                                              ? InkWell(
-                                                  onTap: () async {
-                                                    _model
-                                                        .shoesSerialNumberTextController
-                                                        ?.clear();
-                                                    safeSetState(() {});
-                                                  },
-                                                  child: Icon(
-                                                    Icons.clear,
-                                                    color: Color(0xFF57636C),
-                                                    size: 22.0,
-                                                  ),
-                                                )
-                                              : null,
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
+                                  Container(
+                                    width: double.infinity,
+                                    child: TextFormField(
+                                      controller:
+                                          _model.shoesStandardTextController ??=
+                                              TextEditingController(
+                                        text:
+                                            twoWheelDriverScrutinycheckDriverScrutinyRow
+                                                ?.shoesStandard,
+                                      ),
+                                      focusNode: _model.shoesStandardFocusNode,
+                                      onChanged: (_) => EasyDebounce.debounce(
+                                        '_model.shoesStandardTextController',
+                                        Duration(milliseconds: 2000),
+                                        () => safeSetState(() {}),
+                                      ),
+                                      autofocus: false,
+                                      textInputAction: TextInputAction.next,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        hintText: 'Enter Shoes standard',
+                                        hintStyle: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
                                               font: GoogleFonts.inter(
@@ -2420,7 +2257,7 @@ class _TwoWheelDriverScrutinycheckWidgetState
                                                         .bodyMedium
                                                         .fontStyle,
                                               ),
-                                              color: Color(0xFF101518),
+                                              color: Color(0xFF57636C),
                                               fontSize: 14.0,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.normal,
@@ -2429,104 +2266,82 @@ class _TwoWheelDriverScrutinycheckWidgetState
                                                       .bodyMedium
                                                       .fontStyle,
                                             ),
-                                        validator: _model
-                                            .shoesSerialNumberTextControllerValidator
-                                            .asValidator(context),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0xFFDFEDEC),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0xFF06D5CD),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0xFFC4454D),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0xFFC4454D),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        suffixIcon: _model
+                                                .shoesStandardTextController!
+                                                .text
+                                                .isNotEmpty
+                                            ? InkWell(
+                                                onTap: () async {
+                                                  _model
+                                                      .shoesStandardTextController
+                                                      ?.clear();
+                                                  safeSetState(() {});
+                                                },
+                                                child: Icon(
+                                                  Icons.clear,
+                                                  color: Color(0xFF57636C),
+                                                  size: 22.0,
+                                                ),
+                                              )
+                                            : null,
                                       ),
-                                    ),
-                                  ),
-                                ].divide(SizedBox(height: 6.0)),
-                              ),
-                              StyledDivider(
-                                thickness: 2.0,
-                                indent: 50.0,
-                                endIndent: 50.0,
-                                color: FlutterFlowTheme.of(context).alternate,
-                                lineStyle: DividerLineStyle.dashed,
-                              ),
-                              Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment:
-                                    (FFMainAxisAlignment.start).flutterValue,
-                                crossAxisAlignment:
-                                    (FFCrossAxisAlignment.start).flutterValue,
-                                textBaseline: TextBaseline.alphabetic,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10.0, 0.0, 0.0, 0.0),
-                                    child: Text(
-                                      'SOCKS STANDARD',
                                       style: FlutterFlowTheme.of(context)
-                                          .labelMedium
+                                          .bodyMedium
                                           .override(
                                             font: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w600,
+                                              fontWeight: FontWeight.normal,
                                               fontStyle:
                                                   FlutterFlowTheme.of(context)
-                                                      .labelMedium
+                                                      .bodyMedium
                                                       .fontStyle,
                                             ),
-                                            color: Color(0xFF57636C),
+                                            color: Color(0xFF101518),
                                             fontSize: 14.0,
-                                            letterSpacing: 1.0,
-                                            fontWeight: FontWeight.w600,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .fontStyle,
-                                          ),
-                                    ),
-                                  ),
-                                  FlutterFlowDropDown<String>(
-                                    controller:
-                                        _model.socksStandardValueController ??=
-                                            FormFieldController<String>(
-                                      _model.socksStandardValue ??=
-                                          twoWheelDriverScrutinycheckDriverScrutinyRow
-                                              ?.helmetStandard,
-                                    ),
-                                    options: ['FIA 8856-2018'],
-                                    onChanged: (val) => safeSetState(
-                                        () => _model.socksStandardValue = val),
-                                    width:
-                                        MediaQuery.sizeOf(context).width * 1.0,
-                                    height: 40.0,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          font: GoogleFonts.inter(
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.normal,
                                             fontStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium
                                                     .fontStyle,
                                           ),
-                                          color: Color(0xFF101518),
-                                          fontSize: 14.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.normal,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                    hintText: 'Select Socks Standard',
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      color: Color(0xFF57636C),
-                                      size: 24.0,
+                                      validator: _model
+                                          .shoesStandardTextControllerValidator
+                                          .asValidator(context),
                                     ),
-                                    fillColor: Colors.white,
-                                    elevation: 2.0,
-                                    borderColor: Color(0xFFDFEDEC),
-                                    borderWidth: 1.0,
-                                    borderRadius: 10.0,
-                                    margin: EdgeInsets.all(10.0),
-                                    hidesUnderline: true,
-                                    isOverButton: false,
-                                    isSearchable: false,
-                                    isMultiSelect: false,
                                   ),
                                 ].divide(SizedBox(height: 6.0)),
                               ),
@@ -2965,7 +2780,7 @@ class _TwoWheelDriverScrutinycheckWidgetState
                                               ),
                                               TextFormField(
                                                 controller:
-                                                    _model.textController7 ??=
+                                                    _model.textController10 ??=
                                                         TextEditingController(
                                                   text: twoWheelDriverScrutinycheckDriverScrutinyRow
                                                               ?.scrutinisedAt !=
@@ -3071,7 +2886,7 @@ class _TwoWheelDriverScrutinycheckWidgetState
                                                 keyboardType:
                                                     TextInputType.datetime,
                                                 validator: _model
-                                                    .textController7Validator
+                                                    .textController10Validator
                                                     .asValidator(context),
                                               ),
                                             ],
@@ -3578,38 +3393,31 @@ class _TwoWheelDriverScrutinycheckWidgetState
                                         onPressed: () async {
                                           await DriverScrutinyTable().update(
                                             data: {
-                                              'helmet_standard':
-                                                  _model.helmetStandardValue,
+                                              'helmet_standard': _model
+                                                  .helmetStandardTextController
+                                                  .text,
                                               'helmet_serial_number': _model
-                                                  .helmetSerialNumberTextController
+                                                  .helmetStandardTextController
                                                   .text,
                                               'overalls_standard': _model
-                                                  .overallProtStandardValue,
-                                              'overalls_serial_number': _model
-                                                  .overallProtSerialNumberTextController
+                                                  .overallProtStandardTextController
                                                   .text,
-                                              'gloves_standard':
-                                                  _model.glovesStandardValue,
-                                              'shoes_standard':
-                                                  _model.shoesStandardValue,
-                                              'body_protection_standard':
-                                                  _model.fhrStandardValue,
+                                              'overalls_serial_number': _model
+                                                  .overallProtStandardTextController
+                                                  .text,
+                                              'gloves_standard': _model
+                                                  .shoesStandardTextController
+                                                  .text,
+                                              'shoes_standard': _model
+                                                  .shoesStandardTextController
+                                                  .text,
+                                              'body_protection_standard': _model
+                                                  .fhrStandardTextController
+                                                  .text,
                                               'body_protection_serial_number':
                                                   _model
-                                                      .fhrSerialNumberTextController
+                                                      .fhrStandardTextController
                                                       .text,
-                                              'socks_standard':
-                                                  _model.socksStandardValue,
-                                              'undergarments_standard': _model
-                                                  .undergarmentsStandardValue,
-                                              'balaclava_standard':
-                                                  _model.balaclavaStandardValue,
-                                              'gloves_serial_number': _model
-                                                  .glovesSerialNumberTextController
-                                                  .text,
-                                              'shoes_serial_number': _model
-                                                  .shoesSerialNumberTextController
-                                                  .text,
                                             },
                                             matchingRows: (rows) =>
                                                 rows.eqOrNull(
@@ -3696,78 +3504,6 @@ class _TwoWheelDriverScrutinycheckWidgetState
                                                   .validate()) {
                                             _model.formValidate = false;
                                           }
-                                          if (_model.glovesStandardValue ==
-                                              null) {
-                                            _model.formValidate = false;
-                                          }
-                                          if (_model.shoesStandardValue ==
-                                              null) {
-                                            _model.formValidate = false;
-                                          }
-                                          if (_model.overallProtStandardValue ==
-                                              null) {
-                                            _model.formValidate = false;
-                                          }
-                                          if (_model.balaclavaStandardValue ==
-                                              null) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                  'Balaclava Standard is Required',
-                                                  style: TextStyle(),
-                                                ),
-                                                duration: Duration(
-                                                    milliseconds: 4000),
-                                              ),
-                                            );
-                                            _model.formValidate = false;
-                                          }
-                                          if (_model
-                                                  .undergarmentsStandardValue ==
-                                              null) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                  'Undergarments Standard is Required',
-                                                  style: TextStyle(),
-                                                ),
-                                                duration: Duration(
-                                                    milliseconds: 4000),
-                                              ),
-                                            );
-                                            _model.formValidate = false;
-                                          }
-                                          if (_model.socksStandardValue ==
-                                              null) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                  'Socks Standard is Required',
-                                                  style: TextStyle(),
-                                                ),
-                                                duration: Duration(
-                                                    milliseconds: 4000),
-                                              ),
-                                            );
-                                            _model.formValidate = false;
-                                          }
-                                          if (_model.fhrStandardValue == null) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                  'FHR Standard is Required',
-                                                  style: TextStyle(),
-                                                ),
-                                                duration: Duration(
-                                                    milliseconds: 4000),
-                                              ),
-                                            );
-                                            _model.formValidate = false;
-                                          }
                                           if (_model.formValidate!) {
                                             var confirmDialogResponse =
                                                 await showDialog<bool>(
@@ -3808,37 +3544,30 @@ class _TwoWheelDriverScrutinycheckWidgetState
                                                   .update(
                                                 data: {
                                                   'helmet_standard': _model
-                                                      .helmetStandardValue,
+                                                      .helmetStandardTextController
+                                                      .text,
                                                   'helmet_serial_number': _model
-                                                      .helmetSerialNumberTextController
+                                                      .helmetStandardTextController
                                                       .text,
                                                   'overalls_standard': _model
-                                                      .overallProtStandardValue,
+                                                      .overallProtStandardTextController
+                                                      .text,
                                                   'overalls_serial_number': _model
-                                                      .overallProtSerialNumberTextController
+                                                      .overallProtStandardTextController
                                                       .text,
                                                   'gloves_standard': _model
-                                                      .glovesStandardValue,
-                                                  'shoes_standard':
-                                                      _model.shoesStandardValue,
-                                                  'body_protection_standard':
-                                                      _model.fhrStandardValue,
+                                                      .shoesStandardTextController
+                                                      .text,
+                                                  'shoes_standard': _model
+                                                      .shoesStandardTextController
+                                                      .text,
+                                                  'body_protection_standard': _model
+                                                      .fhrStandardTextController
+                                                      .text,
                                                   'body_protection_serial_number':
                                                       _model
-                                                          .fhrSerialNumberTextController
+                                                          .fhrStandardTextController
                                                           .text,
-                                                  'socks_standard':
-                                                      _model.socksStandardValue,
-                                                  'undergarments_standard': _model
-                                                      .undergarmentsStandardValue,
-                                                  'balaclava_standard': _model
-                                                      .balaclavaStandardValue,
-                                                  'gloves_serial_number': _model
-                                                      .glovesSerialNumberTextController
-                                                      .text,
-                                                  'shoes_serial_number': _model
-                                                      .shoesSerialNumberTextController
-                                                      .text,
                                                   'isSubmited': true,
                                                   'created_at':
                                                       supaSerialize<DateTime>(
@@ -3933,21 +3662,21 @@ class _TwoWheelDriverScrutinycheckWidgetState
                                     await DriverScrutinyTable().update(
                                       data: {
                                         'helmet_serial_number': _model
-                                            .helmetSerialNumberTextController
+                                            .helmetStandardTextController.text,
+                                        'overalls_standard': _model
+                                            .overallProtStandardTextController
                                             .text,
-                                        'overalls_standard':
-                                            _model.overallProtStandardValue,
                                         'overalls_serial_number': _model
-                                            .overallProtSerialNumberTextController
+                                            .overallProtStandardTextController
                                             .text,
-                                        'gloves_standard':
-                                            _model.glovesStandardValue,
-                                        'shoes_standard':
-                                            _model.shoesStandardValue,
-                                        'body_protection_standard':
-                                            _model.fhrStandardValue,
+                                        'gloves_standard': _model
+                                            .shoesStandardTextController.text,
+                                        'shoes_standard': _model
+                                            .shoesStandardTextController.text,
+                                        'body_protection_standard': _model
+                                            .fhrStandardTextController.text,
                                         'body_protection_serial_number': _model
-                                            .fhrSerialNumberTextController.text,
+                                            .fhrStandardTextController.text,
                                         'driverSignature': _model.psSignature !=
                                                     null &&
                                                 _model.psSignature != ''
@@ -3966,8 +3695,8 @@ class _TwoWheelDriverScrutinycheckWidgetState
                                         'remarks': _model
                                             .remarksTextFieldTextController
                                             .text,
-                                        'helmet_standard':
-                                            _model.helmetStandardValue,
+                                        'helmet_standard': _model
+                                            .helmetStandardTextController.text,
                                         'isHelmetChecked': valueOrDefault<bool>(
                                           _model.helmetCheckboxValue,
                                           false,
@@ -3990,18 +3719,6 @@ class _TwoWheelDriverScrutinycheckWidgetState
                                           _model.fhrbodyProtectCheckboxValue,
                                           false,
                                         ),
-                                        'socks_standard':
-                                            _model.socksStandardValue,
-                                        'undergarments_standard':
-                                            _model.undergarmentsStandardValue,
-                                        'balaclava_standard':
-                                            _model.balaclavaStandardValue,
-                                        'gloves_serial_number': _model
-                                            .glovesSerialNumberTextController
-                                            .text,
-                                        'shoes_serial_number': _model
-                                            .shoesSerialNumberTextController
-                                            .text,
                                       },
                                       matchingRows: (rows) => rows.eqOrNull(
                                         'id',

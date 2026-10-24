@@ -10,14 +10,13 @@ class EntryCardWidget extends StatefulWidget {
     super.key,
     String? compNumber,
     String? name,
-    String? teamName,
+    this.teamName,
   })  : this.compNumber = compNumber ?? '44',
-        this.name = name ?? 'Lewis Hamilton',
-        this.teamName = teamName ?? 'Mercedes-AMG Petronas F1 Team';
+        this.name = name ?? 'Lewis Hamilton';
 
   final String compNumber;
   final String name;
-  final String teamName;
+  final String? teamName;
 
   @override
   State<EntryCardWidget> createState() => _EntryCardWidgetState();
@@ -137,18 +136,10 @@ class _EntryCardWidgetState extends State<EntryCardWidget> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(
-                            Icons.groups_rounded,
-                            color: FlutterFlowTheme.of(context).secondaryText,
-                            size: 16.0,
-                          ),
                           Expanded(
                             flex: 1,
                             child: Text(
-                              valueOrDefault<String>(
-                                widget.teamName,
-                                'Mercedes-AMG Petronas F1 Team',
-                              ),
+                              widget.teamName!,
                               maxLines: 1,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium

@@ -44,7 +44,7 @@ class _SignatureComponentWidgetState extends State<SignatureComponentWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.sizeOf(context).width * 0.7,
+      width: MediaQuery.sizeOf(context).width * 1.0,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).alternate,
         borderRadius: BorderRadius.circular(16.0),
@@ -95,41 +95,35 @@ class _SignatureComponentWidgetState extends State<SignatureComponentWidget> {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 150.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  FFButtonWidget(
-                    onPressed: () async {
-                      Navigator.pop(context);
-                    },
-                    text: 'Clear',
-                    icon: Icon(
-                      Icons.close_rounded,
-                      size: 15.0,
-                    ),
-                    options: FFButtonOptions(
-                      width: 150.0,
-                      height: 48.0,
-                      padding: EdgeInsets.all(8.0),
-                      iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      iconColor: FlutterFlowTheme.of(context).primaryText,
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      textStyle:
-                          FlutterFlowTheme.of(context).titleSmall.override(
-                                font: GoogleFonts.interTight(
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .fontStyle,
-                                ),
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                letterSpacing: 0.0,
+            Container(
+              decoration: BoxDecoration(),
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 150.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    FFButtonWidget(
+                      onPressed: () async {
+                        Navigator.pop(context);
+                      },
+                      text: 'Clear',
+                      icon: Icon(
+                        Icons.close_rounded,
+                        size: 15.0,
+                      ),
+                      options: FFButtonOptions(
+                        width: 140.0,
+                        height: 48.0,
+                        padding: EdgeInsets.all(8.0),
+                        iconPadding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        iconColor: FlutterFlowTheme.of(context).primaryText,
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        textStyle: FlutterFlowTheme.of(context)
+                            .titleSmall
+                            .override(
+                              font: GoogleFonts.interTight(
                                 fontWeight: FlutterFlowTheme.of(context)
                                     .titleSmall
                                     .fontWeight,
@@ -137,81 +131,82 @@ class _SignatureComponentWidgetState extends State<SignatureComponentWidget> {
                                     .titleSmall
                                     .fontStyle,
                               ),
-                      elevation: 0.0,
-                      borderSide: BorderSide(
-                        color: FlutterFlowTheme.of(context).alternate,
-                        width: 2.0,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                  FFButtonWidget(
-                    onPressed: () async {
-                      final signatureImage =
-                          await _model.signController!.toPngBytes();
-                      if (signatureImage == null) {
-                        showUploadMessage(
-                          context,
-                          'Signature is empty.',
-                        );
-                        return;
-                      }
-                      showUploadMessage(
-                        context,
-                        'Uploading signature...',
-                        showLoading: true,
-                      );
-                      final downloadUrl = (await uploadData(
-                          getSignatureStoragePath(), signatureImage));
-
-                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                      if (downloadUrl != null) {
-                        safeSetState(
-                            () => _model.uploadedSignatureUrl = downloadUrl);
-                        showUploadMessage(
-                          context,
-                          'Success!',
-                        );
-                      } else {
-                        showUploadMessage(
-                          context,
-                          'Failed to upload signature.',
-                        );
-                        return;
-                      }
-
-                      await Future.delayed(
-                        Duration(
-                          milliseconds: 2000,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              letterSpacing: 0.0,
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .fontStyle,
+                            ),
+                        elevation: 0.0,
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).alternate,
+                          width: 2.0,
                         ),
-                      );
-                      Navigator.pop(context, _model.uploadedSignatureUrl);
-                    },
-                    text: 'Save Signature',
-                    icon: Icon(
-                      Icons.check_rounded,
-                      size: 15.0,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
                     ),
-                    options: FFButtonOptions(
-                      width: 180.0,
-                      height: 48.0,
-                      padding: EdgeInsets.all(8.0),
-                      iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      iconColor: FlutterFlowTheme.of(context).primaryText,
-                      color: FlutterFlowTheme.of(context).primary,
-                      textStyle:
-                          FlutterFlowTheme.of(context).titleSmall.override(
-                                font: GoogleFonts.interTight(
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .fontStyle,
-                                ),
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                letterSpacing: 0.0,
+                    FFButtonWidget(
+                      onPressed: () async {
+                        final signatureImage =
+                            await _model.signController!.toPngBytes();
+                        if (signatureImage == null) {
+                          showUploadMessage(
+                            context,
+                            'Signature is empty.',
+                          );
+                          return;
+                        }
+                        showUploadMessage(
+                          context,
+                          'Uploading signature...',
+                          showLoading: true,
+                        );
+                        final downloadUrl = (await uploadData(
+                            getSignatureStoragePath(), signatureImage));
+
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        if (downloadUrl != null) {
+                          safeSetState(
+                              () => _model.uploadedSignatureUrl = downloadUrl);
+                          showUploadMessage(
+                            context,
+                            'Success!',
+                          );
+                        } else {
+                          showUploadMessage(
+                            context,
+                            'Failed to upload signature.',
+                          );
+                          return;
+                        }
+
+                        await Future.delayed(
+                          Duration(
+                            milliseconds: 2000,
+                          ),
+                        );
+                        Navigator.pop(context, _model.uploadedSignatureUrl);
+                      },
+                      text: 'Save Signature',
+                      icon: Icon(
+                        Icons.check_rounded,
+                        size: 15.0,
+                      ),
+                      options: FFButtonOptions(
+                        width: 170.0,
+                        height: 48.0,
+                        padding: EdgeInsets.all(8.0),
+                        iconPadding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        iconColor: FlutterFlowTheme.of(context).primaryText,
+                        color: FlutterFlowTheme.of(context).primary,
+                        textStyle: FlutterFlowTheme.of(context)
+                            .titleSmall
+                            .override(
+                              font: GoogleFonts.interTight(
                                 fontWeight: FlutterFlowTheme.of(context)
                                     .titleSmall
                                     .fontWeight,
@@ -219,15 +214,25 @@ class _SignatureComponentWidgetState extends State<SignatureComponentWidget> {
                                     .titleSmall
                                     .fontStyle,
                               ),
-                      elevation: 0.0,
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                        width: 1.0,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              letterSpacing: 0.0,
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .fontStyle,
+                            ),
+                        elevation: 0.0,
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
-                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                  ),
-                ].divide(SizedBox(width: 12.0)),
+                  ].divide(SizedBox(width: 12.0)),
+                ),
               ),
             ),
           ].divide(SizedBox(height: 16.0)),

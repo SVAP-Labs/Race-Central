@@ -9,7 +9,7 @@ import 'lat_lng.dart';
 import 'place.dart';
 import 'uploaded_file.dart';
 import '/backend/backend.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' hide Type;
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
 import '/flutter_flow/ff_builtin_enums.dart';
@@ -129,4 +129,128 @@ bool? isPDF(FFUploadedFile? uploadedFile) {
 
 bool isUrlPDF(String? inputUrlString) {
   return inputUrlString!.toLowerCase().contains('.pdf');
+}
+
+String? calculateMinimumWeight(
+  String categoryName,
+  String cubicCapacity,
+  bool? isTurbo,
+) {
+  // Returns e.g. "840 Kg" or "1758.62 Kg".
+  // Returns null when the weight can't be worked out (unknown category,
+  // empty CC, or CC out of range), so no junk text is saved.
+
+  if (categoryName == null || categoryName.trim().isEmpty) return null;
+
+  // CC from the TextField as text, e.g. "1598" or "1,598 cc"
+  final double? cc =
+      double.tryParse((cubicCapacity ?? '').replaceAll(RegExp(r'[^0-9.]'), ''));
+
+  final bool turbo = isTurbo ?? false;
+
+  // Normalise the FULL name: lowercase, letters & digits only.
+  // "JK Tyre Levitas Cup - Media Category" -> "jktyrelevitascupmediacategory"
+  // "LGB_F4" / "LGB F4" / "LGB-F4"          -> "lgbf4"
+  final String name =
+      categoryName.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '');
+
+  // ---- Exact full-name / code lookup (no partial matching) ----
+  const Map<String, String> categoryMap = {
+    // JK Tyre Levitas Cup -> 840 Kg
+    'jktyrelevitascupmediacategory': 'LEVITAS',
+    'jktyrelevitascupgentlemancategory': 'LEVITAS',
+    'jktyrelevitascuprookiecategory': 'LEVITAS',
+    'jktyrelevitascup': 'LEVITAS',
+    'levitas': 'LEVITAS',
+
+    // Formula LGB F4 -> 535 Kg
+    'lgbf4': 'LGB_F4',
+    'formulalgbf4': 'LGB_F4',
+    'formulalgbf4rookie': 'LGB_F4',
+    'formulalbgf4rookie': 'LGB_F4', // spelling as given ("LBG")
+
+    // F1300 Novice Cup -> 530 Kg
+    'f1300': 'F1300',
+    'f1300novicecup': 'F1300',
+
+    // Indian Super Touring Cars -> table
+    'istc': 'ISTC',
+    'ist': 'ISTC',
+    'indiansupertouringcars': 'ISTC',
+    'indiansupertouringcarsistc': 'ISTC',
+
+    // Indian Touring Cars -> CC / 1.55
+    'itc': 'ITC',
+    'indiantouringcars': 'ITC',
+    'indiantouringcarsitc': 'ITC',
+
+    // Indian Junior Touring Cars -> CC / 1.65
+    'ijtc': 'IJTC',
+    'indianjuniortouringcars': 'IJTC',
+    'indianjuniortouringcarsijtc': 'IJTC',
+
+    // Super Stock -> NA: CC / 1.5, Turbo: CC x 1.7 / 1.45
+    'ss': 'SUPER_STOCK',
+    'superstock': 'SUPER_STOCK',
+    'superstockss': 'SUPER_STOCK',
+  };
+
+  final String? category = categoryMap[name];
+  if (category == null) return null; // Unknown category
+
+  // ---- Fixed-weight categories (CC not needed) ----
+  if (category == 'LEVITAS') return '840 Kg';
+  if (category == 'LGB_F4') return '535 Kg';
+  if (category == 'F1300') return '530 Kg';
+
+  // ---- CC-based categories ----
+  if (cc == null || cc <= 0) return null;
+
+  double result;
+
+  switch (category) {
+    case 'ISTC':
+      // [upper CC limit, minimum weight]
+      final List<List<double>> naTable = [
+        [1389, 880],
+        [1609, 930],
+        [2009, 980],
+        [2409, 1030],
+        [2809, 1080],
+        [3210, 1130],
+      ];
+      final List<List<double>> turboTable = [
+        [926, 930],
+        [1072, 980],
+        [1339, 1030],
+        [1606, 1080],
+        [1873, 1130],
+        [2140, 1180],
+      ];
+      final List<List<double>> table = turbo ? turboTable : naTable;
+      for (final List<double> row in table) {
+        if (cc <= row[0]) {
+          return '${row[1].toInt()} Kg';
+        }
+      }
+      return null; // CC above max allowed
+
+    case 'ITC':
+      result = cc / 1.55;
+      break;
+
+    case 'IJTC':
+      result = cc / 1.65;
+      break;
+
+    case 'SUPER_STOCK':
+      result = turbo ? (cc * 1.7) / 1.45 : cc / 1.5;
+      break;
+
+    default:
+      return null;
+  }
+
+  // 2 decimal places, e.g. "1758.62 Kg"
+  return '${result.toStringAsFixed(2)} Kg';
 }

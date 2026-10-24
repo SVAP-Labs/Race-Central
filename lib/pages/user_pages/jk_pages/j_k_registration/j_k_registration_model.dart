@@ -52,7 +52,7 @@ class JKRegistrationModel extends FlutterFlowModel<JKRegistrationWidget> {
     updateFn(psUserProfileDetails ??= UserDetailsProfileStruct());
   }
 
-  String psCategoryTeamid = 'Team Name';
+  String? psCategoryTeamid = '';
 
   UserEmergencyDetailsStruct? psUserEmergencyDetails;
   void updatePsUserEmergencyDetailsStruct(
@@ -60,18 +60,20 @@ class JKRegistrationModel extends FlutterFlowModel<JKRegistrationWidget> {
     updateFn(psUserEmergencyDetails ??= UserEmergencyDetailsStruct());
   }
 
+  bool psCategory1PageLoaded = false;
+
   ///  State fields for stateful widgets in this page.
 
   final formKey4 = GlobalKey<FormState>();
   final formKey2 = GlobalKey<FormState>();
   final formKey3 = GlobalKey<FormState>();
   final formKey1 = GlobalKey<FormState>();
+  // Stores action output result for [Backend Call - Query Rows] action in JKRegistration widget.
+  List<EventCategoriesRow>? queriedCategory;
   // Stores action output result for [Backend Call - API (getUniqueEntryNumber)] action in JKRegistration widget.
   ApiCallResponse? apiResulto4e8;
   // Stores action output result for [Backend Call - API (getcategorynumbers)] action in JKRegistration widget.
   ApiCallResponse? apiResultallNumbers;
-  // Stores action output result for [Backend Call - Query Rows] action in JKRegistration widget.
-  List<EventCategoriesRow>? queriedCategory;
   // State field(s) for PageView widget.
   PageController? pageViewController;
 
@@ -113,15 +115,6 @@ class JKRegistrationModel extends FlutterFlowModel<JKRegistrationWidget> {
   FocusNode? fmsciLicenseFocusNode;
   TextEditingController? fmsciLicenseTextController;
   String? Function(BuildContext, String?)? fmsciLicenseTextControllerValidator;
-  String? _fmsciLicenseTextControllerValidator(
-      BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'FMSCI License Number is required';
-    }
-
-    return null;
-  }
-
   // State field(s) for No1DropDown widget.
   String? no1DropDownValue;
   FormFieldController<String>? no1DropDownValueController;
@@ -169,13 +162,11 @@ class JKRegistrationModel extends FlutterFlowModel<JKRegistrationWidget> {
     return null;
   }
 
-  // State field(s) for StateTextField widget.
-  FocusNode? stateTextFieldFocusNode;
-  TextEditingController? stateTextFieldTextController;
-  String? Function(BuildContext, String?)?
-      stateTextFieldTextControllerValidator;
-  String? _stateTextFieldTextControllerValidator(
-      BuildContext context, String? val) {
+  // State field(s) for stateText widget.
+  FocusNode? stateTextFocusNode;
+  TextEditingController? stateTextTextController;
+  String? Function(BuildContext, String?)? stateTextTextControllerValidator;
+  String? _stateTextTextControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return 'State/Region is required';
     }
@@ -239,17 +230,9 @@ class JKRegistrationModel extends FlutterFlowModel<JKRegistrationWidget> {
   }
 
   // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode;
+  FocusNode? textFieldFocusNode1;
   TextEditingController? textController12;
   String? Function(BuildContext, String?)? textController12Validator;
-  String? _textController12Validator(BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Code is required';
-    }
-
-    return null;
-  }
-
   // State field(s) for EmergencycontactTextField widget.
   FocusNode? emergencycontactTextFieldFocusNode1;
   TextEditingController? emergencycontactTextFieldTextController1;
@@ -259,10 +242,6 @@ class JKRegistrationModel extends FlutterFlowModel<JKRegistrationWidget> {
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return 'Emergency Contact Number is required';
-    }
-
-    if (val.length < 10) {
-      return 'Minimum 10 digits required';
     }
 
     return null;
@@ -327,15 +306,15 @@ class JKRegistrationModel extends FlutterFlowModel<JKRegistrationWidget> {
     return null;
   }
 
-  // State field(s) for emergency_StateField widget.
-  FocusNode? emergencyStateFieldFocusNode;
-  TextEditingController? emergencyStateFieldTextController;
+  // State field(s) for emergency_stateText widget.
+  FocusNode? emergencyStateTextFocusNode;
+  TextEditingController? emergencyStateTextTextController;
   String? Function(BuildContext, String?)?
-      emergencyStateFieldTextControllerValidator;
-  String? _emergencyStateFieldTextControllerValidator(
+      emergencyStateTextTextControllerValidator;
+  String? _emergencyStateTextTextControllerValidator(
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
-      return 'State / Region is required';
+      return 'Satte/Region is required';
     }
 
     return null;
@@ -384,150 +363,46 @@ class JKRegistrationModel extends FlutterFlowModel<JKRegistrationWidget> {
   TextEditingController? facebookhandleTextController;
   String? Function(BuildContext, String?)?
       facebookhandleTextControllerValidator;
-  String? _facebookhandleTextControllerValidator(
-      BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Enter Facebook Handle';
-    }
-
-    if (val.length < 2) {
-      return 'Requires at least 2 characters.';
-    }
-
-    return null;
-  }
-
   // State field(s) for instagramhandle widget.
   FocusNode? instagramhandleFocusNode;
   TextEditingController? instagramhandleTextController;
   String? Function(BuildContext, String?)?
       instagramhandleTextControllerValidator;
-  String? _instagramhandleTextControllerValidator(
-      BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Enter Instagram Handle';
-    }
-
-    if (val.length < 2) {
-      return 'Requires at least 2 characters.';
-    }
-
-    return null;
-  }
-
   // State field(s) for racingSinceTextField widget.
   FocusNode? racingSinceTextFieldFocusNode;
   TextEditingController? racingSinceTextFieldTextController;
   String? Function(BuildContext, String?)?
       racingSinceTextFieldTextControllerValidator;
-  String? _racingSinceTextFieldTextControllerValidator(
-      BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Enter racing since';
-    }
-
-    if (val.length < 4) {
-      return 'Enter the year';
-    }
-    if (val.length > 4) {
-      return 'Maximum 4 characters allowed, currently ${val.length}.';
-    }
-
-    return null;
-  }
-
   // State field(s) for racesParticipatedTextField widget.
   FocusNode? racesParticipatedTextFieldFocusNode;
   TextEditingController? racesParticipatedTextFieldTextController;
   String? Function(BuildContext, String?)?
       racesParticipatedTextFieldTextControllerValidator;
-  String? _racesParticipatedTextFieldTextControllerValidator(
-      BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Fill number of races participated . Enter 0 if no races.';
-    }
-
-    if (val.length < 1) {
-      return 'Requires at least 1 characters.';
-    }
-
-    return null;
-  }
-
   // State field(s) for podiums widget.
   FocusNode? podiumsFocusNode;
   TextEditingController? podiumsTextController;
   String? Function(BuildContext, String?)? podiumsTextControllerValidator;
-  String? _podiumsTextControllerValidator(BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Fill Number of Podiums . Enter 0 in case of no podiums.';
-    }
-
-    if (val.length < 1) {
-      return 'Requires at least 1 characters.';
-    }
-
-    return null;
-  }
-
   // State field(s) for hobbiesTextField widget.
   FocusNode? hobbiesTextFieldFocusNode;
   TextEditingController? hobbiesTextFieldTextController;
   String? Function(BuildContext, String?)?
       hobbiesTextFieldTextControllerValidator;
-  String? _hobbiesTextFieldTextControllerValidator(
-      BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Fill Missing Field.';
-    }
-
-    if (val.length < 5) {
-      return 'Requires at least 5 characters.';
-    }
-
-    return null;
-  }
-
   // State field(s) for motorsportIdolTextField widget.
   FocusNode? motorsportIdolTextFieldFocusNode;
   TextEditingController? motorsportIdolTextFieldTextController;
   String? Function(BuildContext, String?)?
       motorsportIdolTextFieldTextControllerValidator;
-  String? _motorsportIdolTextFieldTextControllerValidator(
-      BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Fill Missing Field.';
-    }
-
-    if (val.length < 3) {
-      return 'Requires at least 3 characters.';
-    }
-
-    return null;
-  }
-
   // State field(s) for aimTextField widget.
   FocusNode? aimTextFieldFocusNode;
   TextEditingController? aimTextFieldTextController;
   String? Function(BuildContext, String?)? aimTextFieldTextControllerValidator;
-  String? _aimTextFieldTextControllerValidator(
-      BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Fill Missing Field.';
-    }
-
-    if (val.length < 10) {
-      return 'Requires at least 10 characters.';
-    }
-
-    return null;
-  }
-
   // Stores action output result for [Backend Call - Update Row(s)] action in Button widget.
   List<AppUsersRow>? checkJSONLoad;
   // State field(s) for teamName widget.
   String? teamNameValue;
   FormFieldController<String>? teamNameValueController;
+  // Stores action output result for [Backend Call - Query Rows] action in teamName widget.
+  List<ChampionshipTeamsRow>? queryTeamName;
   // State field(s) for EntrantManager widget.
   FocusNode? entrantManagerFocusNode;
   TextEditingController? entrantManagerTextController;
@@ -542,11 +417,16 @@ class JKRegistrationModel extends FlutterFlowModel<JKRegistrationWidget> {
     return null;
   }
 
-  // State field(s) for entrantMobile widget.
-  FocusNode? entrantMobileFocusNode;
-  TextEditingController? entrantMobileTextController;
-  String? Function(BuildContext, String?)? entrantMobileTextControllerValidator;
-  String? _entrantMobileTextControllerValidator(
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode2;
+  TextEditingController? textController31;
+  String? Function(BuildContext, String?)? textController31Validator;
+  // State field(s) for entrantMobileTextField widget.
+  FocusNode? entrantMobileTextFieldFocusNode;
+  TextEditingController? entrantMobileTextFieldTextController;
+  String? Function(BuildContext, String?)?
+      entrantMobileTextFieldTextControllerValidator;
+  String? _entrantMobileTextFieldTextControllerValidator(
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return 'Mobile Number Of Entrant / Team  is required';
@@ -579,19 +459,16 @@ class JKRegistrationModel extends FlutterFlowModel<JKRegistrationWidget> {
   @override
   void initState(BuildContext context) {
     issuingAsnTextControllerValidator = _issuingAsnTextControllerValidator;
-    fmsciLicenseTextControllerValidator = _fmsciLicenseTextControllerValidator;
     addressLaneTextControllerValidator = _addressLaneTextControllerValidator;
     streetLaneTextControllerValidator = _streetLaneTextControllerValidator;
     cityTextTextControllerValidator = _cityTextTextControllerValidator;
-    stateTextFieldTextControllerValidator =
-        _stateTextFieldTextControllerValidator;
+    stateTextTextControllerValidator = _stateTextTextControllerValidator;
     zipcodeTextFieldTextControllerValidator =
         _zipcodeTextFieldTextControllerValidator;
     emergencyTextFieldTextControllerValidator =
         _emergencyTextFieldTextControllerValidator;
     relationshipTextFieldTextControllerValidator =
         _relationshipTextFieldTextControllerValidator;
-    textController12Validator = _textController12Validator;
     emergencycontactTextFieldTextController1Validator =
         _emergencycontactTextFieldTextController1Validator;
     emergencycontactTextFieldTextController2Validator =
@@ -602,30 +479,16 @@ class JKRegistrationModel extends FlutterFlowModel<JKRegistrationWidget> {
         _emergencyStreetLaneTextControllerValidator;
     emergencyCityTextTextControllerValidator =
         _emergencyCityTextTextControllerValidator;
-    emergencyStateFieldTextControllerValidator =
-        _emergencyStateFieldTextControllerValidator;
+    emergencyStateTextTextControllerValidator =
+        _emergencyStateTextTextControllerValidator;
     emergencyZipcodeTextFieldTextControllerValidator =
         _emergencyZipcodeTextFieldTextControllerValidator;
     nationalityTextFieldTextControllerValidator =
         _nationalityTextFieldTextControllerValidator;
-    facebookhandleTextControllerValidator =
-        _facebookhandleTextControllerValidator;
-    instagramhandleTextControllerValidator =
-        _instagramhandleTextControllerValidator;
-    racingSinceTextFieldTextControllerValidator =
-        _racingSinceTextFieldTextControllerValidator;
-    racesParticipatedTextFieldTextControllerValidator =
-        _racesParticipatedTextFieldTextControllerValidator;
-    podiumsTextControllerValidator = _podiumsTextControllerValidator;
-    hobbiesTextFieldTextControllerValidator =
-        _hobbiesTextFieldTextControllerValidator;
-    motorsportIdolTextFieldTextControllerValidator =
-        _motorsportIdolTextFieldTextControllerValidator;
-    aimTextFieldTextControllerValidator = _aimTextFieldTextControllerValidator;
     entrantManagerTextControllerValidator =
         _entrantManagerTextControllerValidator;
-    entrantMobileTextControllerValidator =
-        _entrantMobileTextControllerValidator;
+    entrantMobileTextFieldTextControllerValidator =
+        _entrantMobileTextFieldTextControllerValidator;
     entrantemailTextControllerValidator = _entrantemailTextControllerValidator;
   }
 
@@ -649,8 +512,8 @@ class JKRegistrationModel extends FlutterFlowModel<JKRegistrationWidget> {
     cityTextFocusNode?.dispose();
     cityTextTextController?.dispose();
 
-    stateTextFieldFocusNode?.dispose();
-    stateTextFieldTextController?.dispose();
+    stateTextFocusNode?.dispose();
+    stateTextTextController?.dispose();
 
     zipcodeTextFieldFocusNode?.dispose();
     zipcodeTextFieldTextController?.dispose();
@@ -664,7 +527,7 @@ class JKRegistrationModel extends FlutterFlowModel<JKRegistrationWidget> {
     relationshipTextFieldFocusNode?.dispose();
     relationshipTextFieldTextController?.dispose();
 
-    textFieldFocusNode?.dispose();
+    textFieldFocusNode1?.dispose();
     textController12?.dispose();
 
     emergencycontactTextFieldFocusNode1?.dispose();
@@ -682,8 +545,8 @@ class JKRegistrationModel extends FlutterFlowModel<JKRegistrationWidget> {
     emergencyCityTextFocusNode?.dispose();
     emergencyCityTextTextController?.dispose();
 
-    emergencyStateFieldFocusNode?.dispose();
-    emergencyStateFieldTextController?.dispose();
+    emergencyStateTextFocusNode?.dispose();
+    emergencyStateTextTextController?.dispose();
 
     emergencyZipcodeTextFieldFocusNode?.dispose();
     emergencyZipcodeTextFieldTextController?.dispose();
@@ -721,8 +584,11 @@ class JKRegistrationModel extends FlutterFlowModel<JKRegistrationWidget> {
     entrantManagerFocusNode?.dispose();
     entrantManagerTextController?.dispose();
 
-    entrantMobileFocusNode?.dispose();
-    entrantMobileTextController?.dispose();
+    textFieldFocusNode2?.dispose();
+    textController31?.dispose();
+
+    entrantMobileTextFieldFocusNode?.dispose();
+    entrantMobileTextFieldTextController?.dispose();
 
     entrantemailFocusNode?.dispose();
     entrantemailTextController?.dispose();

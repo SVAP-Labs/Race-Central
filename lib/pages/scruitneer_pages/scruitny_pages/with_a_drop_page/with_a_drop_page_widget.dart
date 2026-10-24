@@ -1,4 +1,3 @@
-import '/backend/backend.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -197,12 +196,14 @@ class _WithADropPageWidgetState extends State<WithADropPageWidget> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          StreamBuilder<
-                                              List<
-                                                  RacingControlAppSupportRecord>>(
-                                            stream:
-                                                queryRacingControlAppSupportRecord(
-                                              singleRecord: true,
+                                          FutureBuilder<
+                                              List<ChampionshipTeamsRow>>(
+                                            future: ChampionshipTeamsTable()
+                                                .queryRows(
+                                              queryFn: (q) => q.eqOrNull(
+                                                'chship_id',
+                                                widget.champshipID,
+                                              ),
                                             ),
                                             builder: (context, snapshot) {
                                               // Customize what your widget looks like when it's loading.
@@ -221,19 +222,9 @@ class _WithADropPageWidgetState extends State<WithADropPageWidget> {
                                                   ),
                                                 );
                                               }
-                                              List<RacingControlAppSupportRecord>
-                                                  teamDropdownRacingControlAppSupportRecordList =
+                                              List<ChampionshipTeamsRow>
+                                                  teamDropdownChampionshipTeamsRowList =
                                                   snapshot.data!;
-                                              // Return an empty Container when the item does not exist.
-                                              if (snapshot.data!.isEmpty) {
-                                                return Container();
-                                              }
-                                              final teamDropdownRacingControlAppSupportRecord =
-                                                  teamDropdownRacingControlAppSupportRecordList
-                                                          .isNotEmpty
-                                                      ? teamDropdownRacingControlAppSupportRecordList
-                                                          .first
-                                                      : null;
 
                                               return FlutterFlowDropDown<
                                                   String>(
@@ -244,8 +235,8 @@ class _WithADropPageWidgetState extends State<WithADropPageWidget> {
                                                       'ALL',
                                                 ),
                                                 options: functions.addAllToDropdown(
-                                                    teamDropdownRacingControlAppSupportRecord!
-                                                        .kartingTeams
+                                                    teamDropdownChampionshipTeamsRowList
+                                                        .map((e) => e.teamName)
                                                         .toList(),
                                                     'ALL')!,
                                                 onChanged: (val) async {
@@ -1268,6 +1259,10 @@ class _WithADropPageWidgetState extends State<WithADropPageWidget> {
                                                                                 driverListItem.driverScrutinyId,
                                                                                 ParamType.String,
                                                                               ),
+                                                                              'isTurboAllowed': serializeParam(
+                                                                                _model.queriedEventCategoryVheicle?.firstOrNull?.isTurboAllowed,
+                                                                                ParamType.bool,
+                                                                              ),
                                                                             }.withoutNulls,
                                                                           );
                                                                         } else if (_model.queriedEventCategoryVheicle?.firstOrNull?.categoryType ==
@@ -1295,10 +1290,8 @@ class _WithADropPageWidgetState extends State<WithADropPageWidget> {
                                                                               ),
                                                                             }.withoutNulls,
                                                                           );
-                                                                        } else if ((_model.queriedEventCategoryVheicle?.firstOrNull?.categoryType ==
-                                                                                'onemake_4w') ||
-                                                                            (_model.queriedEventCategoryVheicle?.firstOrNull?.categoryType ==
-                                                                                'f4')) {
+                                                                        } else if (_model.queriedEventCategoryVheicle?.firstOrNull?.categoryType ==
+                                                                            'f4') {
                                                                           context
                                                                               .pushNamed(
                                                                             OpenWheelVehicleScrutinyWidget.routeName,
@@ -1347,6 +1340,31 @@ class _WithADropPageWidgetState extends State<WithADropPageWidget> {
                                                                               ),
                                                                             }.withoutNulls,
                                                                           );
+                                                                        } else if (_model.queriedEventCategoryVheicle?.firstOrNull?.categoryType ==
+                                                                            'onemake_4w') {
+                                                                          context
+                                                                              .pushNamed(
+                                                                            Onemake4WScrutinyFormWidget.routeName,
+                                                                            queryParameters:
+                                                                                {
+                                                                              'kartScrutinyID': serializeParam(
+                                                                                driverListItem.kartScrutinyId,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'eventRegistrationID': serializeParam(
+                                                                                driverListItem.id,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'category': serializeParam(
+                                                                                driverListItem.category,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'isTurboAllowed': serializeParam(
+                                                                                _model.queriedEventCategoryVheicle?.firstOrNull?.isTurboAllowed,
+                                                                                ParamType.bool,
+                                                                              ),
+                                                                            }.withoutNulls,
+                                                                          );
                                                                         } else {
                                                                           context
                                                                               .pushNamed(
@@ -1377,7 +1395,7 @@ class _WithADropPageWidgetState extends State<WithADropPageWidget> {
                                                                             () {});
                                                                       },
                                                                       text:
-                                                                          'Kart Scrutiny',
+                                                                          'Vehicle Scrutiny',
                                                                       icon:
                                                                           Icon(
                                                                         Icons

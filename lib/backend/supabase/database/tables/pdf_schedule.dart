@@ -34,4 +34,10 @@ class PdfScheduleRow extends SupabaseDataRow {
 
   DateTime? get createdAt => getField<DateTime>('created_at');
   set createdAt(DateTime? value) => setField<DateTime>('created_at', value);
+
+  String? get kind => getField<String>('kind');
+  set kind(String? value) => setField<String>('kind', value);
+
+  String? get title => getField<String>('title');
+  set title(String? value) => setField<String>('title', value);
 }

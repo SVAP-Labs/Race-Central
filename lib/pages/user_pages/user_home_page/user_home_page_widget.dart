@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -7,6 +8,8 @@ import '/pages/components/driver_nav_bar/driver_nav_bar_widget.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
@@ -34,15 +37,65 @@ class UserHomePageWidget extends StatefulWidget {
   State<UserHomePageWidget> createState() => _UserHomePageWidgetState();
 }
 
-class _UserHomePageWidgetState extends State<UserHomePageWidget> {
+class _UserHomePageWidgetState extends State<UserHomePageWidget>
+    with TickerProviderStateMixin {
   late UserHomePageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => UserHomePageModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      Function() _navigate = () {};
+      if ((currentUserDocument?.role == null) ||
+          (currentUserDisplayName == '')) {
+        GoRouter.of(context).prepareAuthEvent();
+        await authManager.signOut();
+        GoRouter.of(context).clearRedirectLocation();
+
+        _navigate = () =>
+            context.goNamedAuth(Auth2LoginWidget.routeName, context.mounted);
+      }
+
+      _navigate();
+    });
+
+    animationsMap.addAll({
+      'buttonOnPageLoadAnimation1': AnimationInfo(
+        loop: true,
+        reverse: true,
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          ShimmerEffect(
+            curve: Curves.easeInOut,
+            delay: 700.0.ms,
+            duration: 1800.0.ms,
+            color: Color(0xFFF5F5F5),
+            angle: 0.524,
+          ),
+        ],
+      ),
+      'buttonOnPageLoadAnimation2': AnimationInfo(
+        loop: true,
+        reverse: true,
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          ShimmerEffect(
+            curve: Curves.easeInOut,
+            delay: 700.0.ms,
+            duration: 1800.0.ms,
+            color: Color(0xFFF5F5F5),
+            angle: 0.524,
+          ),
+        ],
+      ),
+    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -770,30 +823,6 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                                           );
                                                                         },
                                                                       );
-
-                                                                      context
-                                                                          .pushNamed(
-                                                                        KartDriverScrutinycheckWidget
-                                                                            .routeName,
-                                                                        queryParameters:
-                                                                            {
-                                                                          'driverScrutinyID':
-                                                                              serializeParam(
-                                                                            listViewEventRegistrationsRow.driverScrutinyId,
-                                                                            ParamType.String,
-                                                                          ),
-                                                                          'eventRegID':
-                                                                              serializeParam(
-                                                                            listViewEventRegistrationsRow.id,
-                                                                            ParamType.String,
-                                                                          ),
-                                                                          'pCategory':
-                                                                              serializeParam(
-                                                                            listViewEventRegistrationsRow.category,
-                                                                            ParamType.String,
-                                                                          ),
-                                                                        }.withoutNulls,
-                                                                      );
                                                                     }
 
                                                                     FFAppState()
@@ -882,7 +911,9 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                                           .success,
                                                                     ),
                                                                   ),
-                                                                ),
+                                                                ).animateOnPageLoad(
+                                                                        animationsMap[
+                                                                            'buttonOnPageLoadAnimation1']!),
                                                               ),
                                                               Padding(
                                                                 padding:
@@ -1496,12 +1527,18 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                                             listViewEventRegistrationsRow.category,
                                                                             ParamType.String,
                                                                           ),
+                                                                          'isTurboAllowed':
+                                                                              serializeParam(
+                                                                            _model.fetchingEventCategortype?.firstOrNull?.isTurboAllowed,
+                                                                            ParamType.bool,
+                                                                          ),
                                                                         }.withoutNulls,
                                                                       );
-                                                                    } else if ((_model.fetchingEventCategortype?.firstOrNull?.categoryType ==
-                                                                            'onemake_4w') ||
-                                                                        (_model.fetchingEventCategortype?.firstOrNull?.categoryType ==
-                                                                            'f4')) {
+                                                                    } else if (_model
+                                                                            .fetchingEventCategortype
+                                                                            ?.firstOrNull
+                                                                            ?.categoryType ==
+                                                                        'f4') {
                                                                       context
                                                                           .pushNamed(
                                                                         OpenWheelVehicleScrutinyWidget
@@ -1581,6 +1618,39 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                                           ),
                                                                         }.withoutNulls,
                                                                       );
+                                                                    } else if (_model
+                                                                            .fetchingEventCategortype
+                                                                            ?.firstOrNull
+                                                                            ?.categoryType ==
+                                                                        'onemake_4w') {
+                                                                      context
+                                                                          .pushNamed(
+                                                                        Onemake4WScrutinyFormWidget
+                                                                            .routeName,
+                                                                        queryParameters:
+                                                                            {
+                                                                          'kartScrutinyID':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.kartScrutinyId,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                          'eventRegistrationID':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.id,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                          'category':
+                                                                              serializeParam(
+                                                                            listViewEventRegistrationsRow.category,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                          'isTurboAllowed':
+                                                                              serializeParam(
+                                                                            _model.fetchingEventCategortype?.firstOrNull?.isTurboAllowed,
+                                                                            ParamType.bool,
+                                                                          ),
+                                                                        }.withoutNulls,
+                                                                      );
                                                                     } else {
                                                                       await showDialog(
                                                                         context:
@@ -1601,30 +1671,6 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                                             ),
                                                                           );
                                                                         },
-                                                                      );
-
-                                                                      context
-                                                                          .pushNamed(
-                                                                        KartScrutinycheckWidget
-                                                                            .routeName,
-                                                                        queryParameters:
-                                                                            {
-                                                                          'kartScrutinyID':
-                                                                              serializeParam(
-                                                                            listViewEventRegistrationsRow.kartScrutinyId,
-                                                                            ParamType.String,
-                                                                          ),
-                                                                          'eventRegistrationID':
-                                                                              serializeParam(
-                                                                            listViewEventRegistrationsRow.id,
-                                                                            ParamType.String,
-                                                                          ),
-                                                                          'category':
-                                                                              serializeParam(
-                                                                            listViewEventRegistrationsRow.category,
-                                                                            ParamType.String,
-                                                                          ),
-                                                                        }.withoutNulls,
                                                                       );
                                                                     }
 
@@ -1714,110 +1760,9 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                                           .success,
                                                                     ),
                                                                   ),
-                                                                ),
-                                                              ),
-                                                              Padding(
-                                                                padding:
-                                                                    EdgeInsets
-                                                                        .all(
-                                                                            4.0),
-                                                                child:
-                                                                    FFButtonWidget(
-                                                                  onPressed:
-                                                                      () async {
-                                                                    context
-                                                                        .pushNamed(
-                                                                      StreamingPageWidget
-                                                                          .routeName,
-                                                                      queryParameters:
-                                                                          {
-                                                                        'eventID':
-                                                                            serializeParam(
-                                                                          cardEventsRow
-                                                                              .eventUid,
-                                                                          ParamType
-                                                                              .String,
-                                                                        ),
-                                                                      }.withoutNulls,
-                                                                    );
-                                                                  },
-                                                                  text:
-                                                                      'Allocated Tyres',
-                                                                  icon: Icon(
-                                                                    Icons
-                                                                        .tire_repair,
-                                                                    size: 18.0,
-                                                                  ),
-                                                                  options:
-                                                                      FFButtonOptions(
-                                                                    width: MediaQuery.sizeOf(context)
-                                                                            .width *
-                                                                        1.0,
-                                                                    height:
-                                                                        30.0,
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            16.0,
-                                                                            0.0,
-                                                                            16.0,
-                                                                            0.0),
-                                                                    iconPadding:
-                                                                        EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                    iconColor: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryText,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .secondaryBackground,
-                                                                    textStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .titleSmall
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.interTight(
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
-                                                                            fontStyle:
-                                                                                FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                          ),
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).primaryText,
-                                                                          fontSize:
-                                                                              14.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                          fontStyle: FlutterFlowTheme.of(context)
-                                                                              .titleSmall
-                                                                              .fontStyle,
-                                                                        ),
-                                                                    elevation:
-                                                                        10.0,
-                                                                    borderSide:
-                                                                        BorderSide(
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .alternate,
-                                                                    ),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8.0),
-                                                                    hoverColor:
-                                                                        FlutterFlowTheme.of(context)
-                                                                            .alternate,
-                                                                    hoverBorderSide:
-                                                                        BorderSide(
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .success,
-                                                                    ),
-                                                                  ),
-                                                                ),
+                                                                ).animateOnPageLoad(
+                                                                        animationsMap[
+                                                                            'buttonOnPageLoadAnimation2']!),
                                                               ),
                                                               Padding(
                                                                 padding:
@@ -2225,6 +2170,111 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                                   ),
                                                                 ),
                                                               ),
+                                                              if (valueOrDefault<
+                                                                  bool>(
+                                                                (cardEventsRow
+                                                                            .eventType ==
+                                                                        'Karting') ||
+                                                                    (cardEventsRow
+                                                                            .eventType ==
+                                                                        'Karting_IAME'),
+                                                                false,
+                                                              ))
+                                                                Padding(
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .all(
+                                                                              4.0),
+                                                                  child:
+                                                                      FFButtonWidget(
+                                                                    onPressed:
+                                                                        () async {
+                                                                      context
+                                                                          .pushNamed(
+                                                                        StreamingPageWidget
+                                                                            .routeName,
+                                                                        queryParameters:
+                                                                            {
+                                                                          'eventID':
+                                                                              serializeParam(
+                                                                            cardEventsRow.eventUid,
+                                                                            ParamType.String,
+                                                                          ),
+                                                                        }.withoutNulls,
+                                                                      );
+                                                                    },
+                                                                    text:
+                                                                        'Allocated Tyres',
+                                                                    icon: Icon(
+                                                                      Icons
+                                                                          .tire_repair,
+                                                                      size:
+                                                                          18.0,
+                                                                    ),
+                                                                    options:
+                                                                        FFButtonOptions(
+                                                                      width: MediaQuery.sizeOf(context)
+                                                                              .width *
+                                                                          1.0,
+                                                                      height:
+                                                                          30.0,
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          16.0,
+                                                                          0.0,
+                                                                          16.0,
+                                                                          0.0),
+                                                                      iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                      iconColor:
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .primaryText,
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .secondaryBackground,
+                                                                      textStyle: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .titleSmall
+                                                                          .override(
+                                                                            font:
+                                                                                GoogleFonts.interTight(
+                                                                              fontWeight: FontWeight.normal,
+                                                                              fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                            ),
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).primaryText,
+                                                                            fontSize:
+                                                                                14.0,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                            fontWeight:
+                                                                                FontWeight.normal,
+                                                                            fontStyle:
+                                                                                FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                          ),
+                                                                      elevation:
+                                                                          10.0,
+                                                                      borderSide:
+                                                                          BorderSide(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .alternate,
+                                                                      ),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              8.0),
+                                                                      hoverColor:
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .alternate,
+                                                                      hoverBorderSide:
+                                                                          BorderSide(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .success,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
                                                             ].divide(SizedBox(
                                                                 height: 2.0)),
                                                           ),

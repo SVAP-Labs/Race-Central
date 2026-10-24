@@ -578,6 +578,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'category',
               ParamType.String,
             ),
+            isTurboAllowed: params.getParam(
+              'isTurboAllowed',
+              ParamType.bool,
+            ),
           ),
         ),
         FFRoute(
@@ -619,6 +623,33 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             category: params.getParam(
               'category',
               ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: Onemake4WScrutinyFormWidget.routeName,
+          path: Onemake4WScrutinyFormWidget.routePath,
+          requireAuth: true,
+          builder: (context, params) => Onemake4WScrutinyFormWidget(
+            kartScrutinyID: params.getParam(
+              'kartScrutinyID',
+              ParamType.String,
+            ),
+            eventRegistrationID: params.getParam(
+              'eventRegistrationID',
+              ParamType.String,
+            ),
+            driverScrutinyID: params.getParam(
+              'driverScrutinyID',
+              ParamType.String,
+            ),
+            category: params.getParam(
+              'category',
+              ParamType.String,
+            ),
+            isTurboAllowed: params.getParam(
+              'isTurboAllowed',
+              ParamType.bool,
             ),
           ),
         )

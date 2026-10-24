@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/schema/enums/enums.dart';
+import '/flutter_flow/ff_builtin_enums.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart' as actions;
@@ -45,35 +46,55 @@ class _LandingSplashScreenWidgetState extends State<LandingSplashScreenWidget> {
           milliseconds: 2000,
         ),
       );
-      _model.updateStatus = await actions.forceUpdateCheck(
-        context,
-      );
-      if ((currentUserDocument?.role == UserRole.Driver) &&
-          (currentUserDocument?.dateOfBirth != null)) {
-        if (FFAppState().userChoosenEvent != '') {
-          context.goNamed(
-            UserHomePageWidget.routeName,
-            queryParameters: {
-              'eventUID': serializeParam(
-                FFAppState().userChoosenEvent,
-                ParamType.String,
-              ),
-            }.withoutNulls,
+      await Future.wait([
+        Future(() async {
+          _model.updateStatus = await actions.forceUpdateCheck(
+            context,
           );
-        } else {
-          context.pushNamed(UserEventsListPageWidget.routeName);
-        }
-      } else if (currentUserDocument?.role == UserRole.Scruitneer) {
-        context.goNamed(ScruitneerLandingWidget.routeName);
-      } else if (currentUserDocument?.role == UserRole.Sporting) {
-        context.goNamed(SportingLandingPageWidget.routeName);
-      } else if (currentUserDocument?.role == null) {
-        context.goNamed(Auth2CreateWidget.routeName);
-      } else if (currentUserDocument?.dateOfBirth == null) {
-        context.pushNamed(Auth2CreateProfileWidget.routeName);
-      } else {
-        context.goNamed(Auth2CreateWidget.routeName);
-      }
+          if ((currentUserDocument?.role == UserRole.Driver) &&
+              (currentUserDocument?.dateOfBirth != null)) {
+            if (FFAppState().userChoosenEvent != '') {
+              context.goNamedAuth(
+                UserHomePageWidget.routeName,
+                context.mounted,
+                queryParameters: {
+                  'eventUID': serializeParam(
+                    FFAppState().userChoosenEvent,
+                    ParamType.String,
+                  ),
+                }.withoutNulls,
+              );
+            } else {
+              context.pushNamedAuth(
+                  UserEventsListPageWidget.routeName, context.mounted);
+            }
+          } else if (currentUserDocument?.role == UserRole.Scruitneer) {
+            context.goNamedAuth(
+                ScruitneerLandingWidget.routeName, context.mounted);
+          } else if (currentUserDocument?.role == UserRole.Sporting) {
+            context.goNamedAuth(
+                SportingLandingPageWidget.routeName, context.mounted);
+          } else if (currentUserDocument?.role == null) {
+            context.goNamedAuth(Auth2CreateWidget.routeName, context.mounted);
+          } else if (currentUserDocument?.dateOfBirth == null) {
+            context.pushNamedAuth(
+                Auth2CreateProfileWidget.routeName, context.mounted);
+          } else {
+            GoRouter.of(context).prepareAuthEvent();
+            await authManager.signOut();
+            GoRouter.of(context).clearRedirectLocation();
+          }
+        }),
+        Future(() async {
+          await Future.delayed(
+            Duration(
+              milliseconds: 9000,
+            ),
+          );
+          _model.showRetry = true;
+          safeSetState(() {});
+        }),
+      ]);
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
@@ -299,6 +320,84 @@ class _LandingSplashScreenWidgetState extends State<LandingSplashScreenWidget> {
                     ),
                   ),
                 ),
+                if (_model.showRetry)
+                  Align(
+                    alignment: AlignmentDirectional(-0.02, 0.84),
+                    child: InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        GoRouter.of(context).prepareAuthEvent();
+                        await authManager.signOut();
+                        GoRouter.of(context).clearRedirectLocation();
+
+                        context.goNamedAuth(
+                            Auth2LoginWidget.routeName, context.mounted);
+                      },
+                      child: Container(
+                        width: MediaQuery.sizeOf(context).width * 0.8,
+                        height: 50.0,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 12.0,
+                              color: Color(0x33FF9900),
+                            )
+                          ],
+                          gradient: LinearGradient(
+                            colors: [Color(0xFFFFFF4444), Color(0xFFFF9900)],
+                            stops: [0.0, 1.0],
+                            begin: AlignmentDirectional(0.0, -1.0),
+                            end: AlignmentDirectional(0, 1.0),
+                          ),
+                          borderRadius: BorderRadius.circular(24.0),
+                          shape: BoxShape.rectangle,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment:
+                                (FFMainAxisAlignment.center).flutterValue,
+                            children: [
+                              Align(
+                                alignment: AlignmentDirectional(0.0, 0.0),
+                                child: Icon(
+                                  Icons.replay,
+                                  color: Colors.white,
+                                  size: 25.0,
+                                ),
+                              ),
+                              Text(
+                                'Taking longer ? Tap to login',
+                                maxLines: 2,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      font: GoogleFonts.inter(
+                                        fontWeight: FontWeight.w500,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                      color: FlutterFlowTheme.of(context).info,
+                                      fontSize: 16.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w500,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                overflow: TextOverflow.visible,
+                              ),
+                            ].divide(SizedBox(width: 10.0)),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),

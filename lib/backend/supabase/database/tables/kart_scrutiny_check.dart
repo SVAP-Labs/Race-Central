@@ -167,4 +167,11 @@ class KartScrutinyCheckRow extends SupabaseDataRow {
 
   bool? get chk22 => getField<bool>('chk_22');
   set chk22(bool? value) => setField<bool>('chk_22', value);
+
+  String? get seatStandard => getField<String>('seatStandard');
+  set seatStandard(String? value) => setField<String>('seatStandard', value);
+
+  String? get seatSerialNumber => getField<String>('seatSerialNumber');
+  set seatSerialNumber(String? value) =>
+      setField<String>('seatSerialNumber', value);
 }

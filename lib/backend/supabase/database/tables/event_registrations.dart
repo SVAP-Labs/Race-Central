@@ -163,4 +163,48 @@ class EventRegistrationsRow extends SupabaseDataRow {
 
   String? get tyreSize => getField<String>('tyre_size');
   set tyreSize(String? value) => setField<String>('tyre_size', value);
+
+  int? get preferredNumber1 => getField<int>('preferred_number_1');
+  set preferredNumber1(int? value) =>
+      setField<int>('preferred_number_1', value);
+
+  DateTime? get numberAllocatedAt => getField<DateTime>('number_allocated_at');
+  set numberAllocatedAt(DateTime? value) =>
+      setField<DateTime>('number_allocated_at', value);
+
+  String? get numberAllocatedBy => getField<String>('number_allocated_by');
+  set numberAllocatedBy(String? value) =>
+      setField<String>('number_allocated_by', value);
+
+  bool? get dnp => getField<bool>('dnp');
+  set dnp(bool? value) => setField<bool>('dnp', value);
+
+  String? get dnpReason => getField<String>('dnp_reason');
+  set dnpReason(String? value) => setField<String>('dnp_reason', value);
+
+  DateTime? get dnpAt => getField<DateTime>('dnp_at');
+  set dnpAt(DateTime? value) => setField<DateTime>('dnp_at', value);
+
+  String? get dnpBy => getField<String>('dnp_by');
+  set dnpBy(String? value) => setField<String>('dnp_by', value);
+
+  bool? get documentationOk => getField<bool>('documentation_ok');
+  set documentationOk(bool? value) => setField<bool>('documentation_ok', value);
+
+  DateTime? get documentationAt => getField<DateTime>('documentation_at');
+  set documentationAt(DateTime? value) =>
+      setField<DateTime>('documentation_at', value);
+
+  String? get documentationBy => getField<String>('documentation_by');
+  set documentationBy(String? value) =>
+      setField<String>('documentation_by', value);
+
+  bool? get licenceOk => getField<bool>('licence_ok');
+  set licenceOk(bool? value) => setField<bool>('licence_ok', value);
+
+  DateTime? get licenceAt => getField<DateTime>('licence_at');
+  set licenceAt(DateTime? value) => setField<DateTime>('licence_at', value);
+
+  String? get licenceBy => getField<String>('licence_by');
+  set licenceBy(String? value) => setField<String>('licence_by', value);
 }

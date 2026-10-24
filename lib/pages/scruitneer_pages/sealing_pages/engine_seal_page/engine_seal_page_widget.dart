@@ -3320,7 +3320,7 @@ class _EngineSealPageWidgetState extends State<EngineSealPageWidget> {
                                                       ),
                                                       FFButtonWidget(
                                                         onPressed: () async {
-                                                          if (!isWeb) {
+                                                          if (isiOS) {
                                                             await requestPermission(
                                                                 cameraPermission);
                                                           }

@@ -66,6 +66,24 @@ class RacingControlAppSupportRecord extends FirestoreRecord {
   List<String> get iameKartingTeams => _iameKartingTeams ?? const [];
   bool hasIameKartingTeams() => _iameKartingTeams != null;
 
+  // "fmsciHomogatedVehicles" field.
+  List<String>? _fmsciHomogatedVehicles;
+  List<String> get fmsciHomogatedVehicles =>
+      _fmsciHomogatedVehicles ?? const [];
+  bool hasFmsciHomogatedVehicles() => _fmsciHomogatedVehicles != null;
+
+  // "fmsciHomologatedF4Vehciles" field.
+  List<VehicleHomologationStruct>? _fmsciHomologatedF4Vehciles;
+  List<VehicleHomologationStruct> get fmsciHomologatedF4Vehciles =>
+      _fmsciHomologatedF4Vehciles ?? const [];
+  bool hasFmsciHomologatedF4Vehciles() => _fmsciHomologatedF4Vehciles != null;
+
+  // "fmsciHomologated2WVehicles" field.
+  List<VehicleHomologationStruct>? _fmsciHomologated2WVehicles;
+  List<VehicleHomologationStruct> get fmsciHomologated2WVehicles =>
+      _fmsciHomologated2WVehicles ?? const [];
+  bool hasFmsciHomologated2WVehicles() => _fmsciHomologated2WVehicles != null;
+
   void _initializeFields() {
     _kartingEvents = getDataList(snapshotData['kartingEvents']);
     _kartingTeams = getDataList(snapshotData['kartingTeams']);
@@ -78,6 +96,16 @@ class RacingControlAppSupportRecord extends FirestoreRecord {
         getDataList(snapshotData['kartTeamRepresentative']);
     _termsAndConditions = snapshotData['termsAndConditions'] as String?;
     _iameKartingTeams = getDataList(snapshotData['iameKartingTeams']);
+    _fmsciHomogatedVehicles =
+        getDataList(snapshotData['fmsciHomogatedVehicles']);
+    _fmsciHomologatedF4Vehciles = getStructList(
+      snapshotData['fmsciHomologatedF4Vehciles'],
+      VehicleHomologationStruct.fromMap,
+    );
+    _fmsciHomologated2WVehicles = getStructList(
+      snapshotData['fmsciHomologated2WVehicles'],
+      VehicleHomologationStruct.fromMap,
+    );
   }
 
   static CollectionReference get collection =>
@@ -149,7 +177,13 @@ class RacingControlAppSupportRecordDocumentEquality
         listEquality.equals(
             e1?.kartTeamRepresentative, e2?.kartTeamRepresentative) &&
         e1?.termsAndConditions == e2?.termsAndConditions &&
-        listEquality.equals(e1?.iameKartingTeams, e2?.iameKartingTeams);
+        listEquality.equals(e1?.iameKartingTeams, e2?.iameKartingTeams) &&
+        listEquality.equals(
+            e1?.fmsciHomogatedVehicles, e2?.fmsciHomogatedVehicles) &&
+        listEquality.equals(
+            e1?.fmsciHomologatedF4Vehciles, e2?.fmsciHomologatedF4Vehciles) &&
+        listEquality.equals(
+            e1?.fmsciHomologated2WVehicles, e2?.fmsciHomologated2WVehicles);
   }
 
   @override
@@ -163,7 +197,10 @@ class RacingControlAppSupportRecordDocumentEquality
         const ListEquality().hash(e?.kartingEventsCode),
         const ListEquality().hash(e?.kartTeamRepresentative),
         e?.termsAndConditions,
-        const ListEquality().hash(e?.iameKartingTeams)
+        const ListEquality().hash(e?.iameKartingTeams),
+        const ListEquality().hash(e?.fmsciHomogatedVehicles),
+        const ListEquality().hash(e?.fmsciHomologatedF4Vehciles),
+        const ListEquality().hash(e?.fmsciHomologated2WVehicles)
       ]);
 
   @override

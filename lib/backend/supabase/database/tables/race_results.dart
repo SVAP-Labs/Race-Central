@@ -65,4 +65,11 @@ class RaceResultsRow extends SupabaseDataRow {
 
   String? get eventId => getField<String>('event_id');
   set eventId(String? value) => setField<String>('event_id', value);
+
+  double? get measuredWeight => getField<double>('measuredWeight');
+  set measuredWeight(double? value) =>
+      setField<double>('measuredWeight', value);
+
+  double? get minimumWeight => getField<double>('minimumWeight');
+  set minimumWeight(double? value) => setField<double>('minimumWeight', value);
 }

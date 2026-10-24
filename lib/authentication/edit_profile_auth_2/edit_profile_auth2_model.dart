@@ -59,17 +59,19 @@ class EditProfileAuth2Model extends FlutterFlowModel<EditProfileAuth2Widget> {
   // State field(s) for genderDropDown widget.
   String? genderDropDownValue;
   FormFieldController<String>? genderDropDownValueController;
-  // State field(s) for contact widget.
-  FocusNode? contactFocusNode;
-  TextEditingController? contactTextController;
-  String? Function(BuildContext, String?)? contactTextControllerValidator;
-  String? _contactTextControllerValidator(BuildContext context, String? val) {
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode;
+  TextEditingController? textController3;
+  String? Function(BuildContext, String?)? textController3Validator;
+  // State field(s) for primarycontactTextField widget.
+  FocusNode? primarycontactTextFieldFocusNode;
+  TextEditingController? primarycontactTextFieldTextController;
+  String? Function(BuildContext, String?)?
+      primarycontactTextFieldTextControllerValidator;
+  String? _primarycontactTextFieldTextControllerValidator(
+      BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
-      return 'Emergency Contact is required';
-    }
-
-    if (val.length < 10) {
-      return 'Requires at least 10 characters.';
+      return 'Contact Number is required';
     }
 
     return null;
@@ -79,19 +81,6 @@ class EditProfileAuth2Model extends FlutterFlowModel<EditProfileAuth2Widget> {
   FocusNode? parentNameFocusNode;
   TextEditingController? parentNameTextController;
   String? Function(BuildContext, String?)? parentNameTextControllerValidator;
-  String? _parentNameTextControllerValidator(
-      BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Parent / Guardian Name is required';
-    }
-
-    if (val.length < 3) {
-      return 'Requires at least 3 characters.';
-    }
-
-    return null;
-  }
-
   // State field(s) for parentemail widget.
   FocusNode? parentemailFocusNode;
   TextEditingController? parentemailTextController;
@@ -105,8 +94,8 @@ class EditProfileAuth2Model extends FlutterFlowModel<EditProfileAuth2Widget> {
   void initState(BuildContext context) {
     firstNameTextControllerValidator = _firstNameTextControllerValidator;
     lastNameTextControllerValidator = _lastNameTextControllerValidator;
-    contactTextControllerValidator = _contactTextControllerValidator;
-    parentNameTextControllerValidator = _parentNameTextControllerValidator;
+    primarycontactTextFieldTextControllerValidator =
+        _primarycontactTextFieldTextControllerValidator;
   }
 
   @override
@@ -117,8 +106,11 @@ class EditProfileAuth2Model extends FlutterFlowModel<EditProfileAuth2Widget> {
     lastNameFocusNode?.dispose();
     lastNameTextController?.dispose();
 
-    contactFocusNode?.dispose();
-    contactTextController?.dispose();
+    textFieldFocusNode?.dispose();
+    textController3?.dispose();
+
+    primarycontactTextFieldFocusNode?.dispose();
+    primarycontactTextFieldTextController?.dispose();
 
     parentNameFocusNode?.dispose();
     parentNameTextController?.dispose();

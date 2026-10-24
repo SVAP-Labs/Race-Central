@@ -15,17 +15,8 @@ class TwoWheelerScrutinyModel
 
   final formKey = GlobalKey<FormState>();
   // State field(s) for make_model widget.
-  FocusNode? makeModelFocusNode;
-  TextEditingController? makeModelTextController;
-  String? Function(BuildContext, String?)? makeModelTextControllerValidator;
-  String? _makeModelTextControllerValidator(BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Chassis Make is Required.';
-    }
-
-    return null;
-  }
-
+  String? makeModelValue;
+  FormFieldController<String>? makeModelValueController;
   // State field(s) for CCNumber widget.
   FocusNode? cCNumberFocusNode;
   TextEditingController? cCNumberTextController;
@@ -43,15 +34,6 @@ class TwoWheelerScrutinyModel
   TextEditingController? fMSCIHomologationNoTextController;
   String? Function(BuildContext, String?)?
       fMSCIHomologationNoTextControllerValidator;
-  String? _fMSCIHomologationNoTextControllerValidator(
-      BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'FMSCI Homologation Number  is required';
-    }
-
-    return null;
-  }
-
   // State field(s) for cubicCapacity widget.
   FocusNode? cubicCapacityFocusNode;
   TextEditingController? cubicCapacityTextController;
@@ -148,12 +130,12 @@ class TwoWheelerScrutinyModel
   bool? chkfireextfixValue;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode1;
-  TextEditingController? textController12;
-  String? Function(BuildContext, String?)? textController12Validator;
+  TextEditingController? textController11;
+  String? Function(BuildContext, String?)? textController11Validator;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode2;
-  TextEditingController? textController13;
-  String? Function(BuildContext, String?)? textController13Validator;
+  TextEditingController? textController12;
+  String? Function(BuildContext, String?)? textController12Validator;
   // State field(s) for CommentsTextField widget.
   FocusNode? commentsTextFieldFocusNode;
   TextEditingController? commentsTextFieldTextController;
@@ -180,18 +162,12 @@ class TwoWheelerScrutinyModel
 
   @override
   void initState(BuildContext context) {
-    makeModelTextControllerValidator = _makeModelTextControllerValidator;
     cCNumberTextControllerValidator = _cCNumberTextControllerValidator;
-    fMSCIHomologationNoTextControllerValidator =
-        _fMSCIHomologationNoTextControllerValidator;
     engineNumberTextControllerValidator = _engineNumberTextControllerValidator;
   }
 
   @override
   void dispose() {
-    makeModelFocusNode?.dispose();
-    makeModelTextController?.dispose();
-
     cCNumberFocusNode?.dispose();
     cCNumberTextController?.dispose();
 
@@ -223,10 +199,10 @@ class TwoWheelerScrutinyModel
     seatbeltSerialNoTextController?.dispose();
 
     textFieldFocusNode1?.dispose();
-    textController12?.dispose();
+    textController11?.dispose();
 
     textFieldFocusNode2?.dispose();
-    textController13?.dispose();
+    textController12?.dispose();
 
     commentsTextFieldFocusNode?.dispose();
     commentsTextFieldTextController?.dispose();

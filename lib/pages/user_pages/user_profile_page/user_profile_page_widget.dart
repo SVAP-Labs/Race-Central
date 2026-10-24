@@ -538,7 +538,7 @@ class _UserProfilePageWidgetState extends State<UserProfilePageWidget>
                         padding: EdgeInsetsDirectional.fromSTEB(
                             12.0, 16.0, 18.0, 0.0),
                         child: Text(
-                          'v 1.0.2_B6.6',
+                          'v 1.0.3_B7.18',
                           textAlign: TextAlign.center,
                           style:
                               FlutterFlowTheme.of(context).labelLarge.override(

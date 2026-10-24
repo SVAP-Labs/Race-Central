@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 
 class LandingSplashScreenModel
     extends FlutterFlowModel<LandingSplashScreenWidget> {
+  ///  Local state fields for this page.
+
+  bool showRetry = false;
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Custom Action - forceUpdateCheck] action in landingSplashScreen widget.

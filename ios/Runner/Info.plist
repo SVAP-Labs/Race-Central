@@ -58,9 +58,9 @@
 	<true/>
 
 	<key>NSCameraUsageDescription</key>
-    <string>Allow camera access to take a new profile picture.</string>
+    <string>Allow camera access to take a new picture.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-    <string>Allow access to your photos to choose a profile picture.</string>
+    <string>Allow access to your photos to choose a picture.</string>
 
 
 

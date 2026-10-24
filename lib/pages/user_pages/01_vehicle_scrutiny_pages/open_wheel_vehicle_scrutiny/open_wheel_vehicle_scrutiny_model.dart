@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
@@ -15,18 +16,12 @@ class OpenWheelVehicleScrutinyModel
   ///  State fields for stateful widgets in this page.
 
   final formKey = GlobalKey<FormState>();
-  // State field(s) for make_model widget.
-  FocusNode? makeModelFocusNode;
-  TextEditingController? makeModelTextController;
-  String? Function(BuildContext, String?)? makeModelTextControllerValidator;
-  String? _makeModelTextControllerValidator(BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Chassis Make is Required.';
-    }
-
-    return null;
-  }
-
+  // Stores action output result for [Backend Call - API (getallowedCarsinCategory)] action in openWheelVehicleScrutiny widget.
+  ApiCallResponse? queriedCarsCollection;
+  // State field(s) for makemodel widget.
+  FocusNode? makemodelFocusNode;
+  TextEditingController? makemodelTextController;
+  String? Function(BuildContext, String?)? makemodelTextControllerValidator;
   // State field(s) for CCNumber widget.
   FocusNode? cCNumberFocusNode;
   TextEditingController? cCNumberTextController;
@@ -44,15 +39,6 @@ class OpenWheelVehicleScrutinyModel
   TextEditingController? fMSCIHomologationNoTextController;
   String? Function(BuildContext, String?)?
       fMSCIHomologationNoTextControllerValidator;
-  String? _fMSCIHomologationNoTextControllerValidator(
-      BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'FMSCI Homologation Number is required';
-    }
-
-    return null;
-  }
-
   // State field(s) for cubicCapacity widget.
   FocusNode? cubicCapacityFocusNode;
   TextEditingController? cubicCapacityTextController;
@@ -100,6 +86,13 @@ class OpenWheelVehicleScrutinyModel
   FocusNode? ballastWeightFocusNode;
   TextEditingController? ballastWeightTextController;
   String? Function(BuildContext, String?)? ballastWeightTextControllerValidator;
+  // State field(s) for seatStandard widget.
+  String? seatStandardValue;
+  FormFieldController<String>? seatStandardValueController;
+  // State field(s) for SeatSerialNo widget.
+  FocusNode? seatSerialNoFocusNode;
+  TextEditingController? seatSerialNoTextController;
+  String? Function(BuildContext, String?)? seatSerialNoTextControllerValidator;
   // State field(s) for seatbeltStandard widget.
   String? seatbeltStandardValue;
   FormFieldController<String>? seatbeltStandardValueController;
@@ -136,8 +129,6 @@ class OpenWheelVehicleScrutinyModel
   bool? chkBatteryValue;
   // State field(s) for chkFuelLines widget.
   bool? chkFuelLinesValue;
-  // State field(s) for chkTransponder widget.
-  bool? chkTransponderValue;
   // State field(s) for chk_oilcan_ChainGuard widget.
   bool? chkOilcanChainGuardValue;
   // State field(s) for chkBallast widget.
@@ -146,12 +137,12 @@ class OpenWheelVehicleScrutinyModel
   bool? chkKillSwitchValue;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode1;
-  TextEditingController? textController12;
-  String? Function(BuildContext, String?)? textController12Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode2;
   TextEditingController? textController13;
   String? Function(BuildContext, String?)? textController13Validator;
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode2;
+  TextEditingController? textController14;
+  String? Function(BuildContext, String?)? textController14Validator;
   // State field(s) for CommentsTextField widget.
   FocusNode? commentsTextFieldFocusNode;
   TextEditingController? commentsTextFieldTextController;
@@ -178,18 +169,15 @@ class OpenWheelVehicleScrutinyModel
 
   @override
   void initState(BuildContext context) {
-    makeModelTextControllerValidator = _makeModelTextControllerValidator;
     cCNumberTextControllerValidator = _cCNumberTextControllerValidator;
-    fMSCIHomologationNoTextControllerValidator =
-        _fMSCIHomologationNoTextControllerValidator;
     engineNumberTextControllerValidator = _engineNumberTextControllerValidator;
     eCUNumberTextControllerValidator = _eCUNumberTextControllerValidator;
   }
 
   @override
   void dispose() {
-    makeModelFocusNode?.dispose();
-    makeModelTextController?.dispose();
+    makemodelFocusNode?.dispose();
+    makemodelTextController?.dispose();
 
     cCNumberFocusNode?.dispose();
     cCNumberTextController?.dispose();
@@ -218,14 +206,17 @@ class OpenWheelVehicleScrutinyModel
     ballastWeightFocusNode?.dispose();
     ballastWeightTextController?.dispose();
 
+    seatSerialNoFocusNode?.dispose();
+    seatSerialNoTextController?.dispose();
+
     seatbeltSerialNoFocusNode?.dispose();
     seatbeltSerialNoTextController?.dispose();
 
     textFieldFocusNode1?.dispose();
-    textController12?.dispose();
+    textController13?.dispose();
 
     textFieldFocusNode2?.dispose();
-    textController13?.dispose();
+    textController14?.dispose();
 
     commentsTextFieldFocusNode?.dispose();
     commentsTextFieldTextController?.dispose();
